@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../mrl.graph/pom.xml" />
+        <option value="$PROJECT_DIR$/../mrl.motion.data/pom.xml" />
+        <option value="$PROJECT_DIR$/../mrl.motion.neural/pom.xml" />
+        <option value="$PROJECT_DIR$/../mrl.motion.viewer/pom.xml" />
+        <option value="$PROJECT_DIR$/../mrl.util/pom.xml" />
+        <option value="$PROJECT_DIR$/../mrl.widget/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_18" default="true" project-jdk-name="18" project-jdk-type="JavaSDK" />
+</project>
