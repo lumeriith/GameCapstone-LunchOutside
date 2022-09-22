@@ -36,4 +36,8 @@
 	  <version>1.5.2</version>
 	</dependency>
   </dependencies>
+    <properties>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
+    </properties>
 </project>

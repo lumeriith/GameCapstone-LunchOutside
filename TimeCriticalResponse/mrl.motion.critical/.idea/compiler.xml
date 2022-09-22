@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="viewer" />
         <module name="widget" />
+        <module name="mrl.motion.critical" />
         <module name="critical" />
         <module name="data" />
         <module name="neural" />
