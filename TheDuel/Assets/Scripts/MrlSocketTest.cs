@@ -13,6 +13,8 @@ public class MrlSocketTest : MonoBehaviour
     public float visualizeScale = 0.02f;
     public GameObject nodeTemplate;
     public int nodeCount = 50;
+    public bool keepCentered = false;
+    public Animator connectedAnimator;
 
 
     private List<GameObject> _nodes;
@@ -30,7 +32,9 @@ public class MrlSocketTest : MonoBehaviour
         _nodes = new List<GameObject>();
         for (int i = 0; i < nodeCount; i++)
         {
-            _nodes.Add(Instantiate(nodeTemplate));
+            _nodes.Add(Instantiate(nodeTemplate, transform));
+            _nodes[i].SetActive(false);
+            _nodes[i].name = "node " + i;
         }
         _client = new TcpClient
         {
@@ -70,11 +74,32 @@ public class MrlSocketTest : MonoBehaviour
     private void ReadData()
     {
         var nodeCount = _memReader.ReadInt32();
+        Vector3[] positions = new Vector3[nodeCount * 2];
+        Vector3 offset = Vector3.zero;
         for (int i = 0; i < nodeCount; i++)
         {
-            _nodes[i].transform.SetPositionAndRotation(_memReader.ReadVector3() * visualizeScale,
-                Quaternion.Euler(_memReader.ReadVector3()));
+            positions[i * 2]  = _memReader.ReadVector3();
+            positions[i * 2 + 1]  = _memReader.ReadVector3();                 
         }
+
+        if (keepCentered)
+        {
+            for (int i = 0; i < positions.Length; i++)
+            {
+                offset += positions[i];
+            }
+
+            offset /= -positions.Length;
+            offset.y = 0f;
+        }
+
+        for (int i = 0; i < positions.Length; i++)
+        {
+            _nodes[i].transform.position = (positions[i] + offset) * visualizeScale;
+            _nodes[i].SetActive(true);
+        }
+
+        if (connectedAnimator == null) return;
         
     }
     
