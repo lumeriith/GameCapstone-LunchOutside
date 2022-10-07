@@ -2,13 +2,17 @@ package mrl.motion.critical.run;
 
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 
+import mrl.motion.data.Motion;
+import mrl.motion.data.MotionData;
+import mrl.motion.data.SkeletonData;
 import mrl.motion.position.PositionResultMotion;
 //import org.eclipse.swt.events.KeyEvent;
 
@@ -16,14 +20,15 @@ import mrl.motion.data.trasf.Pose2d;
 import mrl.motion.neural.agility.AgilityControlParameterGenerator;
 import mrl.motion.neural.agility.JumpSpeedModel;
 import mrl.motion.neural.data.MotionDataConverter;
-import mrl.motion.neural.run.PythonRuntimeController;
+import mrl.motion.neural.run.RealtimePythonController;
 import mrl.util.Configuration;
 import mrl.util.MathUtil;
+import mrl.util.Pair;
 import mrl.util.Utils;
 import mrl.widget.app.Item.ItemDescription;
 
 public class UnityConnectedMartialArts {
-    private PythonRuntimeController c;
+    private RealtimePythonController c;
     private LinkedList<Integer> actionQueue = null;
     private LinkedList<Integer> actionStartFrames = null;
 
@@ -38,6 +43,10 @@ public class UnityConnectedMartialArts {
     private int activatedCount = 0;
     private ServerSocket server;
     private void start() throws IOException {
+        MotionDataConverter.useOrientation = true;
+        MotionDataConverter.useTPoseForMatrix = false;
+        MotionDataConverter.useMatrixForAll = false;
+
         createRuntimeController();
         server = new ServerSocket(1369);
 
@@ -56,23 +65,44 @@ public class UnityConnectedMartialArts {
         Socket soc = server.accept();
         System.out.println("accepted " + soc.getRemoteSocketAddress());
 
+        c.reset();
+
         DataOutputStream socketWriter = new DataOutputStream(soc.getOutputStream());
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream baosWriter = new DataOutputStream(baos);
 
-        while (true) {
-            PositionResultMotion.PositionFrame frame = c.iterateMotion().get(0);
+        String[] posJoints = MotionDataConverter.KeyJointList_Origin;
+        String[] rotJoints = MotionDataConverter.OrientationJointList;
 
-            baosWriter.writeInt(frame.size());
-            for (int i = 0; i < frame.size(); i++) {
-                Point3d[] data = frame.get(i);
-                baosWriter.writeFloat((float) data[0].x);
-                baosWriter.writeFloat((float) data[0].y);
-                baosWriter.writeFloat((float) data[0].z);
-                baosWriter.writeFloat((float) data[1].x);
-                baosWriter.writeFloat((float) data[1].y);
-                baosWriter.writeFloat((float) data[1].z);
+        baosWriter.writeInt(posJoints.length);
+        baosWriter.writeInt(rotJoints.length);
+
+        for (String posJoint : posJoints) {
+            baosWriter.writeInt(posJoint.length());
+            baosWriter.writeChars(posJoint);
+        }
+        for (String rotJoint : rotJoints) {
+            baosWriter.writeInt(rotJoint.length());
+            baosWriter.writeChars(rotJoint);
+        }
+
+        while (true) {
+            double[] output = c.iterateMotion();
+            HashMap<String, Point3d> posMap = MotionDataConverter.dataToPointMapByPosition(output);
+            HashMap<String, Point3d> rotMap = MotionDataConverter.dataToPointMapByOrientation(output);
+
+            for (String key : posJoints) {
+                Point3d pos = posMap.get(key);
+                baosWriter.writeFloat((float)pos.x);
+                baosWriter.writeFloat((float)pos.y);
+                baosWriter.writeFloat((float)pos.z);
+            }
+            for (String key : rotJoints) {
+                Point3d rot = rotMap.get(key);
+                baosWriter.writeFloat((float)rot.x);
+                baosWriter.writeFloat((float)rot.y);
+                baosWriter.writeFloat((float)rot.z);
             }
 
             baosWriter.flush();
@@ -81,12 +111,12 @@ public class UnityConnectedMartialArts {
             socketWriter.writeInt(result.length);
             socketWriter.write(result);
             socketWriter.flush();
-            Thread.sleep(100);
+            Thread.sleep(33);
         }
     }
 
     private void createRuntimeController() {
-        c = new PythonRuntimeController() {
+        c = new RealtimePythonController() {
             @Override
             public double[] getControlParameter() {
                 if (targetDirection == null) return null;

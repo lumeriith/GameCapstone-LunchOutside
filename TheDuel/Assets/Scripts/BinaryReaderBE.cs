@@ -38,5 +38,12 @@ class BinaryReaderBE : BinaryReader {
         Array.Reverse(data);
         return BitConverter.ToDouble(data, 0);
     }
+
+    public override char ReadChar()
+    {
+        var data = base.ReadBytes(2);
+        Array.Reverse(data);
+        return BitConverter.ToChar(data, 0);
+    }
 }
 
