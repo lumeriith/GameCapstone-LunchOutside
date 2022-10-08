@@ -69,6 +69,7 @@ public abstract class RealtimePythonController extends RuntimeController{
 
     public double[] iterateMotion(){
         double[] x = getControlParameter();
+        frame++;
         if (x == null) return null;
         inputList.add(x);
         if (USE_NORMALIZATION) x = normal.normalizeX(x);

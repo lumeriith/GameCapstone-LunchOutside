@@ -17,7 +17,6 @@ public class MrlSocketTest : SerializedMonoBehaviour
     public int nodeCount = 50;
     
     public Dictionary<string, HumanBodyBones> skeletonSettings;
-    public Dictionary<int, string> boneNameByNodeIndex;
 
 
     private List<TestNode> _nodes;
@@ -26,8 +25,12 @@ public class MrlSocketTest : SerializedMonoBehaviour
 
     private NetworkStream _networkStream;
     private byte[] _networkStreamBuffer;
-    private MemoryStream _memStream;
-    private BinaryReaderBE _memReader;
+    
+    private MemoryStream _incomingStream;
+    private MemoryStream _outgoingStream;
+    private BinaryReaderBE _incomingReader;
+    private BinaryWriterBE _outgoingWriter;
+    
     private byte[] _copyRemainBuffer;
     private bool _isFirstPayload = true;
 
@@ -44,8 +47,10 @@ public class MrlSocketTest : SerializedMonoBehaviour
             _client.EndConnect(asyncResult);
             if (!_client.Connected) return;
             _networkStream = _client.GetStream();
-            _memStream = new MemoryStream();
-            _memReader = new BinaryReaderBE(_memStream);
+            _incomingStream = new MemoryStream();
+            _incomingReader = new BinaryReaderBE(_incomingStream);
+            _outgoingStream = new MemoryStream();
+            _outgoingWriter = new BinaryWriterBE(_outgoingStream);
             _networkStreamBuffer = new byte[dataBufferSize];
             _copyRemainBuffer = new byte[dataBufferSize];
             _networkStream.BeginRead(_networkStreamBuffer, 0, dataBufferSize, PutToMemStream, null);
@@ -75,10 +80,10 @@ public class MrlSocketTest : SerializedMonoBehaviour
             return;
         }
 
-        lock (_memStream)
+        lock (_incomingStream)
         {
-            _memStream.Position = _memStream.Length;
-            _memStream.Write(_networkStreamBuffer, 0, bytesRead);
+            _incomingStream.Position = _incomingStream.Length;
+            _incomingStream.Write(_networkStreamBuffer, 0, bytesRead);
         }
         _networkStream.BeginRead(_networkStreamBuffer, 0, dataBufferSize, PutToMemStream, null);
     }
@@ -133,8 +138,8 @@ public class MrlSocketTest : SerializedMonoBehaviour
     {
         if (_isFirstPayload)
         {
-            _setup.numOfPosJoints = _memReader.ReadInt32();
-            _setup.numOfRotJoints = _memReader.ReadInt32();
+            _setup.numOfPosJoints = _incomingReader.ReadInt32();
+            _setup.numOfRotJoints = _incomingReader.ReadInt32();
             _setup.boneToPosIndex = new Dictionary<string, int>();
             _setup.boneToRotIndex = new Dictionary<string, int>();
             _setup.posIndexToBone = new Dictionary<int, string>();
@@ -143,9 +148,9 @@ public class MrlSocketTest : SerializedMonoBehaviour
             char[] arr = new char[255];
             for (int i = 0; i < _setup.numOfPosJoints; i++)
             {
-                int length = _memReader.ReadInt32();
+                int length = _incomingReader.ReadInt32();
                 for (int c = 0; c < length; c++)
-                    arr[c] = _memReader.ReadChar();
+                    arr[c] = _incomingReader.ReadChar();
                 string jointName = new string(arr, 0, length);
                 _setup.boneToPosIndex.Add(jointName, i);
                 _setup.posIndexToBone.Add(i, jointName);
@@ -153,9 +158,9 @@ public class MrlSocketTest : SerializedMonoBehaviour
 
             for (int i = 0; i < _setup.numOfRotJoints; i++)
             {
-                int length = _memReader.ReadInt32();
+                int length = _incomingReader.ReadInt32();
                 for (int c = 0; c < length; c++)
-                    arr[c] = _memReader.ReadChar();
+                    arr[c] = _incomingReader.ReadChar();
                 string jointName = new string(arr, 0, length);
                 _setup.boneToRotIndex.Add(jointName, i);
                 _setup.rotIndexToBone.Add(i, jointName);
@@ -169,42 +174,73 @@ public class MrlSocketTest : SerializedMonoBehaviour
         
         for (int i = 0; i < _setup.numOfPosJoints; i++)
         {
-            _data.positions[i] = _memReader.ReadVector3();
+            _data.positions[i] = _incomingReader.ReadVector3();
         }
         
         for (int i = 0; i < _setup.numOfRotJoints; i++)
         {
-            _data.rotations[i] = _memReader.ReadVector3();
+            _data.rotations[i] = _incomingReader.ReadVector3();
         }
+    }
+
+    public enum OpCode : int
+    {
+        DoAction = 0
+    }
+    
+    private int a = 0;
+    private void SendTest()
+    {
+        _outgoingWriter.Write((int)OpCode.DoAction);
+        if (a == 5) a = 0;
+        _outgoingWriter.Write(a++);
+        FlushOutgoingPacket();
+    }
+
+    private void FlushOutgoingPacket()
+    {
+        var data = _outgoingStream.ToArray();
+        var lengthBytes = BitConverter.GetBytes(data.Length);
+        Array.Reverse(lengthBytes);
+        _networkStream.Write(lengthBytes);
+        _networkStream.Write(data);
+        _outgoingStream.SetLength(0);
     }
     
     private void Update()
     {
-        if (!_client.Connected || _memStream == null) return;
-
-        if (_memStream.Length < 4) return;
-        lock (_memStream)
+        if (_client.Connected && _incomingStream != null)
         {
-            _memStream.Position = 0;
-            var receivingBytesSize = _memReader.ReadInt32();
-            var currentSize = _memStream.Length - _memStream.Position;
+            ProcessIncomingPackets();
+            if (Input.GetKeyDown(KeyCode.Space)) SendTest();
+        }
+    }
+
+    private void ProcessIncomingPackets()
+    {
+        if (_incomingStream.Length < 4) return;
+        lock (_incomingStream)
+        {
+            _incomingStream.Position = 0;
+            var receivingBytesSize = _incomingReader.ReadInt32();
+            var currentSize = _incomingStream.Length - _incomingStream.Position;
             if (currentSize < receivingBytesSize)
             {
                 return;
             }
 
             ReadData();
-            
-            var discardCount = receivingBytesSize + 4 - _memStream.Position;
+
+            var discardCount = receivingBytesSize + 4 - _incomingStream.Position;
             for (int i = 0; i < discardCount; i++)
             {
-                _memStream.ReadByte();
+                _incomingStream.ReadByte();
             }
             
-            var remaining = _memStream.Read(_copyRemainBuffer);
-            _memStream.SetLength(0);
+            var remaining = _incomingStream.Read(_copyRemainBuffer);
+            _incomingStream.SetLength(0);
             if (remaining != 0) 
-                _memStream.Write(_copyRemainBuffer, 0, remaining);
+                _incomingStream.Write(_copyRemainBuffer, 0, remaining);
         }
 
         ProcessData();

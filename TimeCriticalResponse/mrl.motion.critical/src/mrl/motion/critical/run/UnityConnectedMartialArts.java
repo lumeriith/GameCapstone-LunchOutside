@@ -2,8 +2,10 @@ package mrl.motion.critical.run;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.function.IntConsumer;
 
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
@@ -42,6 +44,15 @@ public class UnityConnectedMartialArts {
     private boolean isActivated = false;
     private int activatedCount = 0;
     private ServerSocket server;
+    private DataOutputStream socketWriter;
+    private DataInputStream socketReader;
+    private ByteArrayOutputStream baos;
+    private ByteArrayInputStream bais;
+
+    private DataOutputStream baosWriter;
+    private String[] posJoints;
+    private String[] rotJoints;
+
     private void start() throws IOException {
         MotionDataConverter.useOrientation = true;
         MotionDataConverter.useTPoseForMatrix = false;
@@ -60,21 +71,7 @@ public class UnityConnectedMartialArts {
         }
     }
 
-    private void serveClient() throws IOException, InterruptedException {
-        System.out.println("waiting for client");
-        Socket soc = server.accept();
-        System.out.println("accepted " + soc.getRemoteSocketAddress());
-
-        c.reset();
-
-        DataOutputStream socketWriter = new DataOutputStream(soc.getOutputStream());
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream baosWriter = new DataOutputStream(baos);
-
-        String[] posJoints = MotionDataConverter.KeyJointList_Origin;
-        String[] rotJoints = MotionDataConverter.OrientationJointList;
-
+    private void sendInitialPayload() throws IOException {
         baosWriter.writeInt(posJoints.length);
         baosWriter.writeInt(rotJoints.length);
 
@@ -86,24 +83,88 @@ public class UnityConnectedMartialArts {
             baosWriter.writeInt(rotJoint.length());
             baosWriter.writeChars(rotJoint);
         }
+    }
+
+    private void sendOutputPayload(double[] output) throws IOException {
+        HashMap<String, Point3d> posMap = MotionDataConverter.dataToPointMapByPosition(output);
+        HashMap<String, Point3d> rotMap = MotionDataConverter.dataToPointMapByOrientation(output);
+
+        for (String key : posJoints) {
+            Point3d pos = posMap.get(key);
+            baosWriter.writeFloat((float)pos.x);
+            baosWriter.writeFloat((float)pos.y);
+            baosWriter.writeFloat((float)pos.z);
+        }
+        for (String key : rotJoints) {
+            Point3d rot = rotMap.get(key);
+            baosWriter.writeFloat((float)rot.x);
+            baosWriter.writeFloat((float)rot.y);
+            baosWriter.writeFloat((float)rot.z);
+        }
+    }
+
+    public interface MessageHandlerInterface {
+       public abstract void handle(int payloadLength) throws IOException;
+    }
+
+    private int waitingBytes = -1;
+    private MessageHandlerInterface[] messageHandlers = {
+        this::handlerDoAction
+    };
+
+    private void receiveData() throws IOException {
+        while (true) {
+            int availBytes = socketReader.available();
+            if (waitingBytes < 0 && availBytes >= 4) {
+                waitingBytes = socketReader.readInt();
+                continue;
+            }
+
+            if (waitingBytes > 0 && availBytes >= waitingBytes) {
+                int opCode = socketReader.readInt();
+                if (opCode < 0 || opCode >= messageHandlers.length){
+                    socketReader.skipBytes(waitingBytes - 4);
+                    System.out.println("Got unknown opcode " + opCode + " with payload length of " + (waitingBytes-4));
+                }
+                else {
+                    System.out.println("OP" + opCode + ", Payload: " + (waitingBytes-4));
+                    messageHandlers[opCode].handle(availBytes - 4);
+                }
+                waitingBytes = -1;
+                continue;
+            }
+
+            break;
+        }
+    }
+
+    private void handlerDoAction(int length) throws IOException {
+        int action = socketReader.readInt();
+        actionQueue.push(action);
+        actionStartFrames.push(c.frame);
+    }
+
+    private void serveClient() throws IOException, InterruptedException {
+        System.out.println("waiting for client");
+        Socket soc = server.accept();
+        System.out.println("accepted " + soc.getRemoteSocketAddress());
+
+        socketWriter = new DataOutputStream(soc.getOutputStream());
+        socketReader = new DataInputStream(soc.getInputStream());
+
+        baos = new ByteArrayOutputStream();
+        baosWriter = new DataOutputStream(baos);
+
+        c.reset();
+
+        posJoints = MotionDataConverter.KeyJointList_Origin;
+        rotJoints = MotionDataConverter.OrientationJointList;
+        sendInitialPayload();
 
         while (true) {
+            receiveData();
             double[] output = c.iterateMotion();
-            HashMap<String, Point3d> posMap = MotionDataConverter.dataToPointMapByPosition(output);
-            HashMap<String, Point3d> rotMap = MotionDataConverter.dataToPointMapByOrientation(output);
-
-            for (String key : posJoints) {
-                Point3d pos = posMap.get(key);
-                baosWriter.writeFloat((float)pos.x);
-                baosWriter.writeFloat((float)pos.y);
-                baosWriter.writeFloat((float)pos.z);
-            }
-            for (String key : rotJoints) {
-                Point3d rot = rotMap.get(key);
-                baosWriter.writeFloat((float)rot.x);
-                baosWriter.writeFloat((float)rot.y);
-                baosWriter.writeFloat((float)rot.z);
-            }
+            sendOutputPayload(output);
 
             baosWriter.flush();
             byte[] result = baos.toByteArray();
