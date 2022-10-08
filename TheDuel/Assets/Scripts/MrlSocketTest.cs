@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using Sirenix.OdinInspector;
+using Random = UnityEngine.Random;
 
 public class MrlSocketTest : SerializedMonoBehaviour
 {
@@ -67,7 +68,7 @@ public class MrlSocketTest : SerializedMonoBehaviour
             _nodes[i].name = "n" + i;
         }
 
-        Destroy(nodeTemplate);
+        Destroy(nodeTemplate.gameObject);
     }
 
     private void PutToMemStream(IAsyncResult ar)
@@ -185,16 +186,29 @@ public class MrlSocketTest : SerializedMonoBehaviour
 
     public enum OpCode : int
     {
-        DoAction = 0
+        DoAction = 0,
+        SetDirection = 1,
     }
     
     private int a = 0;
-    private void SendTest()
+    private void DoActionTest()
     {
-        _outgoingWriter.Write((int)OpCode.DoAction);
+        WriteOpCode(OpCode.DoAction);
         if (a == 5) a = 0;
         _outgoingWriter.Write(a++);
         FlushOutgoingPacket();
+    }
+    
+    private void SetDirection(Vector2 dir)
+    {
+        WriteOpCode(OpCode.SetDirection);
+        _outgoingWriter.Write(dir);
+        FlushOutgoingPacket();
+    }
+
+    private void WriteOpCode(OpCode op)
+    {
+        _outgoingWriter.Write((int) op);
     }
 
     private void FlushOutgoingPacket()
@@ -212,7 +226,9 @@ public class MrlSocketTest : SerializedMonoBehaviour
         if (_client.Connected && _incomingStream != null)
         {
             ProcessIncomingPackets();
-            if (Input.GetKeyDown(KeyCode.Space)) SendTest();
+            if (Input.GetKeyDown(KeyCode.Space)) DoActionTest();
+            if (Input.GetKeyDown(KeyCode.Q)) SetDirection(Random.insideUnitCircle);
+            if (Input.GetKeyDown(KeyCode.W)) SetDirection(Vector2.zero);
         }
     }
 

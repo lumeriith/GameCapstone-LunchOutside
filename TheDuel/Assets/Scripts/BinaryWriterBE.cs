@@ -11,4 +11,24 @@ class BinaryWriterBE : BinaryWriter {
         Array.Reverse(data);
         base.Write(data);
     }
+
+    public override void Write(float value)
+    {
+        var data = BitConverter.GetBytes(value);
+        Array.Reverse(data);
+        base.Write(data);
+    }
+
+    public void Write(Vector2 value)
+    {
+        Write(value.x);
+        Write(value.y);
+    }
+    
+    public void Write(Vector3 value)
+    {
+        Write(value.x);
+        Write(value.y);
+        Write(value.z);
+    }
 }
