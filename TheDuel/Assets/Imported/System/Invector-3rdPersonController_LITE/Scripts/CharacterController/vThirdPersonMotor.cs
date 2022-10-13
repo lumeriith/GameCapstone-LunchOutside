@@ -24,7 +24,7 @@ namespace Invector.vCharacterController
         }
         public LocomotionType locomotionType = LocomotionType.FreeWithStrafe;
 
-        public vMovementSpeed freeSpeed, strafeSpeed;
+        public vMovementSpeed strafeSpeed;
 
         [Header("- Airborne")]
 
@@ -166,7 +166,7 @@ namespace Invector.vCharacterController
         public virtual void MoveCharacter(Vector3 _direction)
         {
             // calculate input smooth
-            inputSmooth = Vector3.Lerp(inputSmooth, input, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
+            inputSmooth = Vector3.Lerp(inputSmooth, input, strafeSpeed.movementSmooth * Time.deltaTime);
 
             if (!isGrounded || isJumping) return;
 
@@ -219,7 +219,7 @@ namespace Invector.vCharacterController
 
         public virtual void RotateToDirection(Vector3 direction)
         {
-            RotateToDirection(direction, isStrafing ? strafeSpeed.rotationSpeed : freeSpeed.rotationSpeed);
+            RotateToDirection(direction, strafeSpeed.rotationSpeed);
         }
 
         public virtual void RotateToDirection(Vector3 direction, float rotationSpeed)

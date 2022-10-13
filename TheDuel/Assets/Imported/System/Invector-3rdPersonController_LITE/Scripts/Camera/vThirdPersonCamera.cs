@@ -1,4 +1,5 @@
-﻿using Invector;
+﻿using System;
+using Invector;
 using UnityEngine;
 
 public class vThirdPersonCamera : MonoBehaviour
@@ -84,7 +85,19 @@ public class vThirdPersonCamera : MonoBehaviour
         currentHeight = height;
     }
 
-    void FixedUpdate()
+    private void OnEnable()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OnDisable()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    void Update()
     {
         if (target == null || targetLookAt == null) return;
 

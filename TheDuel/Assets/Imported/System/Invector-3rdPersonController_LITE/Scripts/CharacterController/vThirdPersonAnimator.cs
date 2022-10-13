@@ -7,9 +7,7 @@ namespace Invector.vCharacterController
     {
         #region Variables                
 
-        public const float walkSpeed = 0.5f;
-        public const float runningSpeed = 1f;
-        public const float sprintSpeed = 1.5f;
+        public const float walkSpeed = 1;
 
         #endregion  
 
@@ -22,17 +20,11 @@ namespace Invector.vCharacterController
             animator.SetBool(vAnimatorParameters.IsGrounded, isGrounded);
             animator.SetFloat(vAnimatorParameters.GroundDistance, groundDistance);
 
-            if (isStrafing)
-            {
-                animator.SetFloat(vAnimatorParameters.InputHorizontal, stopMove ? 0 : horizontalSpeed, strafeSpeed.animationSmooth, Time.deltaTime);
-                animator.SetFloat(vAnimatorParameters.InputVertical, stopMove ? 0 : verticalSpeed, strafeSpeed.animationSmooth, Time.deltaTime);
-            }
-            else
-            {
-                animator.SetFloat(vAnimatorParameters.InputVertical, stopMove ? 0 : verticalSpeed, freeSpeed.animationSmooth, Time.deltaTime);
-            }
 
-            animator.SetFloat(vAnimatorParameters.InputMagnitude, stopMove ? 0f : inputMagnitude, isStrafing ? strafeSpeed.animationSmooth : freeSpeed.animationSmooth, Time.deltaTime);
+            animator.SetFloat(vAnimatorParameters.InputHorizontal, stopMove ? 0 : horizontalSpeed, strafeSpeed.animationSmooth, Time.deltaTime);
+            animator.SetFloat(vAnimatorParameters.InputVertical, stopMove ? 0 : verticalSpeed, strafeSpeed.animationSmooth, Time.deltaTime);
+            
+            animator.SetFloat(vAnimatorParameters.InputMagnitude, stopMove ? 0f : inputMagnitude, strafeSpeed.animationSmooth, Time.deltaTime);
         }
 
         public virtual void SetAnimatorMoveSpeed(vMovementSpeed speed)
@@ -43,10 +35,7 @@ namespace Invector.vCharacterController
 
             var newInput = new Vector2(verticalSpeed, horizontalSpeed);
 
-            if (speed.walkByDefault)
-                inputMagnitude = Mathf.Clamp(newInput.magnitude, 0, isSprinting ? runningSpeed : walkSpeed);
-            else
-                inputMagnitude = Mathf.Clamp(isSprinting ? newInput.magnitude + 0.5f : newInput.magnitude, 0, isSprinting ? sprintSpeed : runningSpeed);
+            inputMagnitude = Mathf.Clamp(newInput.magnitude, 0, walkSpeed);
         }
     }
 

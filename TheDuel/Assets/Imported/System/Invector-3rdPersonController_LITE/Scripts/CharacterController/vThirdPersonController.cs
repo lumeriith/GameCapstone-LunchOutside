@@ -22,17 +22,9 @@ namespace Invector.vCharacterController
         {
             if (lockMovement) return;
 
-            if (locomotionType.Equals(LocomotionType.FreeWithStrafe) && !isStrafing || locomotionType.Equals(LocomotionType.OnlyFree))
-            {
-                SetControllerMoveSpeed(freeSpeed);
-                SetAnimatorMoveSpeed(freeSpeed);
-            }
-            else if (locomotionType.Equals(LocomotionType.OnlyStrafe) || locomotionType.Equals(LocomotionType.FreeWithStrafe) && isStrafing)
-            {
-                isStrafing = true;
-                SetControllerMoveSpeed(strafeSpeed);
-                SetAnimatorMoveSpeed(strafeSpeed);
-            }
+            isStrafing = true;
+            SetControllerMoveSpeed(strafeSpeed);
+            SetAnimatorMoveSpeed(strafeSpeed);
 
             if (!useRootMotion)
                 MoveCharacter(moveDirection);
@@ -42,14 +34,14 @@ namespace Invector.vCharacterController
         {
             if (lockRotation) return;
 
-            bool validInput = input != Vector3.zero || (isStrafing ? strafeSpeed.rotateWithCamera : freeSpeed.rotateWithCamera);
+            bool validInput = input != Vector3.zero || strafeSpeed.rotateWithCamera;
 
             if (validInput)
             {
                 // calculate input smooth
-                inputSmooth = Vector3.Lerp(inputSmooth, input, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
+                inputSmooth = Vector3.Lerp(inputSmooth, input, strafeSpeed.movementSmooth * Time.deltaTime);
 
-                Vector3 dir = (isStrafing && (!isSprinting || sprintOnlyFree == false) || (freeSpeed.rotateWithCamera && input == Vector3.zero)) && rotateTarget ? rotateTarget.forward : moveDirection;
+                Vector3 dir = (isStrafing && (!isSprinting || sprintOnlyFree == false) || (strafeSpeed.rotateWithCamera && input == Vector3.zero)) && rotateTarget ? rotateTarget.forward : moveDirection;
                 RotateToDirection(dir);
             }
         }
@@ -58,7 +50,7 @@ namespace Invector.vCharacterController
         {
             if (input.magnitude <= 0.01)
             {
-                moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
+                moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, strafeSpeed.movementSmooth * Time.deltaTime);
                 return;
             }
 

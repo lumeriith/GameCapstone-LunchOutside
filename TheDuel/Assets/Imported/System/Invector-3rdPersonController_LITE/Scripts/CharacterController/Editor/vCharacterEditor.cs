@@ -23,14 +23,7 @@ public class vCharacterEditor : Editor
 
         if (!motor) return;
 
-        GUILayout.BeginVertical("BASIC CONTROLLER LITE BY Invector", "window");
-
-        GUILayout.Space(30);
-
-        if (GUILayout.Button("Purchase FULL Version"))
-        {
-            Application.OpenURL("https://assetstore.unity.com/publishers/13943");
-        }
+        GUILayout.BeginVertical("", "window");
 
         EditorGUILayout.Space();
 
