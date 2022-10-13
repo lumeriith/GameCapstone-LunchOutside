@@ -291,7 +291,6 @@ namespace Invector.vCharacterController
         protected virtual void CheckGround()
         {
             CheckGroundDistance();
-            ControlMaterialPhysics();
 
             if (groundDistance <= groundMinDistance)
             {
@@ -320,19 +319,6 @@ namespace Invector.vCharacterController
                     _rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
                 }
             }
-        }
-
-        protected virtual void ControlMaterialPhysics()
-        {
-            // change the physics material to very slip when not grounded
-            _capsuleCollider.material = (isGrounded && GroundAngle() <= slopeLimit + 1) ? frictionPhysics : slippyPhysics;
-
-            if (isGrounded && input == Vector3.zero)
-                _capsuleCollider.material = maxFrictionPhysics;
-            else if (isGrounded && input != Vector3.zero)
-                _capsuleCollider.material = frictionPhysics;
-            else
-                _capsuleCollider.material = slippyPhysics;
         }
 
         protected virtual void CheckGroundDistance()

@@ -9,7 +9,6 @@ namespace Invector.vCharacterController
         [Header("Controller Input")]
         public string horizontalInput = "Horizontal";
         public string verticallInput = "Vertical";
-        public KeyCode jumpInput = KeyCode.Space;
         public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
 
@@ -78,7 +77,6 @@ namespace Invector.vCharacterController
             CameraInput();
             SprintInput();
             StrafeInput();
-            JumpInput();
         }
 
         public virtual void MoveInput()
@@ -126,25 +124,7 @@ namespace Invector.vCharacterController
             else if (Input.GetKeyUp(sprintInput))
                 cc.Sprint(false);
         }
-
-        /// <summary>
-        /// Conditions to trigger the Jump animation & behavior
-        /// </summary>
-        /// <returns></returns>
-        protected virtual bool JumpConditions()
-        {
-            return cc.isGrounded && cc.GroundAngle() < cc.slopeLimit && !cc.isJumping && !cc.stopMove;
-        }
-
-        /// <summary>
-        /// Input to trigger the Jump 
-        /// </summary>
-        protected virtual void JumpInput()
-        {
-            if (Input.GetKeyDown(jumpInput) && JumpConditions())
-                cc.Jump();
-        }
-
+        
         #endregion       
     }
 }
