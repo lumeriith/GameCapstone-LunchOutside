@@ -5,9 +5,19 @@ using UnityEngine;
 class BinaryReaderBE : BinaryReader { 
     public BinaryReaderBE(System.IO.Stream stream)  : base(stream) { }
 
+    public Matrix4x4 ReadMatrix4x4()
+    {
+        return new Matrix4x4(ReadVector4(), ReadVector4(), ReadVector4(), ReadVector4());
+    }  
+    
     public Vector3 ReadVector3()
     {
         return new Vector3(ReadSingle(), ReadSingle(), ReadSingle());
+    }      
+    
+    public Vector4 ReadVector4()
+    {
+        return new Vector4(ReadSingle(), ReadSingle(), ReadSingle(), ReadSingle());
     }  
     
     public override int ReadInt32()

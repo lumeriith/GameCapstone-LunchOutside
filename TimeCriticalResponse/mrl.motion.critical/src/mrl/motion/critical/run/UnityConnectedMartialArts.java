@@ -2,10 +2,8 @@ package mrl.motion.critical.run;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.function.IntConsumer;
 
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
@@ -13,9 +11,6 @@ import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 
 import mrl.motion.data.Motion;
-import mrl.motion.data.MotionData;
-import mrl.motion.data.SkeletonData;
-import mrl.motion.position.PositionResultMotion;
 //import org.eclipse.swt.events.KeyEvent;
 
 import mrl.motion.data.trasf.Pose2d;
@@ -25,7 +20,6 @@ import mrl.motion.neural.data.MotionDataConverter;
 import mrl.motion.neural.run.RealtimePythonController;
 import mrl.util.Configuration;
 import mrl.util.MathUtil;
-import mrl.util.Pair;
 import mrl.util.Utils;
 import mrl.widget.app.Item.ItemDescription;
 
@@ -49,9 +43,11 @@ public class UnityConnectedMartialArts {
     private ByteArrayOutputStream baos;
     private ByteArrayInputStream bais;
 
-    private DataOutputStream baosWriter;
+    private ExtendedByteArrayOutputStream baosWriter;
     private String[] posJoints;
     private String[] rotJoints;
+    private String[] matJoints;
+
 
     private void start() throws IOException {
         MotionDataConverter.useOrientation = true;
@@ -73,33 +69,40 @@ public class UnityConnectedMartialArts {
 
     private void sendInitialPayload() throws IOException {
         baosWriter.writeInt(posJoints.length);
-        baosWriter.writeInt(rotJoints.length);
-
         for (String posJoint : posJoints) {
             baosWriter.writeInt(posJoint.length());
             baosWriter.writeChars(posJoint);
         }
+
+        baosWriter.writeInt(rotJoints.length);
         for (String rotJoint : rotJoints) {
             baosWriter.writeInt(rotJoint.length());
             baosWriter.writeChars(rotJoint);
+        }
+
+        baosWriter.writeInt(matJoints.length);
+        for (String matJoint : matJoints) {
+            baosWriter.writeInt(matJoint.length());
+            baosWriter.writeChars(matJoint);
         }
     }
 
     private void sendOutputPayload(double[] output) throws IOException {
         HashMap<String, Point3d> posMap = MotionDataConverter.dataToPointMapByPosition(output);
-        HashMap<String, Point3d> rotMap = MotionDataConverter.dataToPointMapByOrientation(output);
+        HashMap<String, Point3d> rotMap = MotionDataConverter.dataToPointMapByOriMatForAll(output);
+        Motion motion = MotionDataConverter.dataToMotionByOriMatForAll(output);
 
         for (String key : posJoints) {
             Point3d pos = posMap.get(key);
-            baosWriter.writeFloat((float)pos.x);
-            baosWriter.writeFloat((float)pos.y);
-            baosWriter.writeFloat((float)pos.z);
+            baosWriter.writePoint3d(pos);
         }
         for (String key : rotJoints) {
             Point3d rot = rotMap.get(key);
-            baosWriter.writeFloat((float)rot.x);
-            baosWriter.writeFloat((float)rot.y);
-            baosWriter.writeFloat((float)rot.z);
+            baosWriter.writePoint3d(rot);
+        }
+        for (String key : matJoints) {
+            Matrix4d mat = motion.get(key);
+            baosWriter.writeMatrix4d(mat);
         }
     }
 
@@ -153,12 +156,15 @@ public class UnityConnectedMartialArts {
         socketReader = new DataInputStream(soc.getInputStream());
 
         baos = new ByteArrayOutputStream();
-        baosWriter = new DataOutputStream(baos);
+        baosWriter = new ExtendedByteArrayOutputStream(baos);
 
         c.reset();
+        c.iterateMotion();
 
         posJoints = MotionDataConverter.KeyJointList_Origin;
         rotJoints = MotionDataConverter.OrientationJointList;
+        matJoints = MotionDataConverter.OrientationJointList;
+
         sendInitialPayload();
 
         while (true) {

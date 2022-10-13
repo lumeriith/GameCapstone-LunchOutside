@@ -46,7 +46,12 @@ public class MrlSocketTest : SerializedMonoBehaviour
         _client.BeginConnect(host, port, asyncResult =>
         {
             _client.EndConnect(asyncResult);
-            if (!_client.Connected) return;
+            if (!_client.Connected)
+            {
+                Debug.LogWarning("Could not connect to model.");
+                return;
+            }
+            Debug.Log("Connected to model.");
             _networkStream = _client.GetStream();
             _incomingStream = new MemoryStream();
             _incomingReader = new BinaryReaderBE(_incomingStream);
@@ -93,16 +98,23 @@ public class MrlSocketTest : SerializedMonoBehaviour
     {
         public Vector3[] positions;
         public Vector3[] rotations;
+        public Matrix4x4[] matrices;
     }
 
     struct SetupData
     {
         public Dictionary<int, string> posIndexToBone;
-        public Dictionary<int, string> rotIndexToBone;
         public Dictionary<string, int> boneToPosIndex;
+        
+        public Dictionary<int, string> rotIndexToBone;
         public Dictionary<string, int> boneToRotIndex;
+        
+        public Dictionary<int, string> matIndexToBone;
+        public Dictionary<string, int> boneToMatIndex;
+        
         public int numOfPosJoints;
         public int numOfRotJoints;
+        public int numOfMatrices;
     }
 
     private ReceivedData _data;
@@ -129,8 +141,19 @@ public class MrlSocketTest : SerializedMonoBehaviour
 
             if (_setup.boneToRotIndex.TryGetValue(_setup.posIndexToBone[i], out var rotIndex))
             {
-                _nodes[i].transform.rotation = Quaternion.Euler(_data.rotations[rotIndex]);
+                var rotVec = _data.rotations[rotIndex];
+                
+                var rot = Quaternion.AngleAxis(rotVec.y, Vector3.up) * Quaternion.AngleAxis(rotVec.x, Vector3.right) * Quaternion.AngleAxis(rotVec.z, Vector3.forward);
+                _nodes[i].transform.rotation = rot;
+                
+                //_nodes[i].transform.rotation = Quaternion.Euler(_data.rotations[rotIndex]);
                 _nodes[i].MakeRed();
+            }
+
+            if (_setup.boneToMatIndex.TryGetValue(_setup.posIndexToBone[i], out var matIndex))
+            {
+                var mat = _data.matrices[matIndex];
+                _nodes[i].transform.rotation = mat.rotation;
             }
         }
     }
@@ -140,11 +163,9 @@ public class MrlSocketTest : SerializedMonoBehaviour
         if (_isFirstPayload)
         {
             _setup.numOfPosJoints = _incomingReader.ReadInt32();
-            _setup.numOfRotJoints = _incomingReader.ReadInt32();
             _setup.boneToPosIndex = new Dictionary<string, int>();
-            _setup.boneToRotIndex = new Dictionary<string, int>();
             _setup.posIndexToBone = new Dictionary<int, string>();
-            _setup.rotIndexToBone = new Dictionary<int, string>();
+            _data.positions = new Vector3[_setup.numOfPosJoints];
 
             char[] arr = new char[255];
             for (int i = 0; i < _setup.numOfPosJoints; i++)
@@ -156,6 +177,11 @@ public class MrlSocketTest : SerializedMonoBehaviour
                 _setup.boneToPosIndex.Add(jointName, i);
                 _setup.posIndexToBone.Add(i, jointName);
             }
+            
+            _setup.numOfRotJoints = _incomingReader.ReadInt32();
+            _setup.boneToRotIndex = new Dictionary<string, int>();
+            _setup.rotIndexToBone = new Dictionary<int, string>();
+            _data.rotations = new Vector3[_setup.numOfRotJoints];
 
             for (int i = 0; i < _setup.numOfRotJoints; i++)
             {
@@ -166,10 +192,22 @@ public class MrlSocketTest : SerializedMonoBehaviour
                 _setup.boneToRotIndex.Add(jointName, i);
                 _setup.rotIndexToBone.Add(i, jointName);
             }
+            
+            _setup.numOfMatrices = _incomingReader.ReadInt32();
+            _setup.boneToMatIndex = new Dictionary<string, int>();
+            _setup.matIndexToBone = new Dictionary<int, string>();
+            _data.matrices = new Matrix4x4[_setup.numOfMatrices];
 
-            _data.positions = new Vector3[_setup.numOfPosJoints];
-            _data.rotations = new Vector3[_setup.numOfRotJoints];
-
+            for (int i = 0; i < _setup.numOfMatrices; i++)
+            {
+                int length = _incomingReader.ReadInt32();
+                for (int c = 0; c < length; c++)
+                    arr[c] = _incomingReader.ReadChar();
+                string jointName = new string(arr, 0, length);
+                _setup.boneToMatIndex.Add(jointName, i);
+                _setup.matIndexToBone.Add(i, jointName);
+            }
+            
             _isFirstPayload = false;
         }
         
@@ -181,6 +219,11 @@ public class MrlSocketTest : SerializedMonoBehaviour
         for (int i = 0; i < _setup.numOfRotJoints; i++)
         {
             _data.rotations[i] = _incomingReader.ReadVector3();
+        }
+
+        for (int i = 0; i < _setup.numOfMatrices; i++)
+        {
+            _data.matrices[i] = _incomingReader.ReadMatrix4x4();
         }
     }
 
