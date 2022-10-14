@@ -3,8 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCharacterController : MonoBehaviour
+
+
+public class Player : Character
 {
+    public static Player instance
+    {
+        get
+        {
+            if (_instance == null) _instance = FindObjectOfType<Player>();
+            return _instance;
+        }
+    }
+    private static Player _instance;
+    
     private Animator _animator;
     
     private void Awake()

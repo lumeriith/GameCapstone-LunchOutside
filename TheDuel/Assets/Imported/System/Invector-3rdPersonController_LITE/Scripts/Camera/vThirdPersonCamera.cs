@@ -1,4 +1,5 @@
 ﻿using System;
+using Cinemachine;
 using Invector;
 using UnityEngine;
 
@@ -43,7 +44,7 @@ public class vThirdPersonCamera : MonoBehaviour
     private Vector3 lookPoint;
     private Vector3 current_cPos;
     private Vector3 desired_cPos;
-    private Camera _camera;
+    private CinemachineVirtualCamera _camera;
     private float distance = 5f;
     private float mouseY = 0f;
     private float mouseX = 0f;
@@ -57,6 +58,8 @@ public class vThirdPersonCamera : MonoBehaviour
     private float cullingHeight = 0.2f;
     private float cullingMinDist = 0.1f;
 
+    private Camera _main;
+
     #endregion
 
     void Start()
@@ -69,7 +72,8 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null)
             return;
 
-        _camera = GetComponent<Camera>();
+        _camera = GetComponent<CinemachineVirtualCamera>();
+        _main = Camera.main;
         currentTarget = target;
         currentTargetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + offSetPlayerPivot, currentTarget.position.z);
 
@@ -177,8 +181,8 @@ public class vThirdPersonCamera : MonoBehaviour
         current_cPos = currentTargetPos + new Vector3(0, currentHeight, 0);
         RaycastHit hitInfo;
 
-        ClipPlanePoints planePoints = _camera.NearClipPlanePoints(current_cPos + (camDir * (distance)), clipPlaneMargin);
-        ClipPlanePoints oldPoints = _camera.NearClipPlanePoints(desired_cPos + (camDir * distance), clipPlaneMargin);
+        ClipPlanePoints planePoints = _main.NearClipPlanePoints(current_cPos + (camDir * (distance)), clipPlaneMargin);
+        ClipPlanePoints oldPoints = _main.NearClipPlanePoints(desired_cPos + (camDir * distance), clipPlaneMargin);
 
         //Check if Height is not blocked 
         if (Physics.SphereCast(targetPos, checkHeightRadius, Vector3.up, out hitInfo, cullingHeight + 0.2f, cullingLayer))
