@@ -10,3 +10,5 @@
 /test.py
 *__pycache__
 /test/
+/train/*/xData.dat
+/train/*/yData.dat
