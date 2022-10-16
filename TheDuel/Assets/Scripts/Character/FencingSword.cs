@@ -35,9 +35,12 @@ public class FencingSword : MonoBehaviour
                 QueryTriggerInteraction.Collide)) return;
         var other = hit.collider.GetComponentInParent<Character>();
         if (other == null) return;
-
-        _lastHitTime = Time.time; // This is intentional!
-        if (Time.time - _lastHitTime < cooldown) return;
+        
+        if (Time.time - _lastHitTime < cooldown)
+        {
+            _lastHitTime = Time.time;
+            return;
+        }
         var hitInfo = new InfoAttackHit
         {
             from = _parent,
@@ -46,7 +49,8 @@ public class FencingSword : MonoBehaviour
             normal = hit.normal,
             collider = hit.collider
         };
-        _parent.onDealAttack(hitInfo);
-        other.onTakeAttack(hitInfo);
+        _parent.onDealAttack?.Invoke(hitInfo);
+        other.onTakeAttack?.Invoke(hitInfo);
+        _lastHitTime = Time.time;
     }
 }
