@@ -27,16 +27,13 @@ namespace Invector.vCharacterController
             InitilizeController();
             InitializeTpCamera();
         }
-
-        protected virtual void FixedUpdate()
+        
+        protected virtual void Update()
         {
             cc.UpdateMotor();               // updates the ThirdPersonMotor methods
             cc.ControlLocomotionType();     // handle the controller locomotion type and movespeed
             cc.ControlRotationType();       // handle the controller rotation type
-        }
-
-        protected virtual void Update()
-        {
+            
             InputHandle();                  // update the input methods
             cc.UpdateAnimator();            // updates the Animator Parameters
         }

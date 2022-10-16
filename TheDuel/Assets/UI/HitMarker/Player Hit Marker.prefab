@@ -104,6 +104,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sustainTime: 1
   decayTime: 1
-  scaleStart: 2
+  scaleStart: 4
   scaleDuration: 0.5
   scaleEase: 30

@@ -48,7 +48,7 @@ public class UI_HitMarker : MonoBehaviour
         transform.position = _main.WorldToScreenPoint(worldPoint);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         UpdatePosition();
     }

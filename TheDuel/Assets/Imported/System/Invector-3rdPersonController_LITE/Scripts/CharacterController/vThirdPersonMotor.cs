@@ -108,7 +108,7 @@ namespace Invector.vCharacterController
         public void Init()
         {
             animator = GetComponent<Animator>();
-            animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
+            animator.updateMode = AnimatorUpdateMode.Normal;
 
             // slides the character through walls and edges
             frictionPhysics = new PhysicMaterial();
@@ -165,6 +165,7 @@ namespace Invector.vCharacterController
 
         public virtual void MoveCharacter(Vector3 _direction)
         {
+            if (Time.deltaTime < float.Epsilon) return;
             // calculate input smooth
             inputSmooth = Vector3.Lerp(inputSmooth, input, strafeSpeed.movementSmooth * Time.deltaTime);
 

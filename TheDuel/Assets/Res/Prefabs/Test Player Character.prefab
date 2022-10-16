@@ -217,7 +217,7 @@ MonoBehaviour:
   locomotionType: 1
   strafeSpeed:
     movementSmooth: 2
-    animationSmooth: 0.1
+    animationSmooth: 0
     rotationSpeed: 16
     walkByDefault: 0
     rotateWithCamera: 1

@@ -17,7 +17,7 @@ public class FencingSword : MonoBehaviour
     public Transform startPivot;
     public Transform endPivot;
 
-    public float cooldown = 1.5f;
+    public const float HitCooldown = 0.75f;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
@@ -36,7 +36,7 @@ public class FencingSword : MonoBehaviour
         var other = hit.collider.GetComponentInParent<Character>();
         if (other == null) return;
         
-        if (Time.time - _lastHitTime < cooldown)
+        if (Time.time - _lastHitTime < HitCooldown)
         {
             _lastHitTime = Time.time;
             return;
