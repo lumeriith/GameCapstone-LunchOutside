@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-class BinaryWriterBE : BinaryWriter { 
+public class BinaryWriterBE : BinaryWriter { 
     public BinaryWriterBE(System.IO.Stream stream)  : base(stream) { }
 
     public override void Write(int value)

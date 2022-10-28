@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-class BinaryReaderBE : BinaryReader { 
+public class BinaryReaderBE : BinaryReader { 
     public BinaryReaderBE(System.IO.Stream stream)  : base(stream) { }
 
     public Matrix4x4 ReadMatrix4x4()
