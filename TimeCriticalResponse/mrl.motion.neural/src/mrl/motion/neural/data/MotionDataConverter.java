@@ -250,6 +250,20 @@ public class MotionDataConverter {
 		motion.root().setTranslation(translation);
 		return Motion.getPointData(SkeletonData.instance, motion);
 	}
+
+	public static HashMap<String, Vector3d> dataToOrientation(double[] data){
+		HashMap<String, Vector3d> ori = new HashMap<String, Vector3d>();
+		int offset = ROOT_OFFSET;
+		Motion motion = new Motion(tposeMotion);
+		String[] jointList = OrientationJointList;
+		offset = ROOT_OFFSET + 1 + KeyJointList_Origin.length*3;
+		for (int j = 0; j < jointList.length; j++) {
+			Vector3d v = new Vector3d(data[offset + j*3 + 0], data[offset + j*3 + 1], data[offset + j*3 + 2]);
+			v.scale(180 / Math.PI);
+			ori.put(jointList[j], v);
+		}
+		return ori;
+	}
 	
 	public static HashMap<String, Point3d> dataToPointMapByOriMatForAll(double[] data){
 		int offset = ROOT_OFFSET;

@@ -2,6 +2,7 @@ package mrl.motion.critical.run;
 
 import java.io.*;
 import java.net.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -50,9 +51,8 @@ public class UnityConnectedMartialArts {
 
 
     private void start() throws IOException {
-        MotionDataConverter.useOrientation = true;
-        MotionDataConverter.useTPoseForMatrix = false;
-        MotionDataConverter.useMatrixForAll = false;
+        // MotionDataConverter.useTPoseForMatrix = false;
+        MotionDataConverter.useMatrixForAll = true;
 
         createRuntimeController();
         server = new ServerSocket(1369);
@@ -89,7 +89,7 @@ public class UnityConnectedMartialArts {
 
     private void sendOutputPayload(double[] output) throws IOException {
         HashMap<String, Point3d> posMap = MotionDataConverter.dataToPointMapByPosition(output);
-        HashMap<String, Point3d> rotMap = MotionDataConverter.dataToPointMapByOriMatForAll(output);
+        HashMap<String, Vector3d> rotMap = MotionDataConverter.dataToOrientation(output);
         Motion motion = MotionDataConverter.dataToMotionByOriMatForAll(output);
 
         for (String key : posJoints) {
@@ -97,8 +97,8 @@ public class UnityConnectedMartialArts {
             baosWriter.writePoint3d(pos);
         }
         for (String key : rotJoints) {
-            Point3d rot = rotMap.get(key);
-            baosWriter.writePoint3d(rot);
+            Vector3d rot = rotMap.get(key);
+            baosWriter.writeVector3d(rot);
         }
         for (String key : matJoints) {
             Matrix4d mat = motion.get(key);
@@ -231,6 +231,7 @@ public class UnityConnectedMartialArts {
                 }
                 // System.out.println("activation : " + agility + " : " + actionQueue.size() + " : " + action + " : " + frame + " : " + Utils.toString(Utils.last(prevOutput)));
                 // System.out.println(Arrays.toString(control));
+                System.out.println(Arrays.toString(prevOutput));
                 return control;
             }
         };
