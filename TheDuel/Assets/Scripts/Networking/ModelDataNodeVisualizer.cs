@@ -11,9 +11,9 @@ public class ModelDataNodeVisualizer : SerializedMonoBehaviour
     public TestNode nodeTemplate;
     public bool useMatrices = false;
     public bool useParentalStructure = false;
+    public bool invertMultiplyOrder = false;
     public Dictionary<string, string> parentInfo;
     public bool showOrientationAsVector = true;
-    public float orientationVectorMultiplier = 1;
     
     private Dictionary<string, TestNode> _boneToNode;
 
@@ -59,11 +59,15 @@ public class ModelDataNodeVisualizer : SerializedMonoBehaviour
     
     private Quaternion GetRotation(string key, bool useMatrix)
     {
+        Quaternion baseRot = parentInfo.ContainsKey(key) && useParentalStructure
+            ? GetRotation(parentInfo[key], true)
+            : Quaternion.identity;
+        
         if (useMatrix)
         {
             var mat = _data.matrices[_setup.boneToMatIndex[key]];
             if (!mat.ValidTRS()) return Quaternion.identity;
-            return mat.rotation * (parentInfo.ContainsKey(key) && useParentalStructure ? GetRotation(parentInfo[key], true) : Quaternion.identity);
+            return invertMultiplyOrder ? mat.rotation * baseRot : baseRot * mat.rotation;
         }
         
         var rotVec = _data.rotations[_setup.boneToRotIndex[key]];
@@ -79,7 +83,7 @@ public class ModelDataNodeVisualizer : SerializedMonoBehaviour
             var rotz = Quaternion.AngleAxis(rotVec.z, Vector3.forward);
             rot =  rotz * rotx * roty;
         }
-        return rot  * (parentInfo.ContainsKey(key) && useParentalStructure ? GetRotation(parentInfo[key], false) : Quaternion.identity);
+        return invertMultiplyOrder ? rot * baseRot : baseRot * rot;
     }
     
     private void ProcessData()

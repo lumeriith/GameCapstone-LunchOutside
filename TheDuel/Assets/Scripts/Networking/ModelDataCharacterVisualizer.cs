@@ -10,9 +10,8 @@ public class ModelDataCharacterVisualizer : MonoBehaviour
     {
         public string name;
         public HumanBodyBones bone;
-        public bool useMatrix;
-        public bool startFromTPose;
-        public Vector3 offsetRot;
+        public Vector3 baseRot;
+        public Vector3 afterRot;
     }
     
     public List<BoneItem> skeletonSettings;
@@ -59,25 +58,11 @@ public class ModelDataCharacterVisualizer : MonoBehaviour
                 }
             }
 
-            if (pair.useMatrix)
+            if (_setup.boneToMatIndex.TryGetValue(pair.name, out var matIndex))
             {
-                if (_setup.boneToMatIndex.TryGetValue(pair.name, out var matIndex))
-                {
-                    var mat = _data.matrices[matIndex];
-                    boneTransform.localRotation = Quaternion.Euler(pair.offsetRot) * mat.rotation * (pair.startFromTPose ? _tPoseRots[pair.bone] : Quaternion.identity);
-                }
+                var mat = _data.matrices[matIndex];
+                boneTransform.localRotation = Quaternion.Euler(pair.afterRot) * mat.rotation * Quaternion.Euler(pair.baseRot);
             }
-            else
-            {
-                if (_setup.boneToRotIndex.TryGetValue(pair.name, out var rotIndex))
-                {
-                    var rotVec = _data.rotations[rotIndex];
-                    var rot = Quaternion.AngleAxis(rotVec.y, Vector3.up) * Quaternion.AngleAxis(rotVec.x, Vector3.right) * Quaternion.AngleAxis(rotVec.z, Vector3.forward);
-                    
-                    boneTransform.localRotation = Quaternion.Euler(pair.offsetRot) * rot * (pair.startFromTPose ? _tPoseRots[pair.bone] : Quaternion.identity);
-                }
-            }
-
         }
     }
 }
