@@ -1,0 +1,24 @@
+{
+	defaultType:
+	file:WalkLeftFencing_RM.bvh
+	person:1
+	oppositePerson:0
+	startFrame:0
+	endFrame:38
+	include:
+	isAlone:
+	type:leftwalk
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:-1
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},

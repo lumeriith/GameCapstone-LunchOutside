@@ -1,0 +1,24 @@
+{
+	defaultType:
+	file:Attack1AForwardFencing_RM.bvh
+	person:1
+	oppositePerson:0
+	startFrame:0
+	endFrame:14
+	include:
+	isAlone:
+	type:attack
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:14
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},
