@@ -10,24 +10,18 @@ import mrl.util.MathUtil;
 public class DuelConfig extends GMMConfig{
 	
 	public static double LOCOMOTION_RATIO = 0.8;
-	public static int LOCO_ACTION_SIZE = 5;
+	public static int LOCO_ACTION_SIZE = 2;
 	public static String[] actionTypes = {
 			"idle",
-			"leftwalk", 
-			"rightwalk", 
-			"backwalk", 
-			"forwardwalk",
-			"attack",
+			"walk",
+			"attack"
 	};
 	public static String[] fullActionTypes = actionTypes;
 	
 	static int tBase = 10;
 	public static double[][] timeOffset = {
 			{ tBase, tBase }, // idle
-			{ tBase, tBase }, // leftwalk
-			{ tBase, tBase }, // rightwalk
-			{ tBase, tBase }, // backwalk
-			{ tBase, tBase }, // forwardwalk
+			{ tBase, tBase }, // walk
 			{ tBase, tBase }, // attack
 	};
 
@@ -172,9 +166,8 @@ public class DuelConfig extends GMMConfig{
 				type.equals("attack")
 				) {
 			return m._directionOffset("LeftFoot", "RightFoot");
-		} else if (type.equals("jd")){
-			return -Math.PI;
-		} else {
+		} 
+		else {
 			return 0;
 		}
 	}
