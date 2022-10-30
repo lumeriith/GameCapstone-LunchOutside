@@ -182,6 +182,8 @@ public class PolicyLearning {
 		boolean isContinuous = (actionType < tData.continuousLabelSize);
 		ArrayList<Integer> frames = config.tConstraints.getActionFrames(actionType);
 		int size = frames.size();
+		System.out.print("actionType: " + actionType + "\n");
+		System.out.print("size: " + size + "\n");
 		while (true) {
 			int index = frames.get(MathUtil.random.nextInt(size));
 //			if (isContinuous && tData.transitionAfterMIndex[index] < 0) continue;
