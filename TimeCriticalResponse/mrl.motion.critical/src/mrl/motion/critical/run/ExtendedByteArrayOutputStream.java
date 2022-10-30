@@ -1,8 +1,6 @@
 package mrl.motion.critical.run;
 
-import javax.vecmath.Matrix4d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
+import javax.vecmath.*;
 import java.io.DataOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
@@ -38,6 +36,16 @@ public class ExtendedByteArrayOutputStream extends DataOutputStream {
         writeFloat((float)v3d.x);
         writeFloat((float)v3d.y);
         writeFloat((float)v3d.z);
+    }
+
+    public void writePoint2d(Point2d p2d) throws IOException {
+        writeFloat((float)p2d.x);
+        writeFloat((float)p2d.y);
+    }
+
+    public void writeVector2d(Vector2d v2d) throws IOException {
+        writeFloat((float)v2d.x);
+        writeFloat((float)v2d.y);
     }
 
     public void writeMatrix4d(Matrix4d m) throws IOException {

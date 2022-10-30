@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -16,11 +17,28 @@ public class ModelVisualizerBase : SerializedMonoBehaviour
     {
         _connection = GetComponent<ModelConnection>();
         _dataReader = GetComponent<ModelDataReader>();
-        _dataReader.onSetupDataReceived += OnSetupDataReceived;
+        _dataReader.onSetupDataReceived += () =>
+        {
+            try
+            {
+                OnSetupDataReceived();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
+        };
         _dataReader.onDataChanged += () =>
         {
             if (!enabled) return;
-            OnDataChanged();
+            try
+            {
+                OnDataChanged();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
         };
     }
 

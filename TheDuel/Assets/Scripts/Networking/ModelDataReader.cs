@@ -98,7 +98,7 @@ public class ModelDataReader : MonoBehaviour
 
         for (int i = 0; i < _setup.numOfMatrices; i++)
         {
-            _data.matrices[i] = reader.ReadMatrix4x4().transpose;
+            _data.matrices[i] = reader.ReadMatrix4x4();
         }
 
         onDataChanged?.Invoke();

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3723176381925577592}
   - component: {fileID: 3723176381925577595}
   m_Layer: 5
-  m_Name: Player Hit Marker
+  m_Name: Player Valid Hit Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 70, y: 70}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3723176381925577590
 CanvasRenderer:

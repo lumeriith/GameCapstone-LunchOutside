@@ -110,8 +110,6 @@ public class UnityConnectedMartialArts {
         HashMap<String, Point3d> posMap = MotionDataConverter.dataToPointMapByPosition(output);
         HashMap<String, Vector3d> rotMap = MotionDataConverter.dataToOrientation(output);
 
-        Motion m2 = MotionDataConverter.dataToMotionByOriMatForAll(output);
-
         for (String key : posJoints) {
             Point3d pos = posMap.get(key);
             baosWriter.writePoint3d(pos);
@@ -121,7 +119,7 @@ public class UnityConnectedMartialArts {
             baosWriter.writeVector3d(rot);
         }
         for (String key : matJoints) {
-            Matrix4d mat = m2.get(key);
+            Matrix4d mat = m.get(key);
             baosWriter.writeMatrix4d(mat);
         }
     }

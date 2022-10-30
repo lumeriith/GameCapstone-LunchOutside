@@ -13,10 +13,11 @@ public class ModelDataCharacterVisualizer : ModelVisualizerBase
         public Vector3 baseRot;
         public Vector3 afterRot;
     }
-    
+
     public List<BoneItem> skeletonSettings;
     public Animator connectedCharacter;
     public bool setCharacterBonePos = false;
+    
     
     private Dictionary<HumanBodyBones, Quaternion> _tPoseRots;
 

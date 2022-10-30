@@ -26,6 +26,8 @@ public class UI_HitMarker : MonoBehaviour
 
     private void Start()
     {
+        
+        
         _localPoint = hit.collider.transform.InverseTransformPoint(hit.point);
         
         UpdatePosition();
@@ -37,7 +39,7 @@ public class UI_HitMarker : MonoBehaviour
 
         DOTween.Sequence()
             .AppendInterval(sustainTime)
-            .Append(_canvasGroup.DOFade(0, decayTime).SetUpdate(false))
+            .Append(_canvasGroup.DOFade(0, decayTime))
             .AppendCallback(() => Destroy(gameObject))
             .SetUpdate(true);
     }

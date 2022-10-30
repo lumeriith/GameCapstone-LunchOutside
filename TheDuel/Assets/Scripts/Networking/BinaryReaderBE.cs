@@ -8,8 +8,13 @@ public class BinaryReaderBE : BinaryReader {
     
     public Matrix4x4 ReadMatrix4x4()
     {
-        return new Matrix4x4(ReadVector4(), ReadVector4(), ReadVector4(), ReadVector4());
+        return new Matrix4x4(ReadVector4(), ReadVector4(), ReadVector4(), ReadVector4()).transpose;
     }  
+    
+    public Vector2 ReadVector2()
+    {
+        return new Vector2(ReadSingle(), ReadSingle());
+    }      
     
     public Vector3 ReadVector3()
     {

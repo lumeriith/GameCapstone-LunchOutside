@@ -5,22 +5,28 @@ using UnityEngine;
 
 public class UI_HitMarkerManager : MonoBehaviour
 {
-    public UI_HitMarker playerHitMarker;
-    public UI_HitMarker enemyHitMarker;
+    public UI_HitMarker playerValidHitMarker;
+    public UI_HitMarker enemyValidHitMarker;
+    
+    public UI_HitMarker playerInvalidHitMarker;
+    public UI_HitMarker enemyInvalidHitMarker;
 
     private void Start()
     {
-        Player.instance.onDealAttack += HandlePlayerDealtAttack;
-        Enemy.instance.onDealAttack += HandleEnemyDealtAttack;
+        ScoreManager.instance.onPlayerValidAttack += (hit) => HandlePlayerDealtAttack(hit, true);
+        ScoreManager.instance.onPlayerInvalidAttack += (hit) => HandlePlayerDealtAttack(hit, false);
+
+        ScoreManager.instance.onEnemyValidAttack += (hit) => HandleEnemyDealtAttack(hit, true);
+        ScoreManager.instance.onEnemyInvalidAttack += (hit) => HandleEnemyDealtAttack(hit, false);
     }
     
-    private void HandlePlayerDealtAttack(InfoAttackHit hit)
+    private void HandlePlayerDealtAttack(InfoAttackHit hit, bool isValid)
     {
-        Instantiate(playerHitMarker, transform).hit = hit;
+        Instantiate(isValid ? playerValidHitMarker : playerInvalidHitMarker, transform).hit = hit;
     }
 
-    private void HandleEnemyDealtAttack(InfoAttackHit hit)
+    private void HandleEnemyDealtAttack(InfoAttackHit hit, bool isValid)
     {
-        Instantiate(enemyHitMarker, transform).hit = hit;
+        Instantiate(isValid ? enemyValidHitMarker : enemyInvalidHitMarker, transform).hit = hit;
     }
 }
