@@ -6,13 +6,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_PlayerHitWindow : MonoBehaviour
+public class UI_HitWindow : MonoBehaviour
 {
+    public bool forPlayer;
+    public Transform followTarget;
+    
     public Color successFillColor;
     public Color successBoxColor;
     public Color failBoxColor;
     public TextMeshProUGUI timerText;
     public Image fillImage;
+    public float fillMaxValue = 0.5f;
     public float timerTextMultiplier = 0.2f;
     public int timerTextDecimals = 2;
     public Image timerTextBox;
@@ -43,16 +47,39 @@ public class UI_PlayerHitWindow : MonoBehaviour
 
     private void Start()
     {
-        ScoreManager.instance.onPlayerScoreWindowStarted += StartScoreWindow;
-        ScoreManager.instance.onPlayerScoreWindowFailed += FailScoreWindow;
-        ScoreManager.instance.onPlayerScoreWindowSucceeded += SucceedScoreWindow;
+        if (forPlayer)
+        {
+            ScoreManager.instance.onPlayerScoreWindowStarted += StartScoreWindow;
+            ScoreManager.instance.onPlayerScoreWindowFailed += FailScoreWindow;
+            ScoreManager.instance.onPlayerScoreWindowSucceeded += SucceedScoreWindow;
+        }
+        else
+        {
+            ScoreManager.instance.onEnemyScoreWindowStarted += StartScoreWindow;
+            ScoreManager.instance.onEnemyScoreWindowFailed += FailScoreWindow;
+            ScoreManager.instance.onEnemyScoreWindowSucceeded += SucceedScoreWindow;
+        }
     }
 
     private void Update()
     {
-        if (ScoreManager.instance.scoreWindowState == ScoreWindowState.OpenForPlayer)
+        if ((forPlayer && ScoreManager.instance.scoreWindowState == ScoreWindowState.OpenForPlayer) ||
+            (!forPlayer && ScoreManager.instance.scoreWindowState == ScoreWindowState.OpenForEnemy))
         {
             UpdateTimerText();
+        }
+    }
+
+
+    private Vector3 _followPos;
+    
+    private void LateUpdate()
+    {
+        if (followTarget != null)
+        {
+            if (ScoreManager.instance.scoreWindowState != ScoreWindowState.Closed)
+                _followPos = followTarget.transform.position;
+            transform.position = Camera.main.WorldToScreenPoint(_followPos);
         }
     }
 
@@ -64,7 +91,7 @@ public class UI_PlayerHitWindow : MonoBehaviour
     private void UpdateTimerText(float time, float max)
     {
         timerText.text = time.ToString($"n{timerTextDecimals}") + "s";
-        fillImage.fillAmount = Mathf.Clamp(time / max * 0.5f, 0f, 1f);
+        fillImage.fillAmount = Mathf.Clamp(time / max * fillMaxValue, 0f, 1f);
     }
 
     private void StartScoreWindow()

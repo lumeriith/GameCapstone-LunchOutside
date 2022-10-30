@@ -38,6 +38,7 @@ public class ScoreManager : ManagerBase<ScoreManager>
 
     public float timescaleRevertSpeed = 1f;
     public float scoreWindowTime = 0.4f;
+    public float scoreWindowTimescale = 0.5f;
 
     private void Start()
     {
@@ -114,7 +115,7 @@ public class ScoreManager : ManagerBase<ScoreManager>
 
     private void StartScoreWindow(bool forPlayer)
     {
-        Time.timeScale = 0.3f;
+        Time.timeScale = scoreWindowTimescale;
         scoreWindowState = forPlayer ? ScoreWindowState.OpenForPlayer : ScoreWindowState.OpenForEnemy;
         remainingScoreWindowTime = scoreWindowTime;
         if (forPlayer) onPlayerScoreWindowStarted?.Invoke();
