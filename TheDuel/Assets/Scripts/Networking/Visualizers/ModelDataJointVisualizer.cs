@@ -40,23 +40,26 @@ public class ModelDataJointVisualizer : ModelVisualizerBase
         }
     }
 
-    private void DrawDebugLine(Transform root)
+    private void DrawLinesToChildren(Transform root)
     {
         foreach (Transform c in root)
         {
             Debug.DrawLine(root.transform.position, c.position, Color.red, 1 / 30f);
-            DrawDebugLine(c);
+            DrawLinesToChildren(c);
         }
     }
-
+    
     protected override void OnDataChanged()
     {
         base.OnDataChanged();
+
         foreach (var pair in setup.boneToMatIndex)
         {
             _nodeByJointName[pair.Key].transform.localRotation = data.matrices[pair.Value].rotation;
         }
 
-        DrawDebugLine(_root.transform);
+        DrawLinesToChildren(_root.transform);
     }
+
+
 }

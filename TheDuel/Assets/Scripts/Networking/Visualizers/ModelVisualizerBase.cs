@@ -17,7 +17,11 @@ public class ModelVisualizerBase : SerializedMonoBehaviour
         _connection = GetComponent<ModelConnection>();
         _dataReader = GetComponent<ModelDataReader>();
         _dataReader.onSetupDataReceived += OnSetupDataReceived;
-        _dataReader.onDataChanged += OnDataChanged;
+        _dataReader.onDataChanged += () =>
+        {
+            if (!enabled) return;
+            OnDataChanged();
+        };
     }
 
     protected virtual void OnSetupDataReceived()
