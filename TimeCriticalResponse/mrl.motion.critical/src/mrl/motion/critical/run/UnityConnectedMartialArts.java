@@ -2,6 +2,7 @@ package mrl.motion.critical.run;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,6 +15,7 @@ import javax.vecmath.Vector3d;
 import mrl.motion.data.Motion;
 //import org.eclipse.swt.events.KeyEvent;
 
+import mrl.motion.data.SkeletonData;
 import mrl.motion.data.trasf.Pose2d;
 import mrl.motion.neural.agility.AgilityControlParameterGenerator;
 import mrl.motion.neural.agility.JumpSpeedModel;
@@ -51,7 +53,7 @@ public class UnityConnectedMartialArts {
 
 
     private void start() throws IOException {
-        // MotionDataConverter.useTPoseForMatrix = false;
+        MotionDataConverter.useTPoseForMatrix = false;
         MotionDataConverter.useMatrixForAll = true;
 
         createRuntimeController();
@@ -70,27 +72,45 @@ public class UnityConnectedMartialArts {
     private void sendInitialPayload() throws IOException {
         baosWriter.writeInt(posJoints.length);
         for (String posJoint : posJoints) {
-            baosWriter.writeInt(posJoint.length());
-            baosWriter.writeChars(posJoint);
+            baosWriter.writeString(posJoint);
         }
 
         baosWriter.writeInt(rotJoints.length);
         for (String rotJoint : rotJoints) {
-            baosWriter.writeInt(rotJoint.length());
-            baosWriter.writeChars(rotJoint);
+            baosWriter.writeString(rotJoint);
         }
 
         baosWriter.writeInt(matJoints.length);
         for (String matJoint : matJoints) {
-            baosWriter.writeInt(matJoint.length());
-            baosWriter.writeChars(matJoint);
+            baosWriter.writeString(matJoint);
+        }
+
+        SkeletonData.Joint j = c.g.motion().motionData.skeletonData.root;
+        ArrayList<SkeletonData.Joint> unpacked = new ArrayList<>();
+        ArrayList<SkeletonData.Joint> unchecked = new ArrayList<>();
+        unchecked.add(j);
+        while (unchecked.size() > 0){
+            j = unchecked.get(0);
+            unchecked.remove(j);
+
+            unpacked.add(j);
+            unchecked.addAll(j.children);
+        }
+
+        baosWriter.writeInt(unpacked.size());
+        for (int i = 0; i < unpacked.size(); i++) {
+            SkeletonData.Joint joint = unpacked.get(i);
+            baosWriter.writeString(joint.name);
+            baosWriter.writeVector3d(joint.transition);
+            baosWriter.writeInt(unpacked.indexOf(joint.parent));
         }
     }
 
-    private void sendOutputPayload(double[] output) throws IOException {
+    private void sendOutputPayload(double[] output, Motion m) throws IOException {
         HashMap<String, Point3d> posMap = MotionDataConverter.dataToPointMapByPosition(output);
         HashMap<String, Vector3d> rotMap = MotionDataConverter.dataToOrientation(output);
-        Motion motion = MotionDataConverter.dataToMotionByOriMatForAll(output);
+
+        Motion m2 = MotionDataConverter.dataToMotionByOriMatForAll(output);
 
         for (String key : posJoints) {
             Point3d pos = posMap.get(key);
@@ -101,7 +121,7 @@ public class UnityConnectedMartialArts {
             baosWriter.writeVector3d(rot);
         }
         for (String key : matJoints) {
-            Matrix4d mat = motion.get(key);
+            Matrix4d mat = m2.get(key);
             baosWriter.writeMatrix4d(mat);
         }
     }
@@ -159,7 +179,8 @@ public class UnityConnectedMartialArts {
         baosWriter = new ExtendedByteArrayOutputStream(baos);
 
         c.reset();
-        c.iterateMotion();
+
+        c.g.update(c.iterateMotion());
 
         posJoints = MotionDataConverter.KeyJointList_Origin;
         rotJoints = MotionDataConverter.OrientationJointList;
@@ -170,7 +191,9 @@ public class UnityConnectedMartialArts {
         while (true) {
             receiveData();
             double[] output = c.iterateMotion();
-            sendOutputPayload(output);
+            c.g.update(output);
+            Motion m = c.g.motion();
+            sendOutputPayload(output, m);
 
             baosWriter.flush();
             byte[] result = baos.toByteArray();

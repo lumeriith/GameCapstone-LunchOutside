@@ -23,6 +23,11 @@ public class ExtendedByteArrayOutputStream extends DataOutputStream {
         super(out);
     }
 
+    public void writeString(String str) throws IOException {
+        writeInt(str.length());
+        writeChars(str);
+    }
+
     public void writePoint3d(Point3d p3d) throws IOException {
         writeFloat((float)p3d.x);
         writeFloat((float)p3d.y);
