@@ -1708,6 +1708,7 @@ GameObject:
   - component: {fileID: 1186946889}
   - component: {fileID: 1186946888}
   - component: {fileID: 1186946887}
+  - component: {fileID: 1186946891}
   m_Layer: 0
   m_Name: Model Communication Object
   m_TagString: Untagged
@@ -1767,6 +1768,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36efc90ba2cdacc4d8b4fe186910c68a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   skeletonSettings: []
   connectedCharacter: {fileID: 1857651550}
   setCharacterBonePos: 0
@@ -2039,14 +2049,14 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  globalOffset: {x: 0, y: 0, z: 0}
   visualizeScale: 0.01
   keepAtCenter: 1
   nodeTemplate: {fileID: 8764231713898862832, guid: a1c4aa5417734f74f89a8643b252b98d,
     type: 3}
   useMatrices: 1
   useParentalStructure: 1
-  showOrientationAsVector: 1
-  orientationVectorMultiplier: 1
+  invertMultiplyOrder: 0
 --- !u!114 &1186946889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2059,7 +2069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa24a514f2a333349b074c47a5b82f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repeatAction: 1
+  repeatAction: 0
   actionNumber: 3
   repeatInterval: 2
 --- !u!114 &1186946890
@@ -2074,6 +2084,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c36cab79d455af438652139a8dcad1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1186946891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186946884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c407d63164f80384c83c181bf7b3103e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  nodeTemplate: {fileID: 8764231713898862832, guid: a1c4aa5417734f74f89a8643b252b98d,
+    type: 3}
+  worldOffset: {x: -10, y: 4, z: 0}
+  scale: 0.2
 --- !u!1 &1279032405
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BinaryReaderBE : BinaryReader { 
     public BinaryReaderBE(System.IO.Stream stream)  : base(stream) { }
-
+    private static char[] arr = new char[255];
+    
     public Matrix4x4 ReadMatrix4x4()
     {
         return new Matrix4x4(ReadVector4(), ReadVector4(), ReadVector4(), ReadVector4());
@@ -18,7 +19,16 @@ public class BinaryReaderBE : BinaryReader {
     public Vector4 ReadVector4()
     {
         return new Vector4(ReadSingle(), ReadSingle(), ReadSingle(), ReadSingle());
-    }  
+    }
+
+    public override string ReadString()
+    {
+        int length = ReadInt32();
+        for (int c = 0; c < length; c++)
+            arr[c] = ReadChar();
+        var res = new string(arr, 0, length);
+        return res;
+    }
     
     public override int ReadInt32()
     {

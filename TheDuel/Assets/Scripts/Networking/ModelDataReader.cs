@@ -11,8 +11,8 @@ public class ModelDataReader : MonoBehaviour
     public Action onSetupDataReceived;
     public Action onDataChanged;
     
-    private ModelReceivedData _data;
-    private ModelSetupData _setup;
+    private ModelReceivedData _data = new ModelReceivedData();
+    private ModelSetupData _setup = new ModelSetupData();
     
     private ModelConnection _connection;
     
@@ -33,13 +33,10 @@ public class ModelDataReader : MonoBehaviour
             _setup.posIndexToBone = new Dictionary<int, string>();
             _data.positions = new Vector3[_setup.numOfPosJoints];
 
-            char[] arr = new char[255];
+            
             for (int i = 0; i < _setup.numOfPosJoints; i++)
             {
-                int length = reader.ReadInt32();
-                for (int c = 0; c < length; c++)
-                    arr[c] = reader.ReadChar();
-                string jointName = new string(arr, 0, length);
+                string jointName = reader.ReadString();
                 _setup.boneToPosIndex.Add(jointName, i);
                 _setup.posIndexToBone.Add(i, jointName);
             }
@@ -51,10 +48,7 @@ public class ModelDataReader : MonoBehaviour
 
             for (int i = 0; i < _setup.numOfRotJoints; i++)
             {
-                int length = reader.ReadInt32();
-                for (int c = 0; c < length; c++)
-                    arr[c] = reader.ReadChar();
-                string jointName = new string(arr, 0, length);
+                string jointName = reader.ReadString();
                 _setup.boneToRotIndex.Add(jointName, i);
                 _setup.rotIndexToBone.Add(i, jointName);
             }
@@ -66,13 +60,27 @@ public class ModelDataReader : MonoBehaviour
 
             for (int i = 0; i < _setup.numOfMatrices; i++)
             {
-                int length = reader.ReadInt32();
-                for (int c = 0; c < length; c++)
-                    arr[c] = reader.ReadChar();
-                string jointName = new string(arr, 0, length);
+                string jointName = reader.ReadString();
                 _setup.boneToMatIndex.Add(jointName, i);
                 _setup.matIndexToBone.Add(i, jointName);
             }
+
+            List<Joint> joints = new List<Joint>();
+            int numOfJoints = reader.ReadInt32();
+            for (int i = 0; i < numOfJoints; i++)
+            {
+                var newJoint = new Joint();
+                newJoint.name = reader.ReadString();
+                newJoint.translation = reader.ReadVector3();
+                var parentIndex = reader.ReadInt32();
+                if (parentIndex >= 0)
+                {
+                    joints[parentIndex].children.Add(newJoint);
+                }
+                joints.Add(newJoint);
+            }
+
+            _setup.root = joints[0];
 
             onSetupDataReceived?.Invoke();
             _isFirstPayload = false;

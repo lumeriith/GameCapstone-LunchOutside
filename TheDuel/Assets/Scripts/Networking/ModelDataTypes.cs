@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct ModelReceivedData
+public class ModelReceivedData
 {
     public Vector3[] positions;
     public Vector3[] rotations;
     public Matrix4x4[] matrices;
 }
 
-public struct ModelSetupData
+public class ModelSetupData
 {
     public Dictionary<int, string> posIndexToBone;
     public Dictionary<string, int> boneToPosIndex;
@@ -22,4 +22,13 @@ public struct ModelSetupData
     public int numOfPosJoints;
     public int numOfRotJoints;
     public int numOfMatrices;
+
+    public Joint root;
+}
+
+public class Joint
+{
+    public string name;
+    public Vector3 translation;
+    public List<Joint> children = new List<Joint>();
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelDataCharacterVisualizer : MonoBehaviour
+public class ModelDataCharacterVisualizer : ModelVisualizerBase
 {
     [Serializable]
     public struct BoneItem
@@ -19,19 +19,11 @@ public class ModelDataCharacterVisualizer : MonoBehaviour
     public bool setCharacterBonePos = false;
     
     private Dictionary<HumanBodyBones, Quaternion> _tPoseRots;
-    
-    private ModelDataReader _dataReader;
-    private ModelSetupData _setup => _dataReader.setup;
-    private ModelReceivedData _data => _dataReader.data;
-    
-    private void Start()
-    {
-        _dataReader = GetComponent<ModelDataReader>();
-        _dataReader.onDataChanged += ApplyToCharacter;
-    }
 
-    private void ApplyToCharacter() 
+    protected override void OnDataChanged()
     {
+        base.OnDataChanged();
+        
         if (_tPoseRots == null)
         {
             _tPoseRots = new Dictionary<HumanBodyBones, Quaternion>();
@@ -51,16 +43,16 @@ public class ModelDataCharacterVisualizer : MonoBehaviour
 
             if (setCharacterBonePos)
             {
-                if (_setup.boneToPosIndex.TryGetValue(pair.name, out var posIndex))
+                if (setup.boneToPosIndex.TryGetValue(pair.name, out var posIndex))
                 {
-                    var pos = _data.positions[posIndex];
+                    var pos = data.positions[posIndex];
                     boneTransform.position = pos;
                 }
             }
 
-            if (_setup.boneToMatIndex.TryGetValue(pair.name, out var matIndex))
+            if (setup.boneToMatIndex.TryGetValue(pair.name, out var matIndex))
             {
-                var mat = _data.matrices[matIndex];
+                var mat = data.matrices[matIndex];
                 boneTransform.localRotation = Quaternion.Euler(pair.afterRot) * mat.rotation * Quaternion.Euler(pair.baseRot);
             }
         }
