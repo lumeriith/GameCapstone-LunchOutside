@@ -67,17 +67,22 @@ public class ModelDataReader : MonoBehaviour
 
             List<Joint> joints = new List<Joint>();
             int numOfJoints = reader.ReadInt32();
+            _setup.jointByBoneName = new Dictionary<string, Joint>();
             for (int i = 0; i < numOfJoints; i++)
             {
                 var newJoint = new Joint();
                 newJoint.name = reader.ReadString();
                 newJoint.translation = reader.ReadVector3();
+                //newJoint.translation *= -1;
+                newJoint.translation.z *= -1;
+
                 var parentIndex = reader.ReadInt32();
                 if (parentIndex >= 0)
                 {
                     joints[parentIndex].children.Add(newJoint);
                 }
                 joints.Add(newJoint);
+                _setup.jointByBoneName.Add(newJoint.name, newJoint);
             }
 
             _setup.root = joints[0];
@@ -100,6 +105,32 @@ public class ModelDataReader : MonoBehaviour
         {
             _data.matrices[i] = reader.ReadMatrix4x4();
         }
+
+        //2. negate qy and qz for all joint rotations
+        for (int i = 0; i < _setup.numOfMatrices; i++)
+        {
+            var m = _data.matrices[i];
+            var pos = m.GetPosition();
+            var rot = m.rotation;
+
+            pos.z *= -1;
+            rot.x *= -1;
+            rot.y *= -1;
+            m = Matrix4x4.Translate(pos) * Matrix4x4.Rotate(rot);
+            _data.matrices[i] = m;
+        }
+        
+        // for (int i = 0; i < _setup.numOfMatrices; i++)
+        // {
+        //     var m = _data.matrices[i];
+        //     var rot = m.rotation;
+        //     var pos = m.GetPosition();
+        //     pos.z *= -1;
+        //     m = Matrix4x4.Translate(pos) * Matrix4x4.Rotate(rot);
+        //     _data.matrices[i] = m;
+        // }
+        
+        // 3. negate x of root trajectory
 
         onDataChanged?.Invoke();
     }
