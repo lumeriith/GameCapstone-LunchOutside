@@ -1,42 +1,50 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class ModelDataCharacterVisualizer : ModelVisualizerBase
 {
     [Serializable]
-    public struct BoneItem
+    public class BoneItem
     {
         public string name;
         public HumanBodyBones bone;
-        public Vector3 baseRot;
-        public Vector3 afterRot;
+        public Quaternion baseRot;
+        public Quaternion afterRot;
     }
 
     public List<BoneItem> skeletonSettings;
     public Animator connectedCharacter;
     public bool setCharacterBonePos = false;
+    public bool enableRetargeting;
+    public bool useBaseRot;
+    public bool useAfterRot;
+
+    [Button]
+    private void Build()
+    {
+        for (int i = 0; i < skeletonSettings.Count; i++)
+        {
+            var item = skeletonSettings[i];
+            var characterBone = connectedCharacter.GetBoneTransform(item.bone);
+            var modelMatrix = data.matrices[setup.boneToMatIndex[item.name]];
+            var fromRotation = modelMatrix.rotation;
+            var toRotation = characterBone.localRotation;
+            
+            // afterRot * fromRotation = toRotation;
+            // OR fromRotation * baseRot = toRotation;
+            item.afterRot = toRotation * Quaternion.Inverse(fromRotation);
+            item.baseRot = Quaternion.Inverse(fromRotation) * toRotation;
+        }
+    }
     
-    
-    private Dictionary<HumanBodyBones, Quaternion> _tPoseRots;
 
     protected override void OnDataChanged()
     {
         base.OnDataChanged();
-        
-        if (_tPoseRots == null)
-        {
-            _tPoseRots = new Dictionary<HumanBodyBones, Quaternion>();
-            for (int i = 0; i < (int)HumanBodyBones.LastBone; i++)
-            {
-                var enumVal = (HumanBodyBones) i;
-                var bone = connectedCharacter.GetBoneTransform(enumVal);
-                if (bone == null) continue;
-                _tPoseRots.Add(enumVal, bone.localRotation);
-            }
-        }
-        
+        if (!enableRetargeting) return;
         foreach (var pair in skeletonSettings)
         {
             var boneTransform = connectedCharacter.GetBoneTransform(pair.bone);
@@ -54,7 +62,11 @@ public class ModelDataCharacterVisualizer : ModelVisualizerBase
             if (setup.boneToMatIndex.TryGetValue(pair.name, out var matIndex))
             {
                 var mat = data.matrices[matIndex];
-                boneTransform.localRotation = Quaternion.Euler(pair.afterRot) * mat.rotation * Quaternion.Euler(pair.baseRot);
+
+                boneTransform.localRotation = mat.rotation;
+                if (useBaseRot) boneTransform.localRotation = boneTransform.localRotation * pair.baseRot;
+                if (useAfterRot)
+                    boneTransform.localRotation = pair.afterRot * boneTransform.localRotation;
             }
         }
     }

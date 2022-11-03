@@ -24,6 +24,7 @@ public class ModelSetupData
     public int numOfMatrices;
 
     public Joint root;
+    public Dictionary<string, Joint> jointByBoneName;
 }
 
 public class Joint
