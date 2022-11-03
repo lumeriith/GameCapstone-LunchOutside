@@ -12,11 +12,13 @@ public class ModelDataJointVisualizer : ModelVisualizerBase
     public float translationScale = 0.01f;
     public List<string> positionBone = new List<string>();
 
-    public bool centerModelOnStart;
+    public bool enableRecenterModel;
+    public float recenterInterval = 2f;
     
     private Dictionary<string, TestNode> _nodeByJointName = new Dictionary<string, TestNode>();
     private TestNode _root;
-    private bool _didSetCenter;
+    
+    private float _lastRecenterTime;
     
     protected override void OnSetupDataReceived()
     {
@@ -68,12 +70,12 @@ public class ModelDataJointVisualizer : ModelVisualizerBase
             if (pair.Key == RootNodeName)
             {
                 var translation = new Vector3(m.m03, m.m13, m.m23) * translationScale;
-                if (centerModelOnStart && !_didSetCenter)
+                if (enableRecenterModel && Time.time - _lastRecenterTime > recenterInterval)
                 {
                     var flat = translation;
                     flat.y = 0;
-                    _didSetCenter = true;
-                    worldOffset -= flat;
+                    _lastRecenterTime = Time.time;
+                    worldOffset = -flat;
                 }
                 
                 node.transform.position = translation + worldOffset;
