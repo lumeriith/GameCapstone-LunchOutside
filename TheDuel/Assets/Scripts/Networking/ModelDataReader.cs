@@ -73,7 +73,6 @@ public class ModelDataReader : MonoBehaviour
                 var newJoint = new Joint();
                 newJoint.name = reader.ReadString();
                 newJoint.translation = reader.ReadVector3();
-                //newJoint.translation *= -1;
                 newJoint.translation.z *= -1;
 
                 var parentIndex = reader.ReadInt32();
@@ -106,7 +105,6 @@ public class ModelDataReader : MonoBehaviour
             _data.matrices[i] = reader.ReadMatrix4x4();
         }
 
-        //2. negate qy and qz for all joint rotations
         for (int i = 0; i < _setup.numOfMatrices; i++)
         {
             var m = _data.matrices[i];
@@ -119,18 +117,6 @@ public class ModelDataReader : MonoBehaviour
             m = Matrix4x4.Translate(pos) * Matrix4x4.Rotate(rot);
             _data.matrices[i] = m;
         }
-        
-        // for (int i = 0; i < _setup.numOfMatrices; i++)
-        // {
-        //     var m = _data.matrices[i];
-        //     var rot = m.rotation;
-        //     var pos = m.GetPosition();
-        //     pos.z *= -1;
-        //     m = Matrix4x4.Translate(pos) * Matrix4x4.Rotate(rot);
-        //     _data.matrices[i] = m;
-        // }
-        
-        // 3. negate x of root trajectory
 
         onDataChanged?.Invoke();
     }
