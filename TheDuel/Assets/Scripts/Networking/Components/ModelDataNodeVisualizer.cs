@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class ModelDataNodeVisualizer : ModelVisualizerBase
+public class ModelDataNodeVisualizer : ModelComponentBase
 {
     public Vector3 globalOffset;
     public float visualizeScale = 0.02f;

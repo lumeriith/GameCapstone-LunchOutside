@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class ModelDataCharacterVisualizer : ModelVisualizerBase
+public class ModelDataCharacterVisualizer : ModelComponentBase
 {
     [Serializable]
     public class BoneItem
@@ -26,7 +26,8 @@ public class ModelDataCharacterVisualizer : ModelVisualizerBase
     public Vector3 worldOffset;
     public bool setWorldOffsetPeriodically;
     public float setWorldOffsetInterval = 1f;
-
+    public float hipsYOffset;
+    
     private float _lastWorldOffsetTime;
     
     public struct BasicTransform
@@ -36,6 +37,8 @@ public class ModelDataCharacterVisualizer : ModelVisualizerBase
     }
     
     private Dictionary<string, BasicTransform> _worldSpaceBoneTransforms = new Dictionary<string, BasicTransform>();
+
+    private Vector3 _prevRootPosition;
 
     [Button]
     private void BuildUsingCurrentPos()
@@ -86,7 +89,13 @@ public class ModelDataCharacterVisualizer : ModelVisualizerBase
                 if (_worldSpaceBoneTransforms.TryGetValue(pair.name, out var tr))
                 {
                     if (pair.name == "Hips")
-                        boneTransform.position = tr.position;
+                    {
+                        var xzPos = new Vector3(tr.position.x, 0, tr.position.z);
+                        var diff = xzPos - _prevRootPosition;
+                        boneTransform.position = tr.position + Vector3.up * hipsYOffset;
+                        connectedCharacter.transform.position += diff;
+                        _prevRootPosition = xzPos;
+                    }
                     boneTransform.rotation = tr.rotation;
                     boneTransform.rotation = boneTransform.rotation * pair.baseRot;
                 }

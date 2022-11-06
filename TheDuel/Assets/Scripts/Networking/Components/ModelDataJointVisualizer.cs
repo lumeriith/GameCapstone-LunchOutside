@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelDataJointVisualizer : ModelVisualizerBase
+public class ModelDataJointVisualizer : ModelComponentBase
 {
     private const string RootNodeName = "Hips";
     

@@ -44,7 +44,6 @@ public class UnityConnectedMartialArts {
     private DataOutputStream socketWriter;
     private DataInputStream socketReader;
     private ByteArrayOutputStream baos;
-    private ByteArrayInputStream bais;
 
     private ExtendedByteArrayOutputStream baosWriter;
     private String[] posJoints;
@@ -125,12 +124,13 @@ public class UnityConnectedMartialArts {
     }
 
     public interface MessageHandlerInterface {
-       public abstract void handle(int payloadLength) throws IOException;
+       void handle(int payloadLength) throws IOException;
     }
 
     private int waitingBytes = -1;
-    private MessageHandlerInterface[] messageHandlers = {
-        this::handlerDoAction
+    private final MessageHandlerInterface[] messageHandlers = {
+            this::handlerDoAction,
+            this::handlerSetDirection
     };
 
     private void receiveData() throws IOException {
@@ -164,6 +164,12 @@ public class UnityConnectedMartialArts {
         actionQueue.push(action);
         actionStartFrames.push(c.frame);
     }
+
+    private void handlerSetDirection(int length) throws IOException {
+        targetDirection = new Vector2d(socketReader.readFloat(), socketReader.readFloat());
+    }
+
+
 
     private void serveClient() throws IOException, InterruptedException {
         System.out.println("waiting for client");
@@ -250,9 +256,6 @@ public class UnityConnectedMartialArts {
                 if (useDynamicAgility) {
                     control = MathUtil.concatenate(control, new double[] { agility });
                 }
-                // System.out.println("activation : " + agility + " : " + actionQueue.size() + " : " + action + " : " + frame + " : " + Utils.toString(Utils.last(prevOutput)));
-                // System.out.println(Arrays.toString(control));
-                System.out.println(Arrays.toString(prevOutput));
                 return control;
             }
         };
