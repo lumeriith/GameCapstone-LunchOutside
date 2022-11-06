@@ -57,9 +57,7 @@ public abstract class RealtimePythonController extends RuntimeController{
     }
 
     public void reset() {
-        if (normal.yList == null) return;
-        double[] initialY = normal.yList.get(3);
-        initialY = new double[initialY.length];
+        double[] initialY = new double[normal.yMeanAndStd[0].length];
         python.model.setStartMotion(initialY);
         prevOutput = initialY;
         g.pose = new Pose2d(Pose2d.BASE);
