@@ -1,0 +1,24 @@
+{
+	defaultType:
+	file:IdleCrouchFencing56.bvh
+	person:1
+	oppositePerson:0
+	startFrame:100
+	endFrame:150
+	include:
+	isAlone:
+	type:crouch
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:-1
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},

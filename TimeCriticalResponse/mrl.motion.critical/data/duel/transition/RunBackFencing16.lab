@@ -1,0 +1,24 @@
+{
+	defaultType:
+	file:RunBackFencing16.bvh
+	person:1
+	oppositePerson:0
+	startFrame:80
+	endFrame:140
+	include:
+	isAlone:
+	type:
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:-1
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},
