@@ -10,19 +10,31 @@ import mrl.util.MathUtil;
 public class DuelConfig extends GMMConfig{
 	
 	public static double LOCOMOTION_RATIO = 0.8;
-	public static int LOCO_ACTION_SIZE = 2;
+	public static int LOCO_ACTION_SIZE = 4;
 	public static String[] actionTypes = {
-			"idle",
-			"walk",
-			"attack"
+			"idle", 
+			"crouch", 
+			"walk", 
+			"run", 
+			"attack", 
+			"death", 
+			"parry", 
+			"draw", 
+			"put_back",
 	};
 	public static String[] fullActionTypes = actionTypes;
 	
 	static int tBase = 10;
 	public static double[][] timeOffset = {
 			{ tBase, tBase }, // idle
+			{ tBase, tBase }, // crouch
 			{ tBase, tBase }, // walk
+			{ tBase, tBase }, // run
 			{ tBase, tBase }, // attack
+			{ tBase, tBase }, // death
+			{ tBase, tBase }, // parry
+			{ tBase, tBase }, // draw
+			{ tBase, tBase }, // put_back
 	};
 
 	public DuelConfig(String name) {
@@ -160,13 +172,22 @@ public class DuelConfig extends GMMConfig{
 	}
 	
 	public static double getDirectionOffsetByType(Motion m, String type) {
-		if (type.equals("p")){
+		if (type.equals("attack") ||
+				type.equals("death") ||
+				type.equals("parry") ||
+				type.equals("draw") ||
+				type.equals("put_back")){
 			return m._directionOffset("LeftHand", "RightHand");
-		} else if (
-				type.equals("attack")
-				) {
-			return m._directionOffset("LeftFoot", "RightFoot");
 		} 
+//		else if (
+//				type.equals("attack") ||
+//				type.equals("death") ||
+//				type.equals("parry") ||
+//				type.equals("draw") ||
+//				type.equals("put_back")
+//				) {
+//			return m._directionOffset("LeftFoot", "RightFoot");
+//		} 
 		else {
 			return 0;
 		}

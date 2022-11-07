@@ -97,7 +97,7 @@ public abstract class GMMConfig {
 		public GMMGoal(int actionType, int timeLimit, double direction) {
 			this.actionType = actionType;
 			setTime(timeLimit);
-			this.direction = direction;
+			//this.direction = direction;
 			
 			if (!isDirectionControl()) {
 				direction = 0;

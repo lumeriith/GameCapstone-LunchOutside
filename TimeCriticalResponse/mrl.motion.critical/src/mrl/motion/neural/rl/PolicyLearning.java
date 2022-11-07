@@ -333,6 +333,10 @@ public class PolicyLearning {
 			
 			goal = sampleRandomGoal(goalGenerator, new Pose2d(Pose2d.BASE), null);
 			path = new MatchingPath(matching.database.getMotionList()[sampleStartingPoint(matching, goal.actionType)]);
+			if(path.time > goal.timeLimit)
+			{
+				System.out.print(path.time);
+			}
 			totalTransform = Matrix2d.identity();
 			finalError = 0;
 		}
@@ -366,6 +370,11 @@ public class PolicyLearning {
 					if (goal.maxSearchTime < minReachTime) {
 						goal.increaseTime(minReachTime - goal.maxSearchTime);
 					}
+				}
+				
+				if(path.time > goal.timeLimit)
+				{
+					System.out.print(path.time);
 				}
 				
 				proceedNearActions();
@@ -404,7 +413,8 @@ public class PolicyLearning {
 		double finalError;
 		double tErrorSum = 0;
 		GMMQueryLog qLog;
-		public Pair<Double, MotionQuery> proceedStep(RL_State rl_state, MotionQuery query) {
+		public Pair<Double, MotionQuery> proceedStep(RL_State rl_state, MotionQuery query) 			
+		{
 			double tErrorWeight = 0.00001;
 			if (isTest) {
 				qLog = new GMMQueryLog();
@@ -423,6 +433,10 @@ public class PolicyLearning {
 			boolean isFinished = false;
 //			TimeChecker.instance.state("findMatchByAABB");
 			while (seqCount <= MOTION_TRANSITON_MARGIN) {
+				if (path.time > goal.timeLimit)
+				{
+					System.out.print(path.time);
+				}
 				match = matching.findMatch(config, goal, path, query, tErrorWeight);
 //				match = matching.findMatchByAABB(tData, goal, path, query);
 				if (match.minDist < Integer.MAX_VALUE) break;
