@@ -13,6 +13,7 @@ public class ModelFollowTransform : ModelComponentBase
     
     private void Update()
     {
+        if (!connection.isConnected) return;
         if (Time.time - _lastSendInterval > interval)
         {
             _lastSendInterval = Time.time;
