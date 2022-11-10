@@ -75,7 +75,7 @@ public class ScoreManager : ManagerBase<ScoreManager>
             onPlayerInvalidAttack?.Invoke(hit);
             return;
         }
-        playerScore++;
+        playerScore += hit.score;
         onPlayerScoreChanged?.Invoke(playerScore);
         onPlayerValidAttack?.Invoke(hit);
         if (scoreWindowState == ScoreWindowState.Before)
@@ -98,7 +98,7 @@ public class ScoreManager : ManagerBase<ScoreManager>
             onEnemyInvalidAttack?.Invoke(hit);
             return;
         }
-        enemyScore++;
+        enemyScore += hit.score;
         onEnemyScoreChanged?.Invoke(enemyScore);
         onEnemyValidAttack?.Invoke(hit);
         if (scoreWindowState == ScoreWindowState.Before)

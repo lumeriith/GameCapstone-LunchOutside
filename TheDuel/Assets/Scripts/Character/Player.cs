@@ -18,7 +18,7 @@ public class Player : Character
     private static Player _instance;
     
     private Animator _animator;
-    
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();

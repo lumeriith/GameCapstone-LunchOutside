@@ -1325,7 +1325,7 @@ PrefabInstance:
     - target: {fileID: 2822101166207294217, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.74
+      value: 5.58
       objectReference: {fileID: 0}
     - target: {fileID: 2822101166207294217, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
@@ -1335,7 +1335,7 @@ PrefabInstance:
     - target: {fileID: 2822101166207294217, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.13
+      value: 0.74
       objectReference: {fileID: 0}
     - target: {fileID: 2822101166207294217, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
@@ -1420,6 +1420,9 @@ MonoBehaviour:
   visionStartPoint: {fileID: 1893630264}
   visionAngle: 0
   sampleBones: 0000000003000000040000000a0000000700000011000000120000000f0000001000000001000000020000000b0000000c000000
+  suspicionGrowSpeedMin: 0.1
+  suspicionGrowSpeedMax: 0.5
+  suspicionDecaySpeed: 0.5
 --- !u!1 &924674836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3658,6 +3661,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2.416
       objectReference: {fileID: 0}
+    - target: {fileID: 6628506633779203502, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: defaultWeaponPrefab
+      value: 
+      objectReference: {fileID: 2559336106323883357, guid: e4b0f2d134a389b419f971fa53ef3e92,
+        type: 3}
+    - target: {fileID: 6628506634661912384, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6628506635665928602, guid: 189328923177af14ea91953fa44e8ff6,
         type: 3}
       propertyPath: m_ClearFlags
@@ -3727,6 +3741,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735207981045960323, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: equipParentBone
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735207981045960323, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: equipLocalPosition.x
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735207981045960323, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: equipLocalPosition.y
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735207981045960323, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: equipLocalPosition.z
+      value: 0.025
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 189328923177af14ea91953fa44e8ff6, type: 3}

@@ -10,25 +10,29 @@ public struct InfoAttackHit
     public Vector3 point;
     public Vector3 normal;
     public Collider collider;
+    public int score;
 }
 
-public class FencingSword : MonoBehaviour
+public class FencingSword : Weapon
 {
     public Transform startPivot;
     public Transform endPivot;
+    public int score = 1;
 
     public const float HitCooldown = 0.75f;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
-    
-    private void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         _parent = GetComponentInParent<Character>();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         var d = endPivot.position - startPivot.position;
         
         if (!Physics.Raycast(startPivot.position, d, out var hit, d.magnitude, LayerMask.GetMask("Character Hitbox"),
@@ -47,7 +51,8 @@ public class FencingSword : MonoBehaviour
             to = other,
             point = hit.point,
             normal = hit.normal,
-            collider = hit.collider
+            collider = hit.collider,
+            score = score
         };
         _parent.onDealAttack?.Invoke(hitInfo);
         other.onTakeAttack?.Invoke(hitInfo);
