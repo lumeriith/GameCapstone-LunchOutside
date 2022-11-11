@@ -39,6 +39,12 @@ public class Referee : MonoBehaviour
         {
             _sampleTransforms[i] = anim.GetBoneTransform(sampleBones[i]);
         }
+
+        GameManager.instance.onRoundPrepare += () =>
+        {
+            currentSuspicion = 0f;
+            currentVisibility = 0f;
+        };
     }
 
     private void FixedUpdate()
@@ -66,7 +72,7 @@ public class Referee : MonoBehaviour
         
         if (currentVisibility != prevVis)
         {
-            onVisibilityChanged(prevVis, currentVisibility);
+            onVisibilityChanged?.Invoke(prevVis, currentVisibility);
         }
     }
 
