@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class vThirdPersonCamera : MonoBehaviour
 {
+    [Serializable]
+    public struct PositionSettings
+    {
+        public float rightOffset;
+        public float defaultDistance;
+        public float height;
+    }
+    
     #region inspector properties    
 
     public Transform target;
@@ -14,10 +22,15 @@ public class vThirdPersonCamera : MonoBehaviour
     public LayerMask cullingLayer = 1 << 0;
     [Tooltip("Debug purposes, lock the camera behind the character for better align the states")]
     public bool lockCamera;
+    
+    public PositionSettings defaultSettings;
+    public PositionSettings aimingSettings;
+    
+    public float rightOffsetSmooth = 0.1f;
+    public float defaultDistanceSmooth = 0.1f;
+    public float heightSmooth = 0.1f;
 
-    public float rightOffset = 0f;
-    public float defaultDistance = 2.5f;
-    public float height = 1.4f;
+    public bool isAiming;
     public float smoothFollow = 10f;
     public float xMouseSensitivity = 3f;
     public float yMouseSensitivity = 3f;
@@ -39,6 +52,15 @@ public class vThirdPersonCamera : MonoBehaviour
     [HideInInspector]
     public Vector2 movementSpeed;
 
+    private float rightOffset;
+    private float defaultDistance;
+    private float height;
+
+    private float rightOffsetCv;
+    private float defaultDistanceCv;
+    private float heightCv;
+
+    
     private Transform targetLookAt;
     private Vector3 currentTargetPos;
     private Vector3 lookPoint;
@@ -72,6 +94,10 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null)
             return;
 
+        rightOffset = defaultSettings.rightOffset;
+        defaultDistance = defaultSettings.defaultDistance;
+        height = defaultSettings.height;
+        
         _camera = GetComponent<CinemachineVirtualCamera>();
         _main = Camera.main;
         currentTarget = target;
@@ -105,6 +131,12 @@ public class vThirdPersonCamera : MonoBehaviour
     {
         if (target == null || targetLookAt == null) return;
 
+        isAiming = Player.instance.isAiming;
+        var settings = isAiming ? aimingSettings : defaultSettings;
+
+        rightOffset = Mathf.SmoothDamp(rightOffset, settings.rightOffset, ref rightOffsetCv, rightOffsetSmooth);
+        defaultDistance = Mathf.SmoothDamp(defaultDistance, settings.defaultDistance, ref defaultDistanceCv, defaultDistanceSmooth);
+        height = Mathf.SmoothDamp(height, settings.height, ref heightCv, heightSmooth);
         CameraMovement();
     }
 

@@ -28,6 +28,7 @@ public class FencingSword : Weapon
     {
         base.Awake();
         _parent = GetComponentInParent<Character>();
+        _animator = _parent.GetComponent<Animator>();
     }
 
     protected override void Update()
@@ -57,5 +58,14 @@ public class FencingSword : Weapon
         _parent.onDealAttack?.Invoke(hitInfo);
         other.onTakeAttack?.Invoke(hitInfo);
         _lastHitTime = Time.time;
+    }
+    
+    private Animator _animator;
+
+    public override void OnUse()
+    {
+        base.OnUse();
+        if (Input.GetKey(KeyCode.W)) _animator.SetTrigger("Leap Attack");
+        else _animator.SetTrigger("Basic Attack");
     }
 }

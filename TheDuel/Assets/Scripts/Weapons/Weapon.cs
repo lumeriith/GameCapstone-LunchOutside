@@ -7,15 +7,18 @@ public class Weapon : MonoBehaviour
 {
     public bool isEquipped { get; set; }
     public Character owner { get; set; }
+    public bool isUseReady => isEquipped && CanUse();
 
     public GameObject[] activatedOnEquip;
-    
+
+    public float useCooldown = 0.1f;
     public HumanBodyBones equipParentBone;
     public Vector3 equipLocalPosition;
     public Vector3 equipLocalRotation;
     public bool isCheating;
     
     private Transform _followTransform;
+    private float _lastUseTime;
 
     protected virtual void Awake()
     {
@@ -29,6 +32,27 @@ public class Weapon : MonoBehaviour
             transform.localPosition = equipLocalPosition;
             transform.localRotation = Quaternion.Euler(equipLocalRotation);
         }
+    }
+
+    public void Use()
+    {
+        if (!isUseReady) return;
+        _lastUseTime = Time.time;
+        OnUse();
+    }
+
+    /// <summary>
+    /// By default it checks for cooldown time.
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool CanUse()
+    {
+        return Time.time - _lastUseTime > useCooldown;
+    }
+
+    public virtual void OnUse()
+    {
+        
     }
 
     public virtual void OnEquip()

@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
     public Action<InfoAttackHit> onTakeAttack;
     public Action<bool> onCheatingChanged;
 
-    public Weapon defaultWeaponPrefab;
+    public Weapon[] defaultWeaponPrefabs;
     public List<Weapon> weapons;
     public Weapon equippedWeapon;
     public int maxWeapons = 3;
@@ -29,15 +29,23 @@ public class Character : MonoBehaviour
         }
     }
 
+    public bool isAiming { get; protected set; }
+
     private bool _isCheating;
 
-    protected void Start()
+    protected virtual void Start()
     {
-        if (defaultWeaponPrefab != null)
+        if (defaultWeaponPrefabs != null)
         {
-            var weap = AddWeapon(defaultWeaponPrefab);
-            _defaultWeapon = weap;
-            EquipDefaultWeapon();
+            foreach (var w in defaultWeaponPrefabs)
+            {
+                var weap = AddWeapon(w);
+                if (_defaultWeapon == null)
+                {
+                    _defaultWeapon = weap;
+                    EquipDefaultWeapon();
+                }
+            }
         }
 
         GameManager.instance.onRoundPrepare += EquipDefaultWeapon;
@@ -88,5 +96,31 @@ public class Character : MonoBehaviour
 
         weapons.Remove(weapon);
         Destroy(weapon);
+    }
+    
+    public void UseWeapon()
+    {
+        if (equippedWeapon == null || !equippedWeapon.isUseReady) return;
+        equippedWeapon.Use();
+    }
+
+    public void CycleWeaponUp()
+    {
+        if (weapons.Count < 2) return;
+        var i = weapons.IndexOf(equippedWeapon);
+        if (i == -1) return;
+        i++;
+        if (i >= weapons.Count) i = 0;
+        EquipWeapon(weapons[i]);
+    }
+
+    public void CycleWeaponDown()
+    {
+        if (weapons.Count < 2) return;
+        var i = weapons.IndexOf(equippedWeapon);
+        if (i == -1) return;
+        i--;
+        if (i < 0) i = weapons.Count - 1;
+        EquipWeapon(weapons[i]);
     }
 }

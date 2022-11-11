@@ -3201,8 +3201,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6628506635665928606}
-  m_LocalRotation: {x: -0.06334738, y: -0.92366636, z: 0.17688419, w: -0.33397546}
-  m_LocalPosition: {x: -3.7833395, y: 3.5064597, z: 7.850486}
+  m_LocalRotation: {x: 0.13033628, y: -0.12741236, z: 0.016119603, w: 0.98311687}
+  m_LocalPosition: {x: 1.7896686, y: 2.1825128, z: -3.5176105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3218,7 +3218,7 @@ Camera:
   m_GameObject: {fileID: 6628506635665928606}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3622,8 +3622,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9117046057168173251}
-  m_LocalRotation: {x: -0.06334738, y: -0.92366636, z: 0.17688419, w: -0.33397546}
-  m_LocalPosition: {x: -3.7833395, y: 3.5064597, z: 7.850486}
+  m_LocalRotation: {x: 0.13033627, y: -0.12741235, z: 0.016119601, w: 0.9831168}
+  m_LocalPosition: {x: 1.7896686, y: 2.1825128, z: -3.5176105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3649,9 +3649,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   lockCamera: 0
-  rightOffset: -0.47
-  defaultDistance: 2.02
-  height: 1.6
+  defaultSettings:
+    rightOffset: -0.47
+    defaultDistance: 2.02
+    height: 1.6
+  aimingSettings:
+    rightOffset: -0.47
+    defaultDistance: 1.5
+    height: 1.7
+  rightOffsetSmooth: 0.1
+  defaultDistanceSmooth: 0.1
+  heightSmooth: 0.1
+  isAiming: 0
   smoothFollow: 10
   xMouseSensitivity: 3
   yMouseSensitivity: 3
@@ -3773,6 +3782,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: defaultWeaponPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: defaultWeaponPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1869352798615921964, guid: 0cd7d7ba0292c504887a476413dfb066,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6dd21c5d2fbad146a00374cb0920858, type: 3}
 --- !u!4 &6999033781007312058 stripped
@@ -3807,7 +3827,7 @@ PrefabInstance:
     - target: {fileID: 3168531735682471817, guid: 7df7fd81f4c32be478332bfeda682b5d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.76
+      value: 1.098
       objectReference: {fileID: 0}
     - target: {fileID: 3168531735682471817, guid: 7df7fd81f4c32be478332bfeda682b5d,
         type: 3}
@@ -3817,7 +3837,7 @@ PrefabInstance:
     - target: {fileID: 3168531735682471817, guid: 7df7fd81f4c32be478332bfeda682b5d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.23
+      value: -2.416
       objectReference: {fileID: 0}
     - target: {fileID: 3168531735682471817, guid: 7df7fd81f4c32be478332bfeda682b5d,
         type: 3}
@@ -3854,6 +3874,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: maxWeapons
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: defaultWeaponPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: defaultWeaponPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1869352798615921964, guid: 0cd7d7ba0292c504887a476413dfb066,
+        type: 3}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: defaultWeaponPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 2559336106323883357, guid: e4b0f2d134a389b419f971fa53ef3e92,
+        type: 3}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: defaultWeaponPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 2272598415935700043, guid: 98006157ee54a554581c4d395a695891,
+        type: 3}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: defaultWeaponPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 5855475486311153994, guid: 2576d221e20b436499882c3c5f32ba8b,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7df7fd81f4c32be478332bfeda682b5d, type: 3}
 --- !u!4 &6628506633779203501 stripped
