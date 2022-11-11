@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 public class GameManager : ManagerBase<GameManager>
 {
     public Action onRoundEnded;
+    public Action onRoundPrepare;
     public Action onRoundStarted;
 
     public bool isRoundOngoing { get; private set; }
@@ -44,6 +45,7 @@ public class GameManager : ManagerBase<GameManager>
     
     private IEnumerator StartRoundRoutine()
     {
+        onRoundPrepare?.Invoke();
         fadeOutVolume.weight = 1f;
         Player.instance.transform.SetPositionAndRotation(playerStartPos.position, playerStartPos.rotation);
         Enemy.instance.transform.SetPositionAndRotation(enemyStartPos.position, enemyStartPos.rotation);

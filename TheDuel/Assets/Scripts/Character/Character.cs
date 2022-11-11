@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
 {
     public Action<InfoAttackHit> onDealAttack;
     public Action<InfoAttackHit> onTakeAttack;
+    public Action<bool> onCheatingChanged;
 
     public Weapon defaultWeaponPrefab;
     public List<Weapon> weapons;
@@ -14,17 +15,42 @@ public class Character : MonoBehaviour
     public int maxWeapons = 3;
 
     public bool canAddWeapon => weapons.Count < maxWeapons;
+
+    private Weapon _defaultWeapon;
     
-    
-    public bool isCheating;
+    public bool isCheating
+    {
+        get => _isCheating;
+        set
+        {
+            if (_isCheating == value) return;
+            _isCheating = value;
+            onCheatingChanged?.Invoke(_isCheating);
+        }
+    }
+
+    private bool _isCheating;
 
     protected void Start()
     {
         if (defaultWeaponPrefab != null)
         {
             var weap = AddWeapon(defaultWeaponPrefab);
-            EquipWeapon(weap);
+            _defaultWeapon = weap;
+            EquipDefaultWeapon();
         }
+
+        GameManager.instance.onRoundPrepare += EquipDefaultWeapon;
+    }
+
+    public void EquipDefaultWeapon()
+    {
+        if (_defaultWeapon == null)
+        {
+            Debug.LogWarning("Default weapon not given", this);
+            return;
+        }
+        EquipWeapon(_defaultWeapon);
     }
 
     public Weapon AddWeapon(Weapon prefab)
