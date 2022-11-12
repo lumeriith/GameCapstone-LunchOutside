@@ -9,7 +9,7 @@ public class CarryingMan : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        Destroy(carryingMan, 100f);
     }
 
     // Update is called once per frame
