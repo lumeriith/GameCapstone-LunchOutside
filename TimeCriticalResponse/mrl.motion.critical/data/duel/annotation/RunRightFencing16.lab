@@ -3,8 +3,8 @@
 	file:RunRightFencing16.bvh
 	person:1
 	oppositePerson:0
-	startFrame:100
-	endFrame:120
+	startFrame:1
+	endFrame:14
 	include:
 	isAlone:
 	type:run

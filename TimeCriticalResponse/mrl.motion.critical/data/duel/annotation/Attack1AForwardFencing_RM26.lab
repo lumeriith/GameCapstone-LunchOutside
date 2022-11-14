@@ -3,8 +3,8 @@
 	file:Attack1AForwardFencing_RM26.bvh
 	person:1
 	oppositePerson:0
-	startFrame:100
-	endFrame:118
+	startFrame:4
+	endFrame:15
 	include:
 	isAlone:
 	type:attack
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:110
+	interactionFrame:12
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:

@@ -3,8 +3,8 @@
 	file:ParryLowFencing21.bvh
 	person:1
 	oppositePerson:0
-	startFrame:92
-	endFrame:120
+	startFrame:2
+	endFrame:17
 	include:
 	isAlone:
 	type:parry
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:102
+	interactionFrame:4
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:

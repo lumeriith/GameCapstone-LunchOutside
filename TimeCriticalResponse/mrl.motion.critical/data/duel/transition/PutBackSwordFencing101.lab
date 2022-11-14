@@ -3,8 +3,8 @@
 	file:PutBackSwordFencing101.bvh
 	person:1
 	oppositePerson:0
-	startFrame:80
-	endFrame:220
+	startFrame:0
+	endFrame:83
 	include:
 	isAlone:
 	type:

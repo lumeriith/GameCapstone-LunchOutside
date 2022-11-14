@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:IdleCombatFencing31.bvh
+	file:RunLeftFencing16.bvh
 	person:1
 	oppositePerson:0
-	startFrame:80
-	endFrame:140
+	startFrame:100
+	endFrame:120
 	include:
 	isAlone:
-	type:
+	type:run
 	subtype:
 	mood:
 	power:

@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:DeathBack98.bvh
+	file:ParryLeftFencing21.bvh
 	person:1
 	oppositePerson:0
-	startFrame:80
-	endFrame:210
+	startFrame:92
+	endFrame:120
 	include:
 	isAlone:
-	type:
+	type:parry_left
 	subtype:
 	mood:
 	power:
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:-1
+	interactionFrame:102
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:

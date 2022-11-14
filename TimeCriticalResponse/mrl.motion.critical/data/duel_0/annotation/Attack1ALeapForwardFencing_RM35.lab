@@ -1,0 +1,24 @@
+{
+	defaultType:
+	file:Attack1ALeapForwardFencing_RM35.bvh
+	person:1
+	oppositePerson:0
+	startFrame:102
+	endFrame:125
+	include:
+	isAlone:
+	type:attack_long
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:118
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},

@@ -720,7 +720,8 @@ public class MotionAnnotationHelper extends BaseApplication{
 	private void setSampleValues(){
 //		propertyPanel.setSampleValues("type", BALL_CONTACTS[0], BALL_CONTACTS[1], "walk", "punch", "kick", "push", "slap", "pointing", "grab", "others");
 //		propertyPanel.setSampleValues("type", "walk", "punch", "kick", "push", "slap", "pointing", "grab", "others");
-		propertyPanel.setSampleValues("type", BALL_CONTACTS[0], BALL_CONTACTS[1], "idle", "crouch", "walk", "run", "attack", "death", "parry", "draw", "put_back", 
+		propertyPanel.setSampleValues("type", BALL_CONTACTS[0], BALL_CONTACTS[1], "walk", "run", "attack_short", "attack_long", 
+				"parry_up", "parry_down", "parry_left", "parry_right", "draw", "put_back", 
 				"others");
 		propertyPanel.setSampleValues("subtype", "", "side", "in-out", "down-up");
 		propertyPanel.setSampleValues("beforeActiveState", "standing", "bent", "lying");

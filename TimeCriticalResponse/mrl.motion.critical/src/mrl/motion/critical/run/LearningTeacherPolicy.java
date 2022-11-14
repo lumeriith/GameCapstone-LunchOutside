@@ -15,10 +15,16 @@ public class LearningTeacherPolicy {
 		return new DuelConfig(name).setDataFolder("duel", "data\\stop_fencing.bvh");
 	}
 	
+	public static GMMConfig duel_0() {
+		String name = "duel_0";
+		return new DuelConfig(name).setDataFolder("duel_0", "data\\stop_fencing.bvh");
+	}
+	
 	public static void main(String[] args) {
 		//GMMConfig config = martial_arts();
-		GMMConfig config = duel();
+		//GMMConfig config = duel();
+		GMMConfig config = duel_0();
 		PolicyLearning learning = new PolicyLearning(config, false);
-		learning.runTraining(100000);
+		learning.runTraining(50000);
 	}
 }

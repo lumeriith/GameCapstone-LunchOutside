@@ -3,8 +3,8 @@
 	file:DrawSwordFencing92.bvh
 	person:1
 	oppositePerson:0
-	startFrame:100
-	endFrame:127
+	startFrame:39
+	endFrame:64
 	include:
 	isAlone:
 	type:draw
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:105
+	interactionFrame:50
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:

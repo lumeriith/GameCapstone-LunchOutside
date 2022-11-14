@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:IdleCombatFencing31.bvh
+	file:ParryLowFencing21.bvh
 	person:1
 	oppositePerson:0
-	startFrame:100
-	endFrame:115
+	startFrame:92
+	endFrame:120
 	include:
 	isAlone:
-	type:idle
+	type:parry_down
 	subtype:
 	mood:
 	power:
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:-1
+	interactionFrame:102
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:

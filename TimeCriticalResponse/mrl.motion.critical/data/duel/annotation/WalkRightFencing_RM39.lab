@@ -3,8 +3,8 @@
 	file:WalkRightFencing_RM39.bvh
 	person:1
 	oppositePerson:0
-	startFrame:100
-	endFrame:140
+	startFrame:2
+	endFrame:20
 	include:
 	isAlone:
 	type:walk

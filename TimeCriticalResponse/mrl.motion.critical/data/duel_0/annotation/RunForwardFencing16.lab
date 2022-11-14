@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:DeathBack98.bvh
+	file:RunForwardFencing16.bvh
 	person:1
 	oppositePerson:0
-	startFrame:95
-	endFrame:200
+	startFrame:100
+	endFrame:120
 	include:
 	isAlone:
-	type:death
+	type:run
 	subtype:
 	mood:
 	power:
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:100
+	interactionFrame:-1
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:

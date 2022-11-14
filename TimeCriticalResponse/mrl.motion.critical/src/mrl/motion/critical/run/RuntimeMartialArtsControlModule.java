@@ -142,12 +142,14 @@ public class RuntimeMartialArtsControlModule extends Module{
 		
 		c.cameraTracking = true;
 		MotionDataConverter.setAllJoints();
-		Configuration.BASE_MOTION_FILE = "data\\t_pose_ue2.bvh";
+//		Configuration.BASE_MOTION_FILE = "data\\t_pose_ue2.bvh";
+		Configuration.BASE_MOTION_FILE = "data\\stop_fencing.bvh";
 		MotionDataConverter.setUseOrientation();
 		MotionDataConverter.setOrientationJointsByFileOrder();
 		
 		useDynamicAgility = true;
-		c.init("martial_arts_sp_da");
+//		c.init("martial_arts_sp_da");
+		c.init("duel_0_sp_da");
 		
 		actionQueue = new LinkedList<Integer>();
 		actionStartFrames = new LinkedList<Integer>();

@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:IdleCrouchFencing56.bvh
+	file:WalkLeftFencing_RM40.bvh
 	person:1
 	oppositePerson:0
 	startFrame:100
-	endFrame:150
+	endFrame:140
 	include:
 	isAlone:
-	type:crouch
+	type:walk
 	subtype:
 	mood:
 	power:

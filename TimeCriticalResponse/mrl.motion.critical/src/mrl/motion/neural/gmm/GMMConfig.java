@@ -262,7 +262,7 @@ public abstract class GMMConfig {
 				
 		protected void setTime(int timeLimit, int minSearchTime, int maxSearchTime) {
 			this.timeLimit = timeLimit;
-			this.maxSearchTime = Math.min(maxSearchTime, 65);
+			this.maxSearchTime = Math.min(maxSearchTime, 100);
 			this.minSearchTime = minSearchTime;
 		}
 		

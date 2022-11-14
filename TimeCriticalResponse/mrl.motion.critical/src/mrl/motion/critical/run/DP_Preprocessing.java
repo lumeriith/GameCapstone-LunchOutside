@@ -16,7 +16,8 @@ public class DP_Preprocessing {
 		String[] actions = DuelConfig.actionTypes;
 		int cLabelSize = DuelConfig.LOCO_ACTION_SIZE;
 		
-		String dataFolder = "duel";
+//		String dataFolder = "duel";
+		String dataFolder = "duel_0";
 		String tPoseFile = "data\\stop_fencing.bvh";
 		
 		TransitionDPGenerator.make(dataFolder, tPoseFile, actions, cLabelSize);
