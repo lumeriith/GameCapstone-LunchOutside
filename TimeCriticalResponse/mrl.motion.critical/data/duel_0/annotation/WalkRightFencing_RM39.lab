@@ -3,11 +3,35 @@
 	file:WalkRightFencing_RM39.bvh
 	person:1
 	oppositePerson:0
-	startFrame:100
-	endFrame:140
+	startFrame:22
+	endFrame:38
 	include:
 	isAlone:
-	type:walk
+	type:walk_r
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:-1
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},
+{
+	defaultType:
+	file:WalkRightFencing_RM39.bvh
+	person:1
+	oppositePerson:0
+	startFrame:43
+	endFrame:60
+	include:
+	isAlone:
+	type:walk_r
 	subtype:
 	mood:
 	power:

@@ -3,8 +3,8 @@
 	file:Attack1ALeapForwardFencing_RM35.bvh
 	person:1
 	oppositePerson:0
-	startFrame:102
-	endFrame:125
+	startFrame:21
+	endFrame:47
 	include:
 	isAlone:
 	type:attack_long
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:118
+	interactionFrame:39
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:
