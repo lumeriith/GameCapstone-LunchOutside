@@ -551,6 +551,10 @@ public class MotionDataConverter {
 		double[] data = new double[jointList.length*3];
 		for (int i = 0; i < jointList.length; i++) {
 			Point3d p = pointMap.get(jointList[i]);
+			if(p == null)
+			{
+				System.out.println("jointList: " + jointList);
+			}
 			data[i*3 + 0] = p.x;
 			data[i*3 + 1] = p.y;
 			data[i*3 + 2] = p.z;

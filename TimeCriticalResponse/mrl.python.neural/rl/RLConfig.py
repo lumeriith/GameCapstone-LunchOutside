@@ -1,5 +1,6 @@
 import tensorflow as tf
-
+tf = tf.compat.v1
+tf.disable_eager_execution()
 class RLConfig:
     __instance = None
     
