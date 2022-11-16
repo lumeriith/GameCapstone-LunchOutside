@@ -17,6 +17,7 @@ public class FlyingCan : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         Vector3 velocity = GetVelocity(transform.position, m_Target, m_InitialAngle);
         m_Rigidbody.velocity = velocity;
+        m_Rigidbody.angularVelocity = new Vector3(0f, 0f, 5f);
     }
 
     void MakeRandom()

@@ -82,6 +82,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyingCan2
       objectReference: {fileID: 0}
+    - target: {fileID: 4535655647612516297, guid: 091c40835fc7ae44ba18d6d34a022afa,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 091c40835fc7ae44ba18d6d34a022afa, type: 3}
 --- !u!1 &6599404768755907646 stripped
