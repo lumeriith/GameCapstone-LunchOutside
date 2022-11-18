@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 1178888512111701770}
   - component: {fileID: 3645555396597239909}
   - component: {fileID: 5397760084310407438}
+  - component: {fileID: 7145240353783150727}
   m_Layer: 0
   m_Name: Referee Cutscene Camera
   m_TagString: Untagged
@@ -705,6 +706,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b211ab1e99ab04d847dea821c59316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7145240353783150727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943971549646108368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &5962483117665111226
 GameObject:
   m_ObjectHideFlags: 0
@@ -5854,6 +5878,7 @@ GameObject:
   - component: {fileID: 9117046057168173250}
   - component: {fileID: 9117046057168173248}
   - component: {fileID: 9117046057168173260}
+  - component: {fileID: 2885180072720922980}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -5956,6 +5981,29 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 6628506634943305643}
+--- !u!114 &2885180072720922980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117046057168173251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &3491612742716512997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6087,7 +6135,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 5b1000f73d84bf341aa31a34bcc809ac, type: 2}
+      objectReference: {fileID: 9100000, guid: cbd1db45c75e5b948a5befe9ecb80421, type: 2}
     - target: {fileID: 2822101166207294217, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
       propertyPath: m_RootOrder

@@ -28,7 +28,7 @@ public class Character : MonoBehaviour
     private Animator _animator;
     private float _currentStunDuration;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _animator = GetComponent<Animator>();
     }

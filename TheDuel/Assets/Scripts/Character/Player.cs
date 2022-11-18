@@ -20,12 +20,13 @@ public class Player : Character
     private LineRenderer _trajectoryRenderer;
     private Camera _cam;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _trajectoryRenderer = GetComponent<LineRenderer>();
         _trajectoryRenderer.positionCount = 20;
     }
-
+    
     protected override void Start()
     {
         base.Start();
