@@ -58,7 +58,21 @@ public class UI_Detection : MonoBehaviour
     {
         Player.instance.onCheatingChanged += OnCheatingChanged;
         Referee.instance.onSuspicionChanged += OnSuspicionChanged;
+        Referee.instance.onDetectedCheating += DetectedCheating;
+        GameManager.instance.onRoundPrepare += RoundPreparing;
         _camera = Camera.main;
+    }
+
+    private void DetectedCheating()
+    {
+        _canvasGroup.DOFade(0f, 1f);
+    }
+
+    private void RoundPreparing()
+    {
+        _canvasGroup.alpha = 1f;
+        meterCanvasGroup.alpha = 0f;
+        topTextBoxCanvasGroup.alpha = 0f;
     }
 
     private void Update()

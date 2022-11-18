@@ -40,7 +40,7 @@ public class GrenadeProjectile : Projectile
             var closestPoint = c.ClosestPoint(transform.position);
             var dist = Vector3.Distance(transform.position, closestPoint);
             var stunTime = Mathf.Lerp(explodeStunTimeMax, explodeStunTimeMin,
-                (dist - explodeMinRadius) / explodeMaxRadius);
+                (dist - explodeMinRadius) / (explodeMaxRadius - explodeMinRadius));
             chr.Stun(stunTime);
 
             if (Vector3.Angle(chr.transform.forward, transform.position - closestPoint) < 90)
