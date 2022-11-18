@@ -81,14 +81,15 @@ public class Referee : MonoBehaviour
                 var endPoint = t.position;
                 var delta = endPoint - startPoint;
                 if (Vector3.Angle(delta, visionStartPoint.forward) > visionAngle) continue;
-                if (Physics.Raycast(startPoint, delta, out var hit, delta.magnitude) && hit.collider.gameObject.GetComponentInParent<Player>() != null)
+                if (Physics.Raycast(startPoint, delta, out var hit, delta.magnitude, ~0, QueryTriggerInteraction.Ignore) && hit.collider.gameObject.GetComponentInParent<Player>() != null)
                 {
                     Debug.DrawLine(startPoint, endPoint, Color.green);
                     visibleRays++;
                 }
                 else
                 {
-                    Debug.DrawLine(startPoint, endPoint, Color.red);
+                    if (hit.point != Vector3.zero) Debug.DrawLine(startPoint, hit.point, Color.yellow);
+                    else Debug.DrawLine(startPoint, endPoint, Color.red);
                 }
             }
         }

@@ -18,6 +18,7 @@ public class Enemy : Character
 
     public float rotationSpeed;
 
+    public bool disableAi;
     public EnemyAIProfile aiProfile;
     public bool disableInitiative;
 
@@ -39,6 +40,7 @@ public class Enemy : Character
     {
         base.Update();
         if (!GameManager.instance.isRoundOngoing) return;
+        if (disableAi) return;
         if (isStunned) return;
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Strafing Movement")) return;
         UpdateNoiseValues();
