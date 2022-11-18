@@ -17,8 +17,17 @@ public class GameManager : ManagerBase<GameManager>
 
     public Transform playerStartPos;
     public Transform enemyStartPos;
+    public BoxCollider playRegionCollider;
+    
+    public Bounds playRegion { get; private set; }
+    
 
     public int cheatPenalty;
+
+    private void Awake()
+    {
+        playRegion = playRegionCollider.bounds;
+    }
 
     private void Start()
     {

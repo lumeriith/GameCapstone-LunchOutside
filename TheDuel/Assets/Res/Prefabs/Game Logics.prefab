@@ -947,6 +947,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6628506634720076806}
+  - {fileID: 396256527681653420}
   m_Father: {fileID: 6628506634691021081}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -965,6 +966,7 @@ MonoBehaviour:
   fadeOutVolume: {fileID: 6628506634720076807}
   playerStartPos: {fileID: 6628506635578084854}
   enemyStartPos: {fileID: 6628506634330252953}
+  playRegionCollider: {fileID: 1767910717089237751}
   cheatPenalty: 1
 --- !u!1 &6628506633889125189
 GameObject:
@@ -1836,7 +1838,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6628506634330252952}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000010430811}
-  m_LocalPosition: {x: 0, y: 0, z: 4.34}
+  m_LocalPosition: {x: -0.03, y: 0, z: 5.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3148,7 +3150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6628506635578084853}
   m_LocalRotation: {x: -0, y: -0.054048, z: -0, w: 0.9985384}
-  m_LocalPosition: {x: 1, y: 0, z: -0.98}
+  m_LocalPosition: {x: -0.02, y: 0, z: -6.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3706,6 +3708,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6747578306244275003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 396256527681653420}
+  - component: {fileID: 1767910717089237751}
+  m_Layer: 0
+  m_Name: Play Region
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &396256527681653420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747578306244275003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6628506633876064983}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1767910717089237751
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747578306244275003}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.94, y: 3.36, z: 14.04}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7738051125117393253
 GameObject:
   m_ObjectHideFlags: 0
@@ -4735,9 +4782,9 @@ MonoBehaviour:
   visionStartPoint: {fileID: 1893630264}
   visionAngle: 70
   sampleBones: 0000000003000000040000000a0000000700000011000000120000000f0000001000000001000000020000000b0000000c000000
-  suspicionGrowSpeedMin: 0.25
-  suspicionGrowSpeedMax: 1
-  suspicionDecaySpeed: 2
+  suspicionGrowSpeedMin: 0.5
+  suspicionGrowSpeedMax: 1.5
+  suspicionDecaySpeed: 2.5
 --- !u!1 &8995713364405753709
 GameObject:
   m_ObjectHideFlags: 0
@@ -6003,7 +6050,7 @@ MonoBehaviour:
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
     m_Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+    m_NoiseOffsets: {x: 292.3617, y: -320.1588, z: -978.18115}
 --- !u!1001 &3491612742716512997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6129,7 +6176,7 @@ PrefabInstance:
     - target: {fileID: 2822101166207294211, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
       propertyPath: m_Name
-      value: Test NPC
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2822101166207294216, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
@@ -6193,6 +6240,57 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
+      propertyPath: aiProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: f5d3c08b049324846a24bc761dc03418,
+        type: 2}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: lookOffset
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: equippedWeapon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: lookRotationOffset
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: weapons.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: initiativeThreshold
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: weapons.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: initiativeProximityMaxDistance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: initiativeProximityMinDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
       propertyPath: defaultWeaponPrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -6226,7 +6324,7 @@ PrefabInstance:
     - target: {fileID: 3168531735682471811, guid: 7df7fd81f4c32be478332bfeda682b5d,
         type: 3}
       propertyPath: m_Name
-      value: Test Player Character
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3168531735682471817, guid: 7df7fd81f4c32be478332bfeda682b5d,
         type: 3}

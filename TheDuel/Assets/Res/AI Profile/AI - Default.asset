@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8475d2469822bfc42857b8090232260d, type: 3}
+  m_Name: AI - Default
+  m_EditorClassIdentifier: 
+  lookNoiseSpeed: 1
+  lookRotationMinOffset: 2
+  lookRotationMaxOffset: 8
+  horizontalNoiseSpeed: 1
+  horizontalStayCenterWeight: 1
+  horizontalRandomWeight: 1
+  verticalNoiseSpeed: 1
+  verticalRandomWeight: 3
+  desiredDistance: 3.5
+  distanceDifferenceWeight: 0.1
+  initiativeNoiseSpeed: 1
+  initiativeProximityMaxDistance: 6
+  initiativeProximityMinDistance: 3
+  initiativeProximityWeight: 2
+  initiativeThreshold: 1.7
+  initiativeRandomWeight: 1
+  initiativeCooldown: 0.5
+  basicAttackChance: 0.7
+  leapAttackChance: 0.3

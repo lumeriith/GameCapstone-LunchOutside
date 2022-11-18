@@ -25,12 +25,12 @@ public class Character : MonoBehaviour
     public bool isStunned => _currentStunDuration > 0;
 
     private byte _isCheatingCounter;
-    private Animator _animator;
+    public Animator animator { get; private set; }
     private float _currentStunDuration;
 
     protected virtual void Awake()
     {
-        _animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     protected virtual void Start()
@@ -54,7 +54,7 @@ public class Character : MonoBehaviour
     protected virtual void Update()
     {
         _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
-        _animator.SetBool(IsStunned, isStunned);
+        animator.SetBool(IsStunned, isStunned);
     }
 
     public void EquipDefaultWeapon()
@@ -161,17 +161,17 @@ public class Character : MonoBehaviour
 
     public void PlayHitHead()
     {
-        _animator.SetTrigger("GetHitHead");
+        animator.SetTrigger("GetHitHead");
     }
 
     public void PlayHitFront()
     {
-        _animator.SetTrigger("GetHitFront");
+        animator.SetTrigger("GetHitFront");
     }
 
     public void PlayHitBack()
     {
-        _animator.SetTrigger("GetHitBack");
+        animator.SetTrigger("GetHitBack");
     }
 
 
