@@ -17,6 +17,8 @@ public class Referee : MonoBehaviour
 
     public Action<float, float> onSuspicionChanged;
     public Action<float, float> onVisibilityChanged;
+    public Action<bool, bool> onIsWatchingChanged;
+    public Action onDetectedCheating;
 
     public Transform visionStartPoint;
     public float visionAngle;
@@ -28,7 +30,22 @@ public class Referee : MonoBehaviour
     
     public float currentSuspicion { get; private set; }
     public float currentVisibility { get; private set; }
-    
+
+    public bool isWatching
+    {
+        get => _isWatching;
+        set
+        {
+            if (value != _isWatching)
+            {
+                onIsWatchingChanged?.Invoke(_isWatching, value);
+                _isWatching = value;
+            }
+        }
+    }
+
+    private bool _isWatching = true;
+
     private Transform[] _sampleTransforms;
 
     private void Start()
@@ -42,7 +59,10 @@ public class Referee : MonoBehaviour
 
         GameManager.instance.onRoundPrepare += () =>
         {
+            onSuspicionChanged?.Invoke(currentSuspicion, 0f);
             currentSuspicion = 0f;
+
+            onVisibilityChanged?.Invoke(currentVisibility, 0f);
             currentVisibility = 0f;
         };
     }
@@ -51,23 +71,28 @@ public class Referee : MonoBehaviour
     {
         var prevVis = currentVisibility;
         
-        var startPoint = visionStartPoint.position;
         int visibleRays = 0;
-        foreach (var t in _sampleTransforms)
+
+        if (isWatching)
         {
-            var endPoint = t.position;
-            var delta = endPoint - startPoint;
-            if (Vector3.Angle(delta, visionStartPoint.forward) > visionAngle) continue;
-            if (Physics.Raycast(startPoint, delta, out var hit, delta.magnitude) && hit.collider.gameObject.GetComponentInParent<Player>() != null)
+            var startPoint = visionStartPoint.position;
+            foreach (var t in _sampleTransforms)
             {
-                Debug.DrawLine(startPoint, endPoint, Color.green);
-                visibleRays++;
-            }
-            else
-            {
-                Debug.DrawLine(startPoint, endPoint, Color.red);
+                var endPoint = t.position;
+                var delta = endPoint - startPoint;
+                if (Vector3.Angle(delta, visionStartPoint.forward) > visionAngle) continue;
+                if (Physics.Raycast(startPoint, delta, out var hit, delta.magnitude) && hit.collider.gameObject.GetComponentInParent<Player>() != null)
+                {
+                    Debug.DrawLine(startPoint, endPoint, Color.green);
+                    visibleRays++;
+                }
+                else
+                {
+                    Debug.DrawLine(startPoint, endPoint, Color.red);
+                }
             }
         }
+
         currentVisibility = (float)visibleRays / _sampleTransforms.Length;
         
         if (currentVisibility != prevVis)
@@ -79,12 +104,16 @@ public class Referee : MonoBehaviour
     private void Update()
     {
         var prevSus = currentSuspicion;
-        if (currentVisibility > 0 && Player.instance.isCheating)
+        if (currentVisibility > 0 && Player.instance.isCheating && currentSuspicion < 0.9999f)
         {
             var speed = Mathf.Lerp(suspicionGrowSpeedMin, suspicionGrowSpeedMax, currentVisibility);
             currentSuspicion = Mathf.MoveTowards(prevSus, 1, speed * Time.deltaTime);
+            if (currentSuspicion > 0.9999f)
+            {
+                onDetectedCheating?.Invoke();
+            }
         }
-        else
+        else if (currentSuspicion < 0.9999f)
         {
             currentSuspicion = Mathf.MoveTowards(prevSus, 0, suspicionDecaySpeed * Time.deltaTime);
         }

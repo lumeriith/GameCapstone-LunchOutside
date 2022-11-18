@@ -18,9 +18,16 @@ public class GameManager : ManagerBase<GameManager>
     public Transform playerStartPos;
     public Transform enemyStartPos;
 
+    public int cheatPenalty;
+
     private void Start()
     {
         StartCoroutine(StartRoundRoutine());
+
+        Referee.instance.onDetectedCheating += () =>
+        {
+            StartCoroutine(CheatRestartRoutine());
+        };
     }
 
     public void StartNewRound()
@@ -36,8 +43,11 @@ public class GameManager : ManagerBase<GameManager>
 
     private IEnumerator EndRoundRoutine()
     {
-        isRoundOngoing = false;
-        onRoundEnded?.Invoke();
+        if (isRoundOngoing)
+        {
+            isRoundOngoing = false;
+            onRoundEnded?.Invoke();   
+        }
         yield return new WaitForSecondsRealtime(1f);
         DOTween.To(() => fadeOutVolume.weight, v => fadeOutVolume.weight = v, 1f, 1f);
         yield return new WaitForSecondsRealtime(1f);
@@ -53,5 +63,15 @@ public class GameManager : ManagerBase<GameManager>
         yield return new WaitForSecondsRealtime(1f);
         onRoundStarted?.Invoke();
         isRoundOngoing = true;
+    }
+
+    private IEnumerator CheatRestartRoutine()
+    {
+        isRoundOngoing = false;
+        onRoundEnded?.Invoke();
+        yield return new WaitForSeconds(1.5f);
+        ScoreManager.instance.IncrementEnemyScore(cheatPenalty);
+        yield return new WaitForSeconds(2f);
+        StartNewRound();
     }
 }

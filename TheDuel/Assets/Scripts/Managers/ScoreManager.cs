@@ -75,8 +75,8 @@ public class ScoreManager : ManagerBase<ScoreManager>
             onPlayerInvalidAttack?.Invoke(hit);
             return;
         }
-        playerScore += hit.score;
-        onPlayerScoreChanged?.Invoke(playerScore);
+
+        IncrementPlayerScore(hit.score);
         onPlayerValidAttack?.Invoke(hit);
         if (scoreWindowState == ScoreWindowState.Before)
         {
@@ -98,8 +98,8 @@ public class ScoreManager : ManagerBase<ScoreManager>
             onEnemyInvalidAttack?.Invoke(hit);
             return;
         }
-        enemyScore += hit.score;
-        onEnemyScoreChanged?.Invoke(enemyScore);
+
+        IncrementEnemyScore(hit.score);
         onEnemyValidAttack?.Invoke(hit);
         if (scoreWindowState == ScoreWindowState.Before)
         {
@@ -120,5 +120,17 @@ public class ScoreManager : ManagerBase<ScoreManager>
         remainingScoreWindowTime = scoreWindowTime;
         if (forPlayer) onPlayerScoreWindowStarted?.Invoke();
         else onEnemyScoreWindowStarted?.Invoke();
+    }
+
+    public void IncrementEnemyScore(int amount)
+    {
+        enemyScore += amount;
+        onEnemyScoreChanged?.Invoke(enemyScore);
+    }
+
+    public void IncrementPlayerScore(int amount)
+    {
+        playerScore += amount;
+        onPlayerScoreChanged?.Invoke(playerScore);
     }
 }

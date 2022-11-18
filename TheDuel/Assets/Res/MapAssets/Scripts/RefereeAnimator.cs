@@ -6,9 +6,9 @@ public class RefereeAnimator : MonoBehaviour
 {
     [SerializeField] float IdleCycle = 3.0f; //idle에서 행동 변화하는 결정 주기
     [SerializeField] float PhoneCycle = 3.0f; // phone 에서 통화 끊는 결정 주기
+    
     private Animator animator;
     private int refereeState = 0;
-    private bool isWatching = true; // 심판이 보고 있는지 
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class RefereeAnimator : MonoBehaviour
         }
         else if (refereeState == 2) //Phone Call 시작
         {
-            isWatching = false;
+            Referee.instance.isWatching = false;
             animator.SetInteger("RefereeState", 2);
             StartCoroutine(PhoneCallStart());
             
@@ -73,7 +73,7 @@ public class RefereeAnimator : MonoBehaviour
     IEnumerator PhoneCallStop()
     {
         yield return new WaitForSeconds(4.0f);
-        isWatching = true;
+        Referee.instance.isWatching = true;
         StartCoroutine(Idle());
     }
 
