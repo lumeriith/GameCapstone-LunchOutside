@@ -1,5 +1,7 @@
 import rnn.RNNModel as rm
 import tensorflow as tf
+# tf = tf.compat.v1
+# tf.disable_eager_execution()
 import sys
 
 def get_config(folder):
@@ -11,6 +13,19 @@ def get_config(folder):
     return c
     
 def get_config_impl(folder):
+    if (folder.startswith("duel_0_sp")):
+        c = WalkConfig()
+        c.X_DIMENSION = 10
+        c.Y_DIMENSION = 178
+        c.additional_joint = c.Y_DIMENSION - 1
+        c.additional_weight = 32
+        c.joint_len_weight = 0
+        c.LAYER_KEEP_PROB = 0.9
+        c.foot_weight = 0.1
+        c.foot_slide_weight = 0.2
+        
+        return c
+    
     if (folder.startswith("martial_arts_sp")):
         c = WalkConfig()
         c.X_DIMENSION = -1

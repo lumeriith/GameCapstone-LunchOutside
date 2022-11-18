@@ -1,6 +1,7 @@
 import rnn.RNNModel as rm
 import tensorflow as tf
-
+# tf = tf.compat.v1
+# tf.disable_eager_execution()
 
 def get_config(folder):
     c = get_config_impl(folder)

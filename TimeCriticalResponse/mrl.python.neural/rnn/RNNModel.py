@@ -1,4 +1,6 @@
 import tensorflow as tf
+# tf = tf.compat.v1
+# tf.disable_eager_execution()
 import util.TensorflowUtils as tu
 from util.dataLoader import loadNormalData
 from util.Util import Normalize, DummyCM
@@ -135,6 +137,7 @@ class RNNConfig(object):
     def rnn_cell(self, size=-1):
         if (size < 0):
             size = self.RNN_SIZE
+        #cell = tf.nn.rnn_cell.BasicLSTMCell(size, forget_bias=self.forget_bias, state_is_tuple=False)
         cell = tf.contrib.rnn.BasicLSTMCell(size, forget_bias=self.forget_bias, state_is_tuple=False)
         return cell
     
@@ -411,9 +414,11 @@ class RNNModel(object):
         for i in range(c.NUM_OF_LAYERS):
             cell = c.rnn_cell()
             if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
+                #cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
             cells.append(cell)
-                                                     
+
+#        stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells, state_is_tuple=False)
         stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells, state_is_tuple=False)
 #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
 #         initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)
@@ -483,9 +488,11 @@ class RNNGlobalRootModel(object):
         for i in range(c.NUM_OF_LAYERS):
             cell = c.rnn_cell()
             if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
+                #cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
             cells.append(cell)
-                                                     
+
+#        stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells)
         stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
 #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
         initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)
@@ -561,9 +568,11 @@ class TimingModel(object):
             for i in range(c.NUM_OF_LAYERS):
                 cell = c.rnn_cell()
                 if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
+                    #cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                     cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cells.append(cell)
-                                                         
+
+#            stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells)
             stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
     #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
             initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)
@@ -628,9 +637,10 @@ class TimingMergedModel(object):
             for i in range(c.TIMING_NUM_OF_LAYERS):
                 cell = c.rnn_cell(c.TIMING_RNN_SIZE)
                 if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
+                    #cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER)
                     cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cells.append(cell)
-                                                         
+
             t_stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
             t_initial_state = t_stacked_lstm.zero_state(self.batchSize, tf.float32)
             t_state = t_initial_state
@@ -643,7 +653,7 @@ class TimingMergedModel(object):
                 if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
                     cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cells.append(cell)
-                                                         
+
             stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
     #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
             initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)

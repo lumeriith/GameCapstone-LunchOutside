@@ -1,5 +1,7 @@
 
 import tensorflow as  tf
+# tf = tf.compat.v1
+# tf.disable_eager_execution()
 import rnn.Configurations
 from util.Pose2d import Pose2d
 

@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:WalkBackwardsFencing_RM41.bvh
+	file:Attack1ALeapForwardFencing_RM35.bvh
 	person:1
 	oppositePerson:0
-	startFrame:22
-	endFrame:61
+	startFrame:17
+	endFrame:57
 	include:
 	isAlone:
-	type:walk
+	type:
 	subtype:
 	mood:
 	power:

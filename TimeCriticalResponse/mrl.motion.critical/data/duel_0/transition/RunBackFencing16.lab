@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:WalkBackwardsFencing_RM41.bvh
+	file:RunBackFencing16.bvh
 	person:1
 	oppositePerson:0
-	startFrame:22
-	endFrame:61
+	startFrame:18
+	endFrame:56
 	include:
 	isAlone:
-	type:walk
+	type:
 	subtype:
 	mood:
 	power:

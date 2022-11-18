@@ -25,6 +25,6 @@ public class LearningTeacherPolicy {
 		//GMMConfig config = duel();
 		GMMConfig config = duel_0();
 		PolicyLearning learning = new PolicyLearning(config, false);
-		learning.runTraining(50000);
+		learning.runTraining(10);
 	}
 }
