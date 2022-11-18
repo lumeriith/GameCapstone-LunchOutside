@@ -3632,6 +3632,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -6.28
       objectReference: {fileID: 0}
+    - target: {fileID: 7949200075952372221, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: viewportXMargin
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949200075952372221, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: viewportYMargin
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8181132205217530360, guid: 189328923177af14ea91953fa44e8ff6,
+        type: 3}
+      propertyPath: disableAi
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9117046057168173250, guid: 189328923177af14ea91953fa44e8ff6,
         type: 3}
       propertyPath: m_LocalPosition.x
