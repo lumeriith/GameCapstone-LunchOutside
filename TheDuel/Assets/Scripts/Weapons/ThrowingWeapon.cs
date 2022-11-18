@@ -6,17 +6,26 @@ public class ThrowingWeapon : Weapon
 {
     public GameObject projectilePrefab;
     public Vector3 throwVelocity;
-    
-    
+    private Camera _mainCamera;
 
-    protected override void Awake()
+
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
+        _mainCamera = Camera.main;
     }
 
     protected override void Update()
     {
         base.Update();
         if (!isEquipped) return;
+    }
+
+    public override void OnUse()
+    {
+        base.OnUse();
+        var gobj = Instantiate(projectilePrefab, transform.position, _mainCamera.transform.rotation);
+        gobj.GetComponent<Rigidbody>().velocity = _mainCamera.transform.rotation * throwVelocity;
+        Kill();
     }
 }

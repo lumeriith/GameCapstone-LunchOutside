@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    private static readonly int IsStunned = Animator.StringToHash("IsStunned");
+    
     public Action<InfoAttackHit> onDealAttack;
     public Action<InfoAttackHit> onTakeAttack;
     public Action<bool> onCheatingChanged;
@@ -18,20 +20,18 @@ public class Character : MonoBehaviour
 
     private Weapon _defaultWeapon;
     
-    public bool isCheating
-    {
-        get => _isCheating;
-        set
-        {
-            if (_isCheating == value) return;
-            _isCheating = value;
-            onCheatingChanged?.Invoke(_isCheating);
-        }
-    }
-
+    public bool isCheating { get; private set; }
     public bool isAiming { get; protected set; }
+    public bool isStunned => _currentStunDuration > 0;
 
-    private bool _isCheating;
+    private byte _isCheatingCounter;
+    private Animator _animator;
+    private float _currentStunDuration;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     protected virtual void Start()
     {
@@ -49,6 +49,12 @@ public class Character : MonoBehaviour
         }
 
         GameManager.instance.onRoundPrepare += EquipDefaultWeapon;
+    }
+
+    protected virtual void Update()
+    {
+        _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
+        _animator.SetBool(IsStunned, isStunned);
     }
 
     public void EquipDefaultWeapon()
@@ -92,6 +98,7 @@ public class Character : MonoBehaviour
         if (equippedWeapon == weapon)
         {
             UnequipWeapon();
+            EquipDefaultWeapon();
         }
 
         weapons.Remove(weapon);
@@ -123,4 +130,49 @@ public class Character : MonoBehaviour
         if (i < 0) i = weapons.Count - 1;
         EquipWeapon(weapons[i]);
     }
+
+    public void IncrementCheatingCounter()
+    {
+        if (_isCheatingCounter == byte.MaxValue) throw new InvalidOperationException();
+        _isCheatingCounter++;
+        UpdateCheatingState();
+    }
+
+    public void DecrementCheatingCounter()
+    {
+        if (_isCheatingCounter == byte.MinValue) throw new InvalidOperationException();
+        _isCheatingCounter--;
+        UpdateCheatingState();
+    }
+
+    private void UpdateCheatingState()
+    {
+        if (isCheating != _isCheatingCounter > 0)
+        {
+            onCheatingChanged?.Invoke(_isCheatingCounter > 0);
+            isCheating = _isCheatingCounter > 0;
+        }
+    }
+
+    public void Stun(float duration)
+    {
+        _currentStunDuration = Mathf.Max(_currentStunDuration, duration);
+    }
+
+    public void PlayHitHead()
+    {
+        _animator.SetTrigger("GetHitHead");
+    }
+
+    public void PlayHitFront()
+    {
+        _animator.SetTrigger("GetHitFront");
+    }
+
+    public void PlayHitBack()
+    {
+        _animator.SetTrigger("GetHitBack");
+    }
+
+
 }

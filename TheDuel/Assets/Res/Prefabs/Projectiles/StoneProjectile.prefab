@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2272598415935700036}
-  - component: {fileID: 2272598415935700043}
+  - component: {fileID: 7835996308643330848}
+  - component: {fileID: 5544409086210945265}
   m_Layer: 0
-  m_Name: Stone
+  m_Name: StoneProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2272598415935700043
+--- !u!114 &7835996308643330848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,19 +43,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 2272598415935700037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fccd2aa91d2b3744ebfd88b8e3a711b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 941295227befe5b4ba1a45dd31b8c68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activatedOnEquip:
-  - {fileID: 2272598415984899010}
-  useCooldown: 0.1
-  equipParentBone: 18
-  equipLocalPosition: {x: -0.05, y: 0.09, z: 0}
-  equipLocalRotation: {x: 0, y: 0, z: 0}
-  isCheating: 1
-  projectilePrefab: {fileID: 2272598415935700037, guid: feb92a7296bebf1418b01dc2a4a61b63,
-    type: 3}
-  throwVelocity: {x: 0, y: 3, z: 8}
+  stunDuration: 2
+  headshotStunDuration: 4
+  headshotGameObjectNames:
+  - humanoid_ Spine2
+  - humanoid_ Neck
+  - humanoid_ Head
+  minVelocity: 1
+--- !u!54 &5544409086210945265
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272598415935700037}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &2272598415984866658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,3 +150,17 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2272598415984866658}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &3595501791962380502
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272598415984899010}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: e08d894d1a4dca746a9673007d5c706d, type: 3}

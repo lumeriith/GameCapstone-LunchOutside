@@ -25,6 +25,11 @@ public class Weapon : MonoBehaviour
         foreach (var gobj in activatedOnEquip) gobj.SetActive(false);
     }
 
+    protected virtual void Start()
+    {
+        
+    }
+
     protected virtual void Update()
     {
         if (isEquipped)
@@ -59,7 +64,7 @@ public class Weapon : MonoBehaviour
     {
         foreach (var gobj in activatedOnEquip) gobj.SetActive(true);
 
-        if (isCheating) owner.isCheating = true;
+        if (isCheating) owner.IncrementCheatingCounter();
         
         var animator = GetComponentInParent<Animator>();
         if (animator == null) GetComponentInChildren<Animator>();
@@ -73,7 +78,7 @@ public class Weapon : MonoBehaviour
     {
         foreach (var gobj in activatedOnEquip) gobj.SetActive(false);
 
-        if (isCheating) owner.isCheating = false;
+        if (isCheating) owner.DecrementCheatingCounter();
         
         _followTransform = null;
         transform.parent = owner.transform;
