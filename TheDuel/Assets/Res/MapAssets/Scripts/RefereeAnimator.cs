@@ -21,6 +21,7 @@ public class RefereeAnimator : MonoBehaviour
         StartCoroutine(Idle());
     }
 
+
     IEnumerator Idle()
     {
         yield return new WaitForSeconds(IdleCycle); 
@@ -36,10 +37,11 @@ public class RefereeAnimator : MonoBehaviour
         }
         else if (refereeState == 2) //Phone Call Ω√¿€
         {
-            Referee.instance.isWatching = false;
-            animator.SetInteger("RefereeState", 2);
-            StartCoroutine(PhoneCallStart());
             
+            animator.SetInteger("RefereeState", 2);
+            Debug.Log("HI");
+            StartCoroutine(PhoneCallStart());
+
         }
     }
 
@@ -52,6 +54,8 @@ public class RefereeAnimator : MonoBehaviour
 
     IEnumerator PhoneCallStart()
     {
+        Referee.instance.isWatching = false;
+        
         yield return new WaitForSeconds(4.0f);
         StartCoroutine(PhoneCall());
     }
