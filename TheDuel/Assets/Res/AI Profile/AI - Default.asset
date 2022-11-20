@@ -26,8 +26,8 @@ MonoBehaviour:
   initiativeProximityMaxDistance: 6
   initiativeProximityMinDistance: 3
   initiativeProximityWeight: 2
-  initiativeThreshold: 1.7
+  initiativeThreshold: 1.65
   initiativeRandomWeight: 1
-  initiativeCooldown: 0.5
-  basicAttackChance: 0.7
-  leapAttackChance: 0.3
+  initiativeCooldown: 0.3
+  basicAttackChance: 0.6
+  leapAttackChance: 0.4

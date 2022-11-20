@@ -29,5 +29,5 @@ MonoBehaviour:
   initiativeThreshold: 1.7
   initiativeRandomWeight: 1
   initiativeCooldown: 0.3
-  basicAttackChance: 0.7
-  leapAttackChance: 0.3
+  basicAttackChance: 0.6
+  leapAttackChance: 0.4

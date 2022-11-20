@@ -35,6 +35,14 @@ public class UI_RefereeMarker : MonoBehaviour
     private void Start()
     {
         _main = Camera.main;
+        Referee.instance.onDetectedCheating += () =>
+        {
+            gameObject.SetActive(false);
+        };
+        GameManager.instance.onRoundPrepare += () =>
+        {
+            gameObject.SetActive(true);
+        };
     }
 
     private void Update()
@@ -42,7 +50,7 @@ public class UI_RefereeMarker : MonoBehaviour
         var isWatching = Referee.instance.isWatching;
         openEye.SetActive(isWatching);
         closedEye.SetActive(!isWatching);
-        if (isWatching)
+        if (Referee.instance.currentVisibility > 0.05f)
             _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, watchingAlpha, alphaRiseSpeed * Time.deltaTime);
         else
             _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, notWatchingAlpha, alphaDecaySpeed * Time.deltaTime);
