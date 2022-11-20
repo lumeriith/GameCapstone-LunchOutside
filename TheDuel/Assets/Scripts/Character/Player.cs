@@ -35,18 +35,18 @@ public class Player : Character
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0)) UseWeapon();
+        if (Input.GetKeyDown(KeyCode.Mouse0)) UseItem();
         var wheel = Input.GetAxis("Mouse ScrollWheel");
         if (wheel > 0)
         {
-            CycleWeaponUp();
+            CycleItemUp();
         }
         else if (wheel < 0)
         {
-            CycleWeaponDown();
+            CycleItemDown();
         }
 
-        isAiming = Input.GetKey(KeyCode.Mouse1) && equippedWeapon != null && equippedWeapon is ThrowingWeapon;
+        isAiming = Input.GetKey(KeyCode.Mouse1) && equippedItem != null && equippedItem is ThrowingItem;
         _trajectoryRenderer.enabled = isAiming;
         if (isAiming) UpdateTrajectory();
     }
@@ -55,7 +55,7 @@ public class Player : Character
     {
         const float TrajectoryDeltaTime = 0.06f;
         
-        var weap = (ThrowingWeapon) equippedWeapon;
+        var weap = (ThrowingItem) equippedItem;
 
         var pos = weap.transform.position;
         var vel = _cam.transform.rotation * weap.throwVelocity;

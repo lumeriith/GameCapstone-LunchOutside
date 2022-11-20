@@ -302,10 +302,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2402d490b9e66c44c808bc29df46f9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultWeaponPrefabs: []
-  weapons: []
-  equippedWeapon: {fileID: 0}
-  maxWeapons: 3
+  defaultItemPrefabs:
+  - {fileID: 1869352798615921964, guid: 0cd7d7ba0292c504887a476413dfb066, type: 3}
+  - {fileID: 2559336106323883357, guid: e4b0f2d134a389b419f971fa53ef3e92, type: 3}
+  - {fileID: 5855475486311153994, guid: 2576d221e20b436499882c3c5f32ba8b, type: 3}
+  - {fileID: 2272598415935700043, guid: 98006157ee54a554581c4d395a695891, type: 3}
+  items: []
+  equippedItem: {fileID: 0}
+  maxItems: 7
 --- !u!120 &3988280798075949974
 LineRenderer:
   m_ObjectHideFlags: 0

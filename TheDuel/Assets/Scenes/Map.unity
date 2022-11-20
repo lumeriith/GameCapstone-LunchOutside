@@ -3645,7 +3645,7 @@ PrefabInstance:
     - target: {fileID: 8181132205217530360, guid: 189328923177af14ea91953fa44e8ff6,
         type: 3}
       propertyPath: disableAi
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9117046057168173250, guid: 189328923177af14ea91953fa44e8ff6,
         type: 3}

@@ -188,10 +188,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e402e703fe0816479c873f4456e01cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultWeaponPrefabs: []
-  weapons: []
-  equippedWeapon: {fileID: 0}
-  maxWeapons: 3
+  defaultItemPrefabs:
+  - {fileID: 1869352798615921964, guid: 0cd7d7ba0292c504887a476413dfb066, type: 3}
+  items: []
+  equippedItem: {fileID: 0}
+  maxItems: 7
   rotationSpeed: 0
   disableAi: 0
   aiProfile: {fileID: 0}

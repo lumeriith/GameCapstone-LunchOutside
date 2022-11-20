@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Item : MonoBehaviour
 {
     public bool isEquipped { get; set; }
     public Character owner { get; set; }
@@ -86,6 +86,6 @@ public class Weapon : MonoBehaviour
     
     public void Kill()
     {
-        owner.RemoveWeapon(this);
+        owner.RemoveItem(this);
     }
 }

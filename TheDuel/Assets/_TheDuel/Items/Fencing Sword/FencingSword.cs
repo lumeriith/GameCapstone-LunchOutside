@@ -13,7 +13,7 @@ public struct InfoAttackHit
     public int score;
 }
 
-public class FencingSword : Weapon
+public class FencingSword : Item
 {
     public Transform startPivot;
     public Transform endPivot;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowingWeapon : Weapon
+public class ThrowingItem : Item
 {
     public GameObject projectilePrefab;
     public Vector3 throwVelocity;

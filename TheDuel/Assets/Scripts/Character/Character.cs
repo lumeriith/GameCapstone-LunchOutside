@@ -11,14 +11,14 @@ public class Character : MonoBehaviour
     public Action<InfoAttackHit> onTakeAttack;
     public Action<bool> onCheatingChanged;
 
-    public Weapon[] defaultWeaponPrefabs;
-    public List<Weapon> weapons;
-    public Weapon equippedWeapon;
-    public int maxWeapons = 3;
+    public Item[] defaultItemPrefabs;
+    public List<Item> items;
+    public Item equippedItem;
+    public int maxItems = 7;
 
-    public bool canAddWeapon => weapons.Count < maxWeapons;
+    public bool canAddItem => items.Count < maxItems;
 
-    private Weapon _defaultWeapon;
+    private Item _defaultItem;
     
     public bool isCheating { get; private set; }
     public bool isAiming { get; protected set; }
@@ -35,20 +35,20 @@ public class Character : MonoBehaviour
 
     protected virtual void Start()
     {
-        if (defaultWeaponPrefabs != null)
+        if (defaultItemPrefabs != null)
         {
-            foreach (var w in defaultWeaponPrefabs)
+            foreach (var w in defaultItemPrefabs)
             {
-                var weap = AddWeapon(w);
-                if (_defaultWeapon == null)
+                var weap = AddItem(w);
+                if (_defaultItem == null)
                 {
-                    _defaultWeapon = weap;
-                    EquipDefaultWeapon();
+                    _defaultItem = weap;
+                    EquipDefaultItem();
                 }
             }
         }
 
-        GameManager.instance.onRoundPrepare += EquipDefaultWeapon;
+        GameManager.instance.onRoundPrepare += EquipDefaultItem;
     }
 
     protected virtual void Update()
@@ -57,78 +57,78 @@ public class Character : MonoBehaviour
         animator.SetBool(IsStunned, isStunned);
     }
 
-    public void EquipDefaultWeapon()
+    public void EquipDefaultItem()
     {
-        if (_defaultWeapon == null)
+        if (_defaultItem == null)
         {
-            Debug.LogWarning("Default weapon not given", this);
+            Debug.LogWarning("Default item not given", this);
             return;
         }
-        EquipWeapon(_defaultWeapon);
+        EquipItem(_defaultItem);
     }
 
-    public Weapon AddWeapon(Weapon prefab)
+    public Item AddItem(Item prefab)
     {
-        if (!canAddWeapon) throw new InvalidOperationException("Max weapon limit reached");
+        if (!canAddItem) throw new InvalidOperationException("Max item limit reached");
         var newWeapon = Instantiate(prefab, transform);
         newWeapon.owner = this;
-        weapons.Add(newWeapon);
+        items.Add(newWeapon);
         return newWeapon;
     }
 
-    public void EquipWeapon(Weapon weapon)
+    public void EquipItem(Item item)
     {
-        if (equippedWeapon != null) UnequipWeapon();
-        weapon.isEquipped = true;
-        equippedWeapon = weapon;
-        weapon.OnEquip();
+        if (equippedItem != null) UnequipItem();
+        item.isEquipped = true;
+        equippedItem = item;
+        item.OnEquip();
     }
 
-    public void UnequipWeapon()
+    public void UnequipItem()
     {
-        if (equippedWeapon == null) throw new InvalidOperationException();
-        equippedWeapon.OnUnequip();
-        equippedWeapon = null;
+        if (equippedItem == null) throw new InvalidOperationException();
+        equippedItem.OnUnequip();
+        equippedItem = null;
     }
 
-    public void RemoveWeapon(Weapon weapon)
+    public void RemoveItem(Item item)
     {
-        if (weapon == null || !weapons.Contains(weapon)) throw new InvalidOperationException();
+        if (item == null || !items.Contains(item)) throw new InvalidOperationException();
         
-        if (equippedWeapon == weapon)
+        if (equippedItem == item)
         {
-            UnequipWeapon();
-            EquipDefaultWeapon();
+            UnequipItem();
+            EquipDefaultItem();
         }
 
-        weapons.Remove(weapon);
-        Destroy(weapon);
+        items.Remove(item);
+        Destroy(item);
     }
     
-    public void UseWeapon()
+    public void UseItem()
     {
-        if (equippedWeapon == null || !equippedWeapon.isUseReady) return;
-        equippedWeapon.Use();
+        if (equippedItem == null || !equippedItem.isUseReady) return;
+        equippedItem.Use();
     }
 
-    public void CycleWeaponUp()
+    public void CycleItemUp()
     {
-        if (weapons.Count < 2) return;
-        var i = weapons.IndexOf(equippedWeapon);
+        if (items.Count < 2) return;
+        var i = items.IndexOf(equippedItem);
         if (i == -1) return;
         i++;
-        if (i >= weapons.Count) i = 0;
-        EquipWeapon(weapons[i]);
+        if (i >= items.Count) i = 0;
+        EquipItem(items[i]);
     }
 
-    public void CycleWeaponDown()
+    public void CycleItemDown()
     {
-        if (weapons.Count < 2) return;
-        var i = weapons.IndexOf(equippedWeapon);
+        if (items.Count < 2) return;
+        var i = items.IndexOf(equippedItem);
         if (i == -1) return;
         i--;
-        if (i < 0) i = weapons.Count - 1;
-        EquipWeapon(weapons[i]);
+        if (i < 0) i = items.Count - 1;
+        EquipItem(items[i]);
     }
 
     public void IncrementCheatingCounter()
@@ -173,6 +173,4 @@ public class Character : MonoBehaviour
     {
         animator.SetTrigger("GetHitBack");
     }
-
-
 }
