@@ -13,11 +13,16 @@ public class DP_Preprocessing {
 		// locomotion action size(cyclic actions)
 //		TransitionDPGenerator.printDistribution = false;
 		
-		String[] actions = DuelConfig.actionTypes;
-		int cLabelSize = DuelConfig.LOCO_ACTION_SIZE;
+//		String[] actions = DuelConfig.actionTypes;
+//		int cLabelSize = DuelConfig.LOCO_ACTION_SIZE;
+//		
+//		String dataFolder = "duel_0";
+//		String tPoseFile = "data\\stop_fencing.bvh";
 		
-//		String dataFolder = "duel";
-		String dataFolder = "duel_0";
+		String[] actions = WalkConfig.actionTypes;
+		int cLabelSize = WalkConfig.LOCO_ACTION_SIZE;
+		
+		String dataFolder = "walk";
 		String tPoseFile = "data\\stop_fencing.bvh";
 		
 		TransitionDPGenerator.make(dataFolder, tPoseFile, actions, cLabelSize);

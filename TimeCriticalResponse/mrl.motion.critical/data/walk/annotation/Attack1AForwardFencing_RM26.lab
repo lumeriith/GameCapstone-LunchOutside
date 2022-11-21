@@ -1,13 +1,13 @@
 {
 	defaultType:
-	file:RunLeftFencing16.bvh
+	file:Attack1AForwardFencing_RM26.bvh
 	person:1
 	oppositePerson:0
-	startFrame:18
-	endFrame:48
+	startFrame:22
+	endFrame:47
 	include:
 	isAlone:
-	type:
+	type:attack_short
 	subtype:
 	mood:
 	power:
@@ -16,7 +16,7 @@
 	beforePassiveState:
 	afterPassiveState:
 	mutipleInteraction:
-	interactionFrame:-1
+	interactionFrame:34
 	interactionActivePart:
 	interactionPassivePart:
 	interactionType:

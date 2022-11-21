@@ -1,10 +1,10 @@
 {
 	defaultType:
-	file:RunLeftFencing16.bvh
+	file:Attack1AForwardFencing_RM26.bvh
 	person:1
 	oppositePerson:0
-	startFrame:18
-	endFrame:48
+	startFrame:16
+	endFrame:55
 	include:
 	isAlone:
 	type:

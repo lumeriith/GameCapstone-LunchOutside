@@ -7,61 +7,39 @@ import mrl.motion.neural.gmm.GMMConfig;
 import mrl.motion.neural.rl.PolicyEvaluation.MatchingPath;
 import mrl.util.MathUtil;
 
-public class DuelConfig extends GMMConfig{
+public class WalkConfig extends GMMConfig{
 	
 	public static double LOCOMOTION_RATIO = 0.8;
-	public static int LOCO_ACTION_SIZE = 2;
+	public static int LOCO_ACTION_SIZE = 4;
 	public static String[] actionTypes = {
-			"walk",
-			"run",
-//			"walk_f",
-//			"walk_b",
-//			"walk_l",
-//			"walk_r",
-//			"run_f",
-//			"run_b",
-//			"run_l",
-//			"run_r",
+			"walk_f",
+			"walk_b",
+			"walk_l",
+			"walk_r",
 			"attack_short",
-			"attack_long",
-			"parry_up",
-			"parry_down",
-			"parry_left",
-			"parry_right",
 	};
 	public static String[] fullActionTypes = actionTypes;
 	
 	static int tBase = 10;
 	public static double[][] timeOffset = {
-			{ tBase, tBase }, // walk
-			{ tBase, tBase }, // run
-//			{ tBase, tBase }, // walk_f
-//			{ tBase, tBase }, // walk_b
-//			{ tBase, tBase }, // walk_l
-//			{ tBase, tBase }, // walk_r
-//			{ tBase, tBase }, // run_f
-//			{ tBase, tBase }, // run_b
-//			{ tBase, tBase }, // run_l
-//			{ tBase, tBase }, // run_r
+			{ tBase, tBase }, // walk_f
+			{ tBase, tBase }, // walk_b
+			{ tBase, tBase }, // walk_l
+			{ tBase, tBase }, // walk_r
 			{ tBase, tBase }, // attack_short
-			{ tBase, tBase }, // attack_long
-			{ tBase, tBase }, // parry_up
-			{ tBase, tBase }, // parry_down
-			{ tBase, tBase }, // parry_left
-			{ tBase, tBase }, // parry_right
 	};
 
-	public DuelConfig(String name) {
+	public WalkConfig(String name) {
 		super(name, fullActionTypes, actionTypes, LOCO_ACTION_SIZE);
 	}
 	
 	@Override
 	public GMMGoalGenerator makeGoalGenerator() {
-		return new DuelGoalGenerator();
+		return new WalkGoalGenerator();
 	}
 	
 	public static boolean USE_STRAIGHT_SAMPLING = true;
-	private class DuelGoalGenerator extends GMMGoalGenerator{
+	private class WalkGoalGenerator extends GMMGoalGenerator{
 		
 		
 		private boolean sampleStraight = false;
@@ -72,7 +50,7 @@ public class DuelConfig extends GMMConfig{
 		private int locoCount = 0;
 		private int locoType = 0;
 		
-		public DuelGoalGenerator() {
+		public WalkGoalGenerator() {
 			prevPose = new Pose2d(Pose2d.BASE);
 			lastGoal = new GMMStuntLocoGoal(MathUtil.random.nextInt(getActionSize()), tBase, 0);
 		}
@@ -186,35 +164,23 @@ public class DuelConfig extends GMMConfig{
 	}
 	
 	public static double getDirectionOffsetByType(Motion m, String type) {
-		if (type.equals("parry_up") || 
-				type.equals("parry_down") ||
-				type.equals("parry_left") ||
-				type.equals("parry_right")){
-			return m._directionOffset("LeftHand", "RightHand");
-		} 
-		else if (
-				type.equals("attack_short") ||
-				type.equals("attack_long")
-				) {
+		if(type.equals("attack_short")) {
 			return m._directionOffset("LeftFoot", "RightFoot");
 		}
-//		else if(type.equals("walk_b") ||
-//				type.equals("run_b")
-//				) {
-//			return -Math.PI;
-//		}
-//		
-//		else if(type.equals("walk_l") ||
-//				type.equals("run_l")
-//				) {
-//			return -(Math.PI / 2);
-//		}
-//		
-//		else if(type.equals("walk_r") ||
-//				type.equals("run_r")
-//				) {
-//			return (Math.PI / 2);
-//		}
+		else if(type.equals("walk_b")
+				) {
+			return -Math.PI;
+		}
+		
+		else if(type.equals("walk_l")
+				) {
+			return -(Math.PI / 2);
+		}
+		
+		else if(type.equals("walk_r")
+				) {
+			return (Math.PI / 2);
+		}
 		
 		else {
 			return 0;

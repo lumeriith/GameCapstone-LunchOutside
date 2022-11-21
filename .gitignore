@@ -4,3 +4,5 @@
 *.data-00000-of-00001
 *.index
 *.meta
+TimeCriticalResponse/mrl.python.neural/train/duel_0_sp_da/data.zip
+TimeCriticalResponse/mrl.python.neural/train/duel_0_sp_da/train/checkpoint
