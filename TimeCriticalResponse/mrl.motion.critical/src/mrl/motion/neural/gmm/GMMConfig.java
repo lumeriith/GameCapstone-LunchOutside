@@ -97,7 +97,7 @@ public abstract class GMMConfig {
 		public GMMGoal(int actionType, int timeLimit, double direction) {
 			this.actionType = actionType;
 			setTime(timeLimit);
-			this.direction = direction;
+			//this.direction = direction;
 			
 			if (!isDirectionControl()) {
 				direction = 0;
@@ -262,7 +262,7 @@ public abstract class GMMConfig {
 				
 		protected void setTime(int timeLimit, int minSearchTime, int maxSearchTime) {
 			this.timeLimit = timeLimit;
-			this.maxSearchTime = Math.min(maxSearchTime, 65);
+			this.maxSearchTime = Math.min(maxSearchTime, 100);
 			this.minSearchTime = minSearchTime;
 		}
 		

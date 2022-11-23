@@ -18,7 +18,6 @@ public class MartialArtsConfig extends GMMConfig{
 			"jk",
 			"jbs",
 			"jd",
-			"stop",
 	};
 	public static String[] fullActionTypes = actionTypes;
 	
@@ -30,7 +29,6 @@ public class MartialArtsConfig extends GMMConfig{
 			{ 22.000, 12.000 }, // jk
 			{ 20.000, 17.500 }, // jbs
 			{ 18.500, 16.000 }, // jd
-			{ tBase, tBase},
 	};
 
 	public MartialArtsConfig(String name) {

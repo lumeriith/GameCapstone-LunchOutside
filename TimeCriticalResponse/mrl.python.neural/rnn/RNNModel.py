@@ -1,4 +1,6 @@
 import tensorflow as tf
+tf = tf.compat.v1
+tf.disable_eager_execution()
 import util.TensorflowUtils as tu
 from util.dataLoader import loadNormalData
 from util.Util import Normalize, DummyCM
@@ -135,7 +137,8 @@ class RNNConfig(object):
     def rnn_cell(self, size=-1):
         if (size < 0):
             size = self.RNN_SIZE
-        cell = tf.contrib.rnn.BasicLSTMCell(size, forget_bias=self.forget_bias, state_is_tuple=False)
+        cell = tf.nn.rnn_cell.BasicLSTMCell(size, forget_bias=self.forget_bias, state_is_tuple=False)
+        #cell = tf.contrib.rnn.BasicLSTMCell(size, forget_bias=self.forget_bias, state_is_tuple=False)
         return cell
     
     def scope(self, label=None):
@@ -398,8 +401,10 @@ class RNNModel(object):
                 
             if (batchSize <= 1): return
             g_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=config.scope_name('generator'))
-            regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
-            self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
+            regularizer = tf.keras.regularizers.L2(l2=0.00001)
+            self.reg_loss_g = regularizer(g_variables)
+            # regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
+            # self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
             self.train_g = train(self.loss_g + self.reg_loss_g, g_variables, lr, self.config.MAX_GRAD_NORM)
             self.train_list = self.train_g
             
@@ -411,10 +416,12 @@ class RNNModel(object):
         for i in range(c.NUM_OF_LAYERS):
             cell = c.rnn_cell()
             if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
-                cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                #cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
             cells.append(cell)
-                                                     
-        stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells, state_is_tuple=False)
+
+        stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells, state_is_tuple=False)
+#        stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells, state_is_tuple=False)
 #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
 #         initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)
         state = tf.reshape(prev_state, [self.batchSize, c.NUM_OF_LAYERS * 2 * c.RNN_SIZE])
@@ -472,8 +479,10 @@ class RNNGlobalRootModel(object):
                 
             if (batchSize <= 1): return
             g_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=config.scope_name('generator'))
-            regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
-            self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
+            regularizer = tf.keras.regularizers.L2(l2=0.00001)
+            self.reg_loss_g = regularizer(g_variables)
+            # regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
+            # self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
             self.train_g = train(self.loss_g + self.reg_loss_g, g_variables, lr, self.config.MAX_GRAD_NORM)
             self.train_list = self.train_g
             
@@ -483,10 +492,12 @@ class RNNGlobalRootModel(object):
         for i in range(c.NUM_OF_LAYERS):
             cell = c.rnn_cell()
             if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
-                cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                #cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
             cells.append(cell)
-                                                     
-        stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
+
+        stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells)
+#        stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
 #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
         initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)
         state = initial_state
@@ -549,8 +560,10 @@ class TimingModel(object):
                 
             if (batchSize <= 1): return
             g_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=config.scope_name('generator'))
-            regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
-            self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
+            regularizer = tf.keras.regularizers.L2(l2=0.00001)
+            self.reg_loss_g = regularizer(g_variables)
+            # regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
+            #self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
             self.train_g = train(self.loss_g + self.reg_loss_g, g_variables, lr, self.config.MAX_GRAD_NORM)
             self.train_list = self.train_g
             
@@ -561,10 +574,12 @@ class TimingModel(object):
             for i in range(c.NUM_OF_LAYERS):
                 cell = c.rnn_cell()
                 if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
-                    cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                    cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                    # cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cells.append(cell)
-                                                         
-            stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
+
+            stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells)
+#            stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
     #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
             initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)
             state = initial_state
@@ -616,8 +631,10 @@ class TimingMergedModel(object):
 #             sys.stdout.flush()
 #             print(g_variables[0].__class__)
 #             sys.stdout.flush()
-            regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
-            self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
+            regularizer = tf.keras.regularizers.L2(l2=0.00001)
+            self.reg_loss_g = regularizer(g_variables)
+#            regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
+#            self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
             self.train_g = train(self.loss_g + self.reg_loss_g, g_variables, lr, self.config.MAX_GRAD_NORM)
             self.train_list = self.train_g
             
@@ -628,10 +645,12 @@ class TimingMergedModel(object):
             for i in range(c.TIMING_NUM_OF_LAYERS):
                 cell = c.rnn_cell(c.TIMING_RNN_SIZE)
                 if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
-                    cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                    cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER)
+                    # cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cells.append(cell)
-                                                         
-            t_stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
+
+            t_stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells)
+#            t_stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
             t_initial_state = t_stacked_lstm.zero_state(self.batchSize, tf.float32)
             t_state = t_initial_state
             t_output_w = tf.get_variable("output_w", [c.TIMING_RNN_SIZE, c.TIMING_Y_DIMENSION], dtype=tf.float32)
@@ -641,10 +660,12 @@ class TimingMergedModel(object):
             for i in range(c.NUM_OF_LAYERS):
                 cell = c.rnn_cell()
                 if ((i < c.NUM_OF_LAYERS - 1) and (c.LAYER_KEEP_PROB < 1)):
-                    cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                    cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
+                    # cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=c.LAYER_KEEP_PROB)
                 cells.append(cell)
-                                                         
-            stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
+
+            stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(cells)
+#            stacked_lstm = tf.contrib.rnn.MultiRNNCell(cells)
     #         stacked_lstm = tf.contrib.rnn.MultiRNNCell([c.rnn_cell() for _ in range(c.NUM_OF_LAYERS)])
             initial_state = stacked_lstm.zero_state(self.batchSize, tf.float32)
             state = initial_state

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class BinaryReaderBE : BinaryReader { 
+class BinaryReaderBE : BinaryReader { 
     public BinaryReaderBE(System.IO.Stream stream)  : base(stream) { }
     private static char[] arr = new char[255];
     

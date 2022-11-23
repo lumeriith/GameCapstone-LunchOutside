@@ -1,5 +1,7 @@
 import tensorflow as tf
-from rl.GMM import GMM 
+tf = tf.compat.v1
+tf.disable_eager_execution()
+from rl.GMM import GMM
 import numpy as np
 
 np.set_printoptions(formatter={'float_kind':lambda x:"%.6f"%x})

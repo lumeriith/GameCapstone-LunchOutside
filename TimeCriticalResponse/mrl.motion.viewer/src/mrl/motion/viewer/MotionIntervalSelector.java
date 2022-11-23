@@ -53,7 +53,7 @@ public class MotionIntervalSelector extends Composite{
 			public void mouseScrolled(MouseEvent e) {
 				if ((e.stateMask & SWT.SHIFT) != 0 && (e.stateMask & SWT.ALT) != 0){
 					Slider nSlider = navigator.getSlider();
-//					// shift¿Í alt¸¦ ´©¸¥ °æ¿ì sliderÀÇ left, right selectionÀ» Á¶Á¤ÇÑ´Ù.
+//					// shiftï¿½ï¿½ altï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ sliderï¿½ï¿½ left, right selectionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 					int index = nSlider.getSelection();
 					int step = 1;
 					if ((e.stateMask & SWT.CTRL) != 0) step = 5;

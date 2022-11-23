@@ -1,0 +1,24 @@
+{
+	defaultType:
+	file:WalkForwardFencing_RM41.bvh
+	person:1
+	oppositePerson:0
+	startFrame:22
+	endFrame:54
+	include:
+	isAlone:
+	type:walk_f
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:-1
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},

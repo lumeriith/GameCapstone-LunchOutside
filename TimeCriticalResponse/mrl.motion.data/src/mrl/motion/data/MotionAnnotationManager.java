@@ -31,14 +31,14 @@ public class MotionAnnotationManager {
 		for (File file : folder.listFiles()){
 			if (file.isDirectory() || !file.getName().endsWith(".lab")) continue;
 			String defaultType = MotionAnnotation.defaultType;
-			ArrayList<MotionAnnotation> list = MotionAnnotation.load(file);
+			ArrayList<MotionAnnotation> list = MotionAnnotation.load(file);		
 			MotionAnnotation.defaultType = defaultType;
 			if (list.size() == 0) continue;
 			
 			String[] fileNames = getFileNames(list.get(0).file, 4);
 			
 			for (MotionAnnotation ann : list){
-				if (ann.startFrame == 0) continue; // #TODO: danceData Ã³¸®ÇÏ¸é¼­ ÀÓ½Ã·Î °íÄ§.   
+//				if (ann.startFrame == 0) continue; // #TODO: danceData Ã³ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½Ó½Ã·ï¿½ ï¿½ï¿½Ä§.   
 //				if (ann.startFrame == 0) throw new RuntimeException();
 				if (!isValid(ann)) continue;
 				if (ann.length() < minLength) continue;

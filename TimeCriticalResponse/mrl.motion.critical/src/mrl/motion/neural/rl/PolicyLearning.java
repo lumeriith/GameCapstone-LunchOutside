@@ -391,6 +391,7 @@ public class PolicyLearning {
 				path.moveSequential(path.current.next, tData);
 				if (checkFinish()) return true;
 			}
+			
 			return false;
 		}
 		
@@ -402,7 +403,8 @@ public class PolicyLearning {
 		double finalError;
 		double tErrorSum = 0;
 		GMMQueryLog qLog;
-		public Pair<Double, MotionQuery> proceedStep(RL_State rl_state, MotionQuery query) {
+		public Pair<Double, MotionQuery> proceedStep(RL_State rl_state, MotionQuery query) 			
+		{
 			double tErrorWeight = 0.00001;
 			if (isTest) {
 				qLog = new GMMQueryLog();

@@ -112,7 +112,7 @@ public class MFeatureMatching {
 		MotionFeature feature = featureList.get(motionIndex);
 		if (doDenormalize) feature = getDenormalizedFeature(feature);
 		if (feature == null) {
-			System.out.println("null!! : " + motionIndex + database.getMotionList().length);
+			System.out.println("null!! : " + motionIndex + "\n" + "motionlist length: " +  database.getMotionList().length);
 		}
 		return feature;
 	}
@@ -121,7 +121,7 @@ public class MFeatureMatching {
 		if (feature == null) feature = featureList.get(motionIndex);
 		if (doDenormalize) feature = getDenormalizedFeature(feature);
 		if (feature == null) {
-			System.out.println("null!! : " + motionIndex + database.getMotionList().length);
+			System.out.println("null!! : " + motionIndex + "\n" + "motionlist length: " +  database.getMotionList().length);
 		}
 		return feature;
 	}
@@ -251,6 +251,15 @@ public class MFeatureMatching {
 		if (!goal.isActiveAction() && (path.time < AgilityModel.TIME_EXTENSION_MIN_TIME)) {
 			tcTable = actionDP.getStartingTCTable();
 		}
+
+		if(remainMaxTime < 0)
+		{
+			System.out.print("#############\n\n");
+			System.out.print("actionType: " + goal.actionType + "\n");
+			System.out.print("remainMaxTime: " + remainMaxTime + "\n");
+			System.out.print("cNodeIndex: " + cNodeIndex + "\n\n");
+		}
+		
 		double upperBound = tcTable.ctdTable[goal.actionType][remainMaxTime][cNodeIndex];
 		double upperBoundOrigin = upperBound;
 		
@@ -483,6 +492,9 @@ public class MFeatureMatching {
 	
 	private void setConfigurations_ue() {
 		String[] sparseJoints = new String[] {
+//				"refernece",
+//				"root",
+				
 //				"Head",
 //				"Hips",
 //				"Spine",
@@ -511,6 +523,9 @@ public class MFeatureMatching {
 		};
 		
 		String[] denseJoints = new String[] {
+//				"refernece",
+//				"root",
+				
 				"Head",
 				"Hips",
 //				"Neck",

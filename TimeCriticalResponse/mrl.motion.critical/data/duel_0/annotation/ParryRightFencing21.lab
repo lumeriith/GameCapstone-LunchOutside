@@ -1,0 +1,24 @@
+{
+	defaultType:
+	file:ParryRightFencing21.bvh
+	person:1
+	oppositePerson:0
+	startFrame:20
+	endFrame:34
+	include:
+	isAlone:
+	type:parry_right
+	subtype:
+	mood:
+	power:
+	beforeActiveState:
+	afterActiveState:
+	beforePassiveState:
+	afterPassiveState:
+	mutipleInteraction:
+	interactionFrame:24
+	interactionActivePart:
+	interactionPassivePart:
+	interactionType:
+	weight:1.0
+},

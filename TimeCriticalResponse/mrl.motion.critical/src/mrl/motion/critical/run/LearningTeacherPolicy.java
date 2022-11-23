@@ -10,9 +10,27 @@ public class LearningTeacherPolicy {
 		return new MartialArtsConfig(name).setDataFolder("martial_arts_compact", "data\\t_pose_ue2.bvh");
 	}
 	
+	public static GMMConfig duel() {
+		String name = "duel";
+		return new DuelConfig(name).setDataFolder("duel", "data\\stop_fencing.bvh");
+	}
+	
+	public static GMMConfig duel_0() {
+		String name = "duel_0";
+		return new DuelConfig(name).setDataFolder("duel_0", "data\\stop_fencing.bvh");
+	}
+	
+	public static GMMConfig walk() {
+		String name = "walk";
+		return new WalkConfig(name).setDataFolder("walk", "data\\stop_fencing.bvh");
+	}
+	
 	public static void main(String[] args) {
-		GMMConfig config = martial_arts();
+		//GMMConfig config = martial_arts();
+		//GMMConfig config = duel();
+		//GMMConfig config = duel_0();
+		GMMConfig config = walk();
 		PolicyLearning learning = new PolicyLearning(config, false);
-		learning.runTraining(100000);
+		learning.runTraining(100);
 	}
 }

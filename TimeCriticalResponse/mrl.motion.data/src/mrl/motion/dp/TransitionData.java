@@ -47,7 +47,7 @@ public class TransitionData {
 	public TransitionNode[] motionToNodeMap;
 	
 	/**
-	 * (mIndex-1)¿¡¼­ mIndex ¸ð¼ÇÀ¸·Î ÀÌµ¿ÇÏ´Â transform
+	 * (mIndex-1)ï¿½ï¿½ï¿½ï¿½ mIndex ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï´ï¿½ transform
 	 */
 	public RotationMatrix2d[] adjRootTransform;
 	public RotationMatrix2d[] tAfterRootTransform;
@@ -334,6 +334,7 @@ public class TransitionData {
 					motionNearActionTypes[i] = actionIdx; 
 				}
 			} else {
+				
 				int mIndex = database.findMotion(ann.file, ann.interactionFrame).motionIndex;
 				motionActionTypes[mIndex] = actionIdx;
 				
