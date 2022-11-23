@@ -1,8 +1,4 @@
-*.xml
-*.iml
-*.dat
-*.data-00000-of-00001
-*.index
-*.meta
-TimeCriticalResponse/mrl.python.neural/train/duel_0_sp_da/data.zip
-TimeCriticalResponse/mrl.python.neural/train/duel_0_sp_da/train/checkpoint
+
+TheDuel/.vsconfig
+TimeCriticalResponse/mrl.motion.critical/.idea/misc.xml
+TheDuel/Assets/Resources/DOTweenSettings.asset

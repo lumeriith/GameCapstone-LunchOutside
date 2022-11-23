@@ -19,7 +19,7 @@ public class FencingSword : Item
     public Transform endPivot;
     public int score = 1;
 
-    public float cooldown = 1.5f;
+    public const float HitCooldown = 0.75f;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
@@ -40,9 +40,12 @@ public class FencingSword : Item
                 QueryTriggerInteraction.Collide)) return;
         var other = hit.collider.GetComponentInParent<Character>();
         if (other == null) return;
-
-        _lastHitTime = Time.time; // This is intentional!
-        if (Time.time - _lastHitTime < cooldown) return;
+        
+        if (Time.time - _lastHitTime < HitCooldown)
+        {
+            _lastHitTime = Time.time;
+            return;
+        }
         var hitInfo = new InfoAttackHit
         {
             from = _parent,
@@ -52,8 +55,9 @@ public class FencingSword : Item
             collider = hit.collider,
             score = score
         };
-        _parent.onDealAttack(hitInfo);
-        other.onTakeAttack(hitInfo);
+        _parent.onDealAttack?.Invoke(hitInfo);
+        other.onTakeAttack?.Invoke(hitInfo);
+        _lastHitTime = Time.time;
     }
     
     private Animator _animator;
