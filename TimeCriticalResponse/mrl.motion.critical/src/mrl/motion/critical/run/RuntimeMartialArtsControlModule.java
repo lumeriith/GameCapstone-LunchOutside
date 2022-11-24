@@ -91,7 +91,8 @@ public class RuntimeMartialArtsControlModule extends Module{
 					getModule(ItemListModule.class).addSingleItem("Goal", Pose2d.to3d(g.pose.position), desc);
 					targetAngle = Double.NaN;
 				}
-				double[] control = AgilityControlParameterGenerator.getActionType(MartialArtsConfig.actionTypes.length, action);
+				// double[] control = AgilityControlParameterGenerator.getActionType(MartialArtsConfig.actionTypes.length, action);
+				double[] control = AgilityControlParameterGenerator.getActionType(DuelConfig.actionTypes.length, action);
 				control = MathUtil.concatenate(control, new double[] { targetAngle });
 				if (useDynamicAgility) {
 					control = MathUtil.concatenate(control, new double[] { agility });
@@ -115,8 +116,8 @@ public class RuntimeMartialArtsControlModule extends Module{
 				Point2d cPos = c.g.pose.position;
 				Vector2d direction = MathUtil.sub(mp2d, cPos);
 				
-				char locoActionSize = String.valueOf(MartialArtsConfig.LOCO_ACTION_SIZE).charAt(0);
-				char fullActionSize = String.valueOf(MartialArtsConfig.actionTypes.length).charAt(0);
+				char locoActionSize = String.valueOf(DuelConfig.LOCO_ACTION_SIZE).charAt(0);
+				char fullActionSize = String.valueOf(DuelConfig.actionTypes.length).charAt(0);
 				if (e.keyCode >= '1' && e.keyCode <= locoActionSize) {
 					targetDirection = direction;
 					locoType = e.keyCode - '1';
@@ -150,6 +151,7 @@ public class RuntimeMartialArtsControlModule extends Module{
 		useDynamicAgility = true;
 //		c.init("martial_arts_sp_da");
 		c.init("duel_0_sp_da");
+//		c.init("walk_sp_da");
 		
 		actionQueue = new LinkedList<Integer>();
 		actionStartFrames = new LinkedList<Integer>();

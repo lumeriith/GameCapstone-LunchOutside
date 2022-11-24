@@ -1,7 +1,7 @@
 import random
 import tensorflow as  tf
-# tf = tf.compat.v1
-# tf.disable_eager_execution()
+tf = tf.compat.v1
+tf.disable_eager_execution()
 import rnn.Configurations
 import numpy as np
 from  tensorflow.python.ops.rnn_cell_impl import LSTMStateTuple
@@ -101,7 +101,7 @@ def run_training(folder, load=False, test=False, lr=0.0001):
         tTrain1 = 0
         tSave = 0
         print("initialize time %d"%(time.time() - tStart))
-        for idx in range(10000):
+        for idx in range(1000):
             batchIndices, start_y = batch_indices(yData)
             state = np.zeros([BATCH_SIZE, config.RNN_SIZE*config.NUM_OF_LAYERS*2])
             lossList = []

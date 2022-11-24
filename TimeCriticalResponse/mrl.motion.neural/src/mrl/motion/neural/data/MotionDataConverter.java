@@ -42,6 +42,8 @@ public class MotionDataConverter {
 	public static boolean useTPoseForMatrix = false;
 	
 	public static String[] OrientationJointList = {
+		"reference",
+		"root",
 		"Head",
 		"Hips",
 		"LeftArm",
@@ -623,18 +625,20 @@ public class MotionDataConverter {
 		return list;
 	}
 	
-	public static String RootJoint = "Hips";
+	public static String RootJoint = "reference";
 	
 	
 	public static String[] KeyJointList = {
+		"reference",
+		"root",
 		"Head_End",
-//		"Hips",
+		"Hips",
 		"LeftHand",
-//		"LeftHand_End",
+		"LeftHand_End",
 		"LeftFoot",
 		"LeftToe",
 		"RightHand",
-//		"RightHand_End",
+		"RightHand_End",
 		"RightFoot",
 		"RightToe",
 		
@@ -647,11 +651,11 @@ public class MotionDataConverter {
 		"RightLeg",
 	};
 	public static String[][] jointPairs = {
-			{ "Hips", "LeftLeg", "LeftFoot", "LeftToe" },
-			{ "Hips", "LeftArm", "LeftForeArm", "LeftHand", "LeftHand_End" },
-			{ "Hips", "RightLeg", "RightFoot", "RightToe" },
-			{ "Hips", "RightArm", "RightForeArm", "RightHand", "RightHand_End" },
-			{ "Hips", "Head_End" },
+			{ "reference", "root", "Hips", "LeftLeg", "LeftFoot", "LeftToe" },
+			{ "reference", "root","Hips", "LeftArm", "LeftForeArm", "LeftHand", "LeftHand_End" },
+			{ "reference", "root","Hips", "RightLeg", "RightFoot", "RightToe" },
+			{ "reference", "root","Hips", "RightArm", "RightForeArm", "RightHand", "RightHand_End" },
+			{ "reference", "root", "Hips", "Head_End" },
 	};
 	public static String[] KeyJointList_Origin = KeyJointList;
 	
@@ -660,6 +664,9 @@ public class MotionDataConverter {
 //	}
 	public static void setAllJoints(){
 		KeyJointList = new String[]{
+			"reference",
+			"root",
+				
 			"Head_End",
 			"LeftHand",
 			"LeftFoot",
@@ -685,9 +692,9 @@ public class MotionDataConverter {
 			"RightUpLeg",
 		};
 		jointPairs = new String[][]{
-				{ "Hips", "LeftUpLeg", "LeftLeg", "LeftFoot", "LeftToe_End" },
-				{ "Neck", "LeftArm", "LeftForeArm", "LeftHand", "LeftHand_End" },
-				{ "Hips", "RightUpLeg", "RightLeg", "RightFoot", "RightToe_End" },
+				{ "reference", "root", "Hips", "LeftUpLeg", "LeftLeg", "LeftFoot", "LeftToe_End" },
+				{ "reference", "root", "Neck", "LeftArm", "LeftForeArm", "LeftHand", "LeftHand_End" },
+				{ "reference", "root", "Hips", "RightUpLeg", "RightLeg", "RightFoot", "RightToe_End" },
 				{ "Neck", "RightArm", "RightForeArm", "RightHand", "RightHand_End" },
 				{ "Hips", "Spine", "Neck", "Head_End" },
 		};

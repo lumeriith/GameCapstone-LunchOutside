@@ -13,6 +13,6 @@ public class StudentPolicyDataGeneration {
 		
 		MotionDataConverter.setOrientationJointsByFileOrder();
 		String namePostfix = "_sp_da";
-		new PolicyDataGeneration(config).generateData(namePostfix, 200000);
+		new PolicyDataGeneration(config).generateData(namePostfix, 300000);
 	}
 }

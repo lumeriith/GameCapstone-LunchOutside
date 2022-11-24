@@ -1,6 +1,6 @@
 import tensorflow as tf
-# tf = tf.compat.v1
-# tf.disable_eager_execution()
+tf = tf.compat.v1
+tf.disable_eager_execution()
 import util.TensorflowUtils as tu
 from util.dataLoader import loadNormalData
 from util.Util import Normalize, DummyCM

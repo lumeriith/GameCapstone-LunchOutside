@@ -401,8 +401,11 @@ class RNNModel(object):
                 
             if (batchSize <= 1): return
             g_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=config.scope_name('generator'))
+
             regularizer = tf.keras.regularizers.L2(l2=0.00001)
-            self.reg_loss_g = regularizer(g_variables)
+            reg_loss_g = [regularizer(w) for w in g_variables]
+
+            self.reg_loss_g = tf.keras.layers.Dense(g_variables, kernel_regularizer=regularizer)
             # regularizer = tf.contrib.layers.l2_regularizer(scale=0.00001)
             # self.reg_loss_g = tf.contrib.layers.apply_regularization(regularizer, g_variables)
             self.train_g = train(self.loss_g + self.reg_loss_g, g_variables, lr, self.config.MAX_GRAD_NORM)

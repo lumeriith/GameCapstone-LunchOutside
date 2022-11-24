@@ -37,6 +37,8 @@ public class RNNPython {
 					"import rnn.RNNModel as rm\n"+
 					"import rnn.Configurations as cf\n"+
 					"import tensorflow as tf\n"+
+					"tf = tf.compat.v1\n"+
+					"tf.disable_eager_execution()\n"+
 					"config = tf.ConfigProto(device_count = {'GPU': 0})\n"+
 					"sess = tf.Session(config=config)\n";
 //					"sess = tf.Session()\n";

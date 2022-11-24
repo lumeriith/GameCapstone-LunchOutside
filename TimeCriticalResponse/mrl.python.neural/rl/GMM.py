@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
-# tf = tf.compat.v1
-# tf.disable_eager_execution()
+tf = tf.compat.v1
+tf.disable_eager_execution()
 from rl.RLConfig import RLConfig
 from rl.ReplayBuffer import Episode
 from rl.ReplayBuffer import Transition

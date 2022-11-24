@@ -21,7 +21,7 @@ public class LearningTeacherPolicy {
 	}
 	
 	public static GMMConfig walk() {
-		String name = "walk";
+		String name = "walk_no_dir";
 		return new WalkConfig(name).setDataFolder("walk", "data\\stop_fencing.bvh");
 	}
 	
@@ -31,6 +31,6 @@ public class LearningTeacherPolicy {
 		//GMMConfig config = duel_0();
 		GMMConfig config = walk();
 		PolicyLearning learning = new PolicyLearning(config, false);
-		learning.runTraining(100);
+		learning.runTraining(10000);
 	}
 }
