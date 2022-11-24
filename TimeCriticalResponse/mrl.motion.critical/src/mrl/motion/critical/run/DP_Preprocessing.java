@@ -19,10 +19,16 @@ public class DP_Preprocessing {
 //		String dataFolder = "duel_0";
 //		String tPoseFile = "data\\stop_fencing.bvh";
 		
-		String[] actions = WalkConfig.actionTypes;
-		int cLabelSize = WalkConfig.LOCO_ACTION_SIZE;
+//		String[] actions = WalkConfig.actionTypes;
+//		int cLabelSize = WalkConfig.LOCO_ACTION_SIZE;
+//		
+//		String dataFolder = "walk";
+//		String tPoseFile = "data\\stop_fencing.bvh";
 		
-		String dataFolder = "walk";
+		String[] actions = FencingConfig.actionTypes;
+		int cLabelSize = FencingConfig.LOCO_ACTION_SIZE;
+		
+		String dataFolder = "fencing";
 		String tPoseFile = "data\\stop_fencing.bvh";
 		
 		TransitionDPGenerator.make(dataFolder, tPoseFile, actions, cLabelSize);

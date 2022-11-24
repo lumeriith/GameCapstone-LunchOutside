@@ -12,7 +12,8 @@ public class MAnnotationRun {
 		//String dataFolder = "data\\martial_arts_compact";
 		//String dataFolder = "data\\duel";
 		//String dataFolder = "data\\duel_0";
-		String dataFolder = "data\\walk";
+		//String dataFolder = "data\\walk";
+		String dataFolder = "data\\fencing";
 		
 		boolean openTransition = false;
 //		openTransition = true;

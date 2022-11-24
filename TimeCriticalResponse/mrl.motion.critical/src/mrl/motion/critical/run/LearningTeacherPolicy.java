@@ -25,12 +25,18 @@ public class LearningTeacherPolicy {
 		return new WalkConfig(name).setDataFolder("walk", "data\\stop_fencing.bvh");
 	}
 	
+	public static GMMConfig fencing() {
+		String name = "fencing_100000";
+		return new FencingConfig(name).setDataFolder("fencing", "data\\stop_fencing.bvh");
+	}
+	
 	public static void main(String[] args) {
 		//GMMConfig config = martial_arts();
 		//GMMConfig config = duel();
 		//GMMConfig config = duel_0();
-		GMMConfig config = walk();
+		//GMMConfig config = walk();
+		GMMConfig config = fencing();
 		PolicyLearning learning = new PolicyLearning(config, false);
-		learning.runTraining(10000);
+		learning.runTraining(100000);
 	}
 }
