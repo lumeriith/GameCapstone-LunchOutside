@@ -39,6 +39,19 @@ def get_config_impl(folder):
 
         return c
 
+    if (folder.startswith("walk_10000_sp")):
+        c = WalkConfig()
+        c.X_DIMENSION = 7
+        c.Y_DIMENSION = 184
+        c.additional_joint = c.Y_DIMENSION - 1
+        c.additional_weight = 32
+        c.joint_len_weight = 0
+        c.LAYER_KEEP_PROB = 0.9
+        c.foot_weight = 0.1
+        c.foot_slide_weight = 0.2
+
+        return c
+
     if (folder.startswith("martial_arts_sp")):
         c = WalkConfig()
         c.X_DIMENSION = -1
