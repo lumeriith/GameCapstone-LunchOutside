@@ -24,11 +24,9 @@ public class ModelDataReader : MonoBehaviour
         _connection.dataReader = ReadData;
     }
 
-    private void ReadData(BinaryReaderBE reader)
+    private void ReadSetupData(BinaryReaderBE reader)
     {
-        if (_isFirstPayload)
-        {
-            _setup.numOfPosJoints = reader.ReadInt32();
+        _setup.numOfPosJoints = reader.ReadInt32();
             _setup.boneToPosIndex = new Dictionary<string, int>();
             _setup.posIndexToBone = new Dictionary<int, string>();
             _data.positions = new Vector3[_setup.numOfPosJoints];
@@ -85,6 +83,13 @@ public class ModelDataReader : MonoBehaviour
             }
 
             _setup.root = joints[0];
+    }
+    
+    private void ReadData(BinaryReaderBE reader)
+    {
+        if (_isFirstPayload)
+        {
+            ReadSetupData(reader);
 
             onSetupDataReceived?.Invoke();
             _isFirstPayload = false;
@@ -93,6 +98,7 @@ public class ModelDataReader : MonoBehaviour
         for (int i = 0; i < _setup.numOfPosJoints; i++)
         {
             _data.positions[i] = reader.ReadVector3();
+            _data.positions[i].z *= -1;
         }
         
         for (int i = 0; i < _setup.numOfRotJoints; i++)

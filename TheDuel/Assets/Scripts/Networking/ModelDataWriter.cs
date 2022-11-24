@@ -10,6 +10,7 @@ public class ModelDataWriter : ModelComponentBase
     {
         DoAction = 0,
         SetDirection = 1,
+        SetTimescale = 2
     }
 
     private float _lastActionTime = float.NegativeInfinity;
@@ -25,6 +26,13 @@ public class ModelDataWriter : ModelComponentBase
     {
         WriteOpCode(OpCode.SetDirection);
         connection.writer.Write(dir);
+        connection.FlushOutgoingPacket();
+    }
+
+    public void WriteSetTimescale(float timescale)
+    {
+        WriteOpCode(OpCode.SetTimescale);
+        connection.writer.Write(timescale);
         connection.FlushOutgoingPacket();
     }
 
