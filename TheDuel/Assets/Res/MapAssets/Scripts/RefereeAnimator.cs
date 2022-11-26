@@ -28,8 +28,8 @@ public class RefereeAnimator : MonoBehaviour
     IEnumerator Idle()
     {
         
-        yield return new WaitForSeconds(IdleCycle); 
-        refereeState = Random.Range(0, 3);
+        yield return new WaitForSeconds(IdleCycle);
+        refereeState = 2; //Random.Range(0, 3);
         if(refereeState == 0)//idle 유지
         {
             StartCoroutine(Idle());
@@ -41,7 +41,7 @@ public class RefereeAnimator : MonoBehaviour
         }
         else if (refereeState == 2) //Phone Call 시작
         {
-            Phone.SetActive(true);
+            
             animator.SetInteger("RefereeState", 2);
             StartCoroutine(PhoneCallStart());
 
@@ -57,6 +57,7 @@ public class RefereeAnimator : MonoBehaviour
 
     IEnumerator PhoneCallStart()
     {
+        Phone.SetActive(true);
         Referee.instance.isWatching = false;
         
 
