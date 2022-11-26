@@ -19,8 +19,25 @@ public class RefereeAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Referee.instance.onDetectedCheating += () =>
+        {
+            StopCoroutine(Idle());
+            StopCoroutine(Stretching());
+            animator.SetInteger("RefereeState", 5);
+        };
         //Phone.GetComponent<MeshRenderer>().gameObject.SetActive(false);
+        GameManager.instance.onRoundStarted += StartRound;
+
+
+        StartCoroutine(Idle());
+
+        
+
+    }
+
+    void StartRound()
+    {
+        animator.SetInteger("RefereeState", 0);
         StartCoroutine(Idle());
     }
 
@@ -29,7 +46,8 @@ public class RefereeAnimator : MonoBehaviour
     {
         
         yield return new WaitForSeconds(IdleCycle);
-        refereeState = 2; //Random.Range(0, 3);
+        refereeState = 
+            Random.Range(0, 3);
         if(refereeState == 0)//idle À¯Áö
         {
             StartCoroutine(Idle());

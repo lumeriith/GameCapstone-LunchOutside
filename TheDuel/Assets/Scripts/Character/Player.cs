@@ -26,7 +26,7 @@ public class Player : Character
         _trajectoryRenderer = GetComponent<LineRenderer>();
         _trajectoryRenderer.positionCount = 20;
     }
-    
+
     protected override void Start()
     {
         base.Start();
@@ -54,8 +54,8 @@ public class Player : Character
     private void UpdateTrajectory()
     {
         const float TrajectoryDeltaTime = 0.06f;
-        
-        var weap = (ThrowingItem) equippedItem;
+
+        var weap = (ThrowingItem)equippedItem;
 
         var pos = weap.transform.position;
         var vel = _cam.transform.rotation * weap.throwVelocity;
@@ -64,6 +64,14 @@ public class Player : Character
             _trajectoryRenderer.SetPosition(i, pos);
             pos += vel * TrajectoryDeltaTime;
             vel += Physics.gravity * TrajectoryDeltaTime;
+        }
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Respawn")
+        {
+            Debug.Log("Hello");
         }
     }
 }
