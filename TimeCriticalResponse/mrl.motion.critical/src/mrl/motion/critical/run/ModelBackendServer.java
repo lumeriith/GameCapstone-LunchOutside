@@ -40,12 +40,25 @@ public class ModelBackendServer {
 
         messageHandler = new ModelMessageHandler(this);
 
-        server = new ServerSocket(1369);
+        int port = 1369;
+        while (true) {
+            try {
+                server = new ServerSocket(port);
+                System.out.println("using port " + port);
+                break;
+            }
+            catch (BindException e) {
+                port++;
+            }
+        }
 
         while (true) {
             try {
                 serveClient();
-            } catch (Exception e) {
+            } catch (SocketException e) {
+                System.out.println(e);
+            }
+            catch (Exception e) {
                 e.printStackTrace();
                 System.out.println(e);
             }
