@@ -9,7 +9,8 @@ public class StudentPolicyDataGeneration {
 	public static void main(String[] args) {
 		//GMMConfig config = LearningTeacherPolicy.martial_arts();
 		//GMMConfig config = LearningTeacherPolicy.duel_0();
-		GMMConfig config = LearningTeacherPolicy.walk();
+		//GMMConfig config = LearningTeacherPolicy.walk();
+		GMMConfig config = LearningTeacherPolicy.fencing();
 		
 		MotionDataConverter.setOrientationJointsByFileOrder();
 		String namePostfix = "_sp_da";

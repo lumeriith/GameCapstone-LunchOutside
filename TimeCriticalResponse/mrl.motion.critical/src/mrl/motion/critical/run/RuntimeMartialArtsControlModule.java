@@ -151,7 +151,7 @@ public class RuntimeMartialArtsControlModule extends Module{
 		useDynamicAgility = true;
 //		c.init("martial_arts_sp_da");
 //		c.init("duel_0_sp_da");
-//		c.init("walk_10000_sp_da");
+//		c.init("walk_no_dir_100000_sp_da");
 		c.init("fencing_100000_sp_da");
 		
 		actionQueue = new LinkedList<Integer>();

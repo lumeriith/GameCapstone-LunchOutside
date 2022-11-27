@@ -164,28 +164,26 @@ public class WalkConfig extends GMMConfig{
 	}
 	
 	public static double getDirectionOffsetByType(Motion m, String type) {
-//		if(type.equals("attack_short")) {
-//			return m._directionOffset("LeftFoot", "RightFoot");
-//		}
-//		else if(type.equals("walk_b")
-//				) {
-//			return -Math.PI;
-//		}
-//		
-//		else if(type.equals("walk_l")
-//				) {
-//			return -(Math.PI / 2);
-//		}
-//		
-//		else if(type.equals("walk_r")
-//				) {
-//			return (Math.PI / 2);
-//		}
-//		
-//		else {
-//			return 0;
-//		}
+		if(type.equals("attack_short")) {
+			return m._directionOffset("Head");
+		}
+		else if(type.equals("walk_b")
+				) {
+			return -Math.PI;
+		}
 		
-		return 0;
+		else if(type.equals("walk_l")
+				) {
+			return -(Math.PI / 2);
+		}
+		
+		else if(type.equals("walk_r")
+				) {
+			return (Math.PI / 2);
+		}
+		
+		else {
+			return 0;
+		}
 	}
 }
