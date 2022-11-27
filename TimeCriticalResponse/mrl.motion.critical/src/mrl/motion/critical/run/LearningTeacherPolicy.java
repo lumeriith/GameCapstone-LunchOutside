@@ -21,7 +21,7 @@ public class LearningTeacherPolicy {
 	}
 	
 	public static GMMConfig walk() {
-		String name = "walk_no_dir";
+		String name = "walk_dir_10000";
 		return new WalkConfig(name).setDataFolder("walk", "data\\stop_fencing.bvh");
 	}
 	
@@ -34,9 +34,9 @@ public class LearningTeacherPolicy {
 		//GMMConfig config = martial_arts();
 		//GMMConfig config = duel();
 		//GMMConfig config = duel_0();
-		//GMMConfig config = walk();
-		GMMConfig config = fencing();
+		GMMConfig config = walk();
+		//GMMConfig config = fencing();
 		PolicyLearning learning = new PolicyLearning(config, false);
-		learning.runTraining(100000);
+		learning.runTraining(10000);
 	}
 }
