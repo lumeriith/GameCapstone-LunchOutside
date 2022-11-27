@@ -6,6 +6,7 @@ public class RefereeAnimator : MonoBehaviour
 {
     [SerializeField] float IdleCycle = 3.0f; //idle에서 행동 변화하는 결정 주기
     [SerializeField] float PhoneCycle = 3.0f; // phone 에서 통화 끊는 결정 주기
+    [SerializeField] GameObject Phone;
     
     private Animator animator;
     private int refereeState = 0;
@@ -18,14 +19,35 @@ public class RefereeAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Referee.instance.onDetectedCheating += () =>
+        {
+            StopCoroutine(Idle());
+            StopCoroutine(Stretching());
+            animator.SetInteger("RefereeState", 5);
+        };
+        //Phone.GetComponent<MeshRenderer>().gameObject.SetActive(false);
+        GameManager.instance.onRoundStarted += StartRound;
+
+
+        StartCoroutine(Idle());
+
+        
+
+    }
+
+    void StartRound()
+    {
+        animator.SetInteger("RefereeState", 0);
         StartCoroutine(Idle());
     }
 
 
     IEnumerator Idle()
     {
-        yield return new WaitForSeconds(IdleCycle); 
-        refereeState = Random.Range(0, 3);
+        
+        yield return new WaitForSeconds(IdleCycle);
+        refereeState = 
+            Random.Range(0, 3);
         if(refereeState == 0)//idle 유지
         {
             StartCoroutine(Idle());
@@ -39,7 +61,6 @@ public class RefereeAnimator : MonoBehaviour
         {
             
             animator.SetInteger("RefereeState", 2);
-            Debug.Log("HI");
             StartCoroutine(PhoneCallStart());
 
         }
@@ -54,8 +75,10 @@ public class RefereeAnimator : MonoBehaviour
 
     IEnumerator PhoneCallStart()
     {
+        Phone.SetActive(true);
         Referee.instance.isWatching = false;
         
+
         yield return new WaitForSeconds(4.0f);
         StartCoroutine(PhoneCall());
     }
@@ -78,6 +101,7 @@ public class RefereeAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
         Referee.instance.isWatching = true;
+        Phone.SetActive(false);
         StartCoroutine(Idle());
     }
 
