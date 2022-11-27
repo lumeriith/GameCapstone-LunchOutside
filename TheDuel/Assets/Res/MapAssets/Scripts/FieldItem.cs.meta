@@ -3,7 +3,11 @@ guid: 59a7c5ab3f950d3469b45334e68ebe08
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mGrenade: {fileID: 5855475486311153988, guid: 2576d221e20b436499882c3c5f32ba8b,
+      type: 3}
+  - mFork: {fileID: 983335826960661052, guid: e4b0f2d134a389b419f971fa53ef3e92, type: 3}
+  - mStone: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -22,9 +22,9 @@ public class FlyingCan : MonoBehaviour
 
     void MakeRandom()
     {
-        randomx = Random.Range(-5, 6);
-        randomy = Random.Range(-5, 6);
-        randomz = Random.Range(-5, 6);
+        randomx = Random.Range(-3, 4);
+        randomy = Random.Range(-3, 4);
+        randomz = Random.Range(-3, 4);
     }
 
     void GetTargetPosition()

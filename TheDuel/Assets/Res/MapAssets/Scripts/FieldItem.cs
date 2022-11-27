@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class FieldItem : MonoBehaviour
 {
-
+    public Item itemPrefab;
+    [SerializeField] private GameObject thisObject;
     
-    public enum Type {Grenade, Fork};
-    public Type type;
-    public int value;
     //[SerializeField] GameObject InteractionMenu;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -27,9 +24,13 @@ public class FieldItem : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+           
+            Player.instance.AddItem(itemPrefab);
+
             Debug.Log("æ∆¿Ã≈€ »πµÊ");
+
+            Destroy(thisObject);
             
-            //Player.instance.AddItem()
         }
     }
 }

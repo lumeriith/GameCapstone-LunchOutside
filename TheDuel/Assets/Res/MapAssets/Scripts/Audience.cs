@@ -12,6 +12,8 @@ public class Audience : MonoBehaviour
     [SerializeField] GameObject can1;
     [SerializeField] GameObject can2;
 
+    
+
     Transform startPosition;
     // Start is called before the first frame update
     void Start()
@@ -60,5 +62,21 @@ public class Audience : MonoBehaviour
         }
 
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name == "Player")
+        {
+            CreateCan();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            CreateCan();
+        }
     }
 }
