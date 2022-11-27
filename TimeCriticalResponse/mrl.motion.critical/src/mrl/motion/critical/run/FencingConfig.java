@@ -15,8 +15,9 @@ public class FencingConfig extends GMMConfig{
 			"walk_f",
 			"walk_b",
 			"walk_l",
+			"walk_r",
 			"attack_short",
-			"attack_long",
+//			"attack_long",
 			"parry_up",
 			"parry_down",
 			"parry_left",
@@ -31,7 +32,7 @@ public class FencingConfig extends GMMConfig{
 			{ tBase, tBase }, // walk_l
 			{ tBase, tBase }, // walk_r
 			{ tBase, tBase }, // attack_short
-			{ tBase, tBase }, // attack_long
+//			{ tBase, tBase }, // attack_long
 			{ tBase, tBase }, // parry_up
 			{ tBase, tBase }, // parry_down
 			{ tBase, tBase }, // parry_left
@@ -173,18 +174,18 @@ public class FencingConfig extends GMMConfig{
 	}
 	
 	public static double getDirectionOffsetByType(Motion m, String type) {
-		if (type.equals("parry_up") || 
-				type.equals("parry_down") ||
-				type.equals("parry_left") ||
-				type.equals("parry_right")){
-			return m._directionOffset("LeftHand", "RightHand");
-		} 
-		else if (
-				type.equals("attack_short") ||
-				type.equals("attack_long")
-				) {
-			return m._directionOffset("Head");
-		}
+//		if (type.equals("parry_up") || 
+//				type.equals("parry_down") ||
+//				type.equals("parry_left") ||
+//				type.equals("parry_right")){
+//			return m._directionOffset("LeftHand", "RightHand");
+//		} 
+//		else if (
+//				type.equals("attack_short") ||
+//				type.equals("attack_long")
+//				) {
+//			return m._directionOffset("LeftFoot", "RightFoot");
+//		}
 //		else if(type.equals("walk_b") ||
 //				type.equals("run_b")
 //				) {
@@ -202,9 +203,11 @@ public class FencingConfig extends GMMConfig{
 //				) {
 //			return (Math.PI / 2);
 //		}
+//		
+//		else {
+//			return 0;
+//		}
 		
-		else {
-			return 0;
-		}
+		return 0;
 	}
 }

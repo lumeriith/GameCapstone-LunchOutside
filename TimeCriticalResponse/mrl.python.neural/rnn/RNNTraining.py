@@ -101,7 +101,7 @@ def run_training(folder, load=False, test=False, lr=0.0001):
         tTrain1 = 0
         tSave = 0
         print("initialize time %d"%(time.time() - tStart))
-        for idx in range(1000):
+        for idx in range(10000):
             batchIndices, start_y = batch_indices(yData)
             state = np.zeros([BATCH_SIZE, config.RNN_SIZE*config.NUM_OF_LAYERS*2])
             lossList = []
@@ -165,7 +165,7 @@ def run_training(folder, load=False, test=False, lr=0.0001):
                 break
             
                 
-            if ((idx % 50) == 0):
+            if ((idx % 100) == 0):
                 t0 = time.time()
                 saver.save(sess, "%s/train/ckpt"%(folder))
                 tSave += (time.time() - t0)
