@@ -51,7 +51,7 @@ MonoBehaviour:
   headshotGameObjectNames:
   - humanoid_ Spine2
   - humanoid_ Neck
-  - humanoid_ Head
+  - dumanoid_ Head
   minVelocity: 1
 --- !u!54 &5544409086210945265
 Rigidbody:

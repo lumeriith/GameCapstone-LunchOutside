@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FlyingCan : MonoBehaviour
@@ -8,6 +9,13 @@ public class FlyingCan : MonoBehaviour
     public float m_InitialAngle = 60f; // 처음 날라가는 각도
     private Rigidbody m_Rigidbody;
     int randomx, randomy, randomz;
+
+    public float stunDuration;
+    public float headshotStunDuration;
+    public string[] headshotGameObjectNames;
+    public float minVelocity = 6f;
+
+    private bool isValid = true;
 
     void Start()
     {
@@ -35,6 +43,7 @@ public class FlyingCan : MonoBehaviour
 
     void Update()
     {
+
     }
 
     public Vector3 GetVelocity(Vector3 player, Vector3 target, float initialAngle)
@@ -60,5 +69,18 @@ public class FlyingCan : MonoBehaviour
             = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
 
         return finalVelocity;
+    }
+
+    protected void OnCollisionEnter(Collision other)
+    {
+        var character = other.gameObject.GetComponentInParent<Character>();
+        if (character == null) return;
+        var hitName = other.collider.name;
+        var isHeadshot = headshotGameObjectNames.Contains(hitName);
+        character.Stun(isHeadshot ? headshotStunDuration : stunDuration);
+        if (isHeadshot) character.PlayHitHead();
+        else character.PlayHitFront();
+
+        Destroy(gameObject, 5);
     }
 }
