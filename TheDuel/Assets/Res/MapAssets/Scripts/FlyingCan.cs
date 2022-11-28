@@ -13,7 +13,8 @@ public class FlyingCan : MonoBehaviour
     public float stunDuration;
     public float headshotStunDuration;
     public string[] headshotGameObjectNames;
-    public float minVelocity = 6f;
+    public float minVelocity = 3f;
+    public float destroyTime = 3f;
 
     private bool isValid = true;
 
@@ -73,14 +74,18 @@ public class FlyingCan : MonoBehaviour
 
     protected void OnCollisionEnter(Collision other)
     {
-        var character = other.gameObject.GetComponentInParent<Character>();
-        if (character == null) return;
-        var hitName = other.collider.name;
-        var isHeadshot = headshotGameObjectNames.Contains(hitName);
-        character.Stun(isHeadshot ? headshotStunDuration : stunDuration);
-        if (isHeadshot) character.PlayHitHead();
-        else character.PlayHitFront();
-
-        Destroy(gameObject, 5);
+        if(isValid)
+        {
+            isValid = false;
+            Destroy(gameObject, destroyTime);
+            if (other.relativeVelocity.magnitude < minVelocity) return;
+            var character = other.gameObject.GetComponentInParent<Character>();
+            if (character == null) return;
+            var hitName = other.collider.name;
+            var isHeadshot = headshotGameObjectNames.Contains(hitName);
+            character.Stun(isHeadshot ? headshotStunDuration : stunDuration);
+            if (isHeadshot) character.PlayHitHead();
+            else character.PlayHitFront();
+        }
     }
 }

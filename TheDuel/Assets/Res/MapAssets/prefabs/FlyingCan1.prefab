@@ -99,3 +99,5 @@ MonoBehaviour:
   - humanoid_ Spine2
   - humanoid_ Neck
   - humanoid_ Head
+  minVelocity: 3
+  destroyTime: 5
