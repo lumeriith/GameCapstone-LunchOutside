@@ -6,10 +6,21 @@ public class WeaponBox : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] GameObject thisObject;
+    public GameObject thisObject;
     [SerializeField] GameObject mFork;
     [SerializeField] GameObject mGrenade;
     [SerializeField] GameObject mStone;
+
+    private int mItemType;
+    private int mHp = 0;
+
+    private void Awake()
+    {
+        mHp = 2;
+        mItemType = Random.Range(0, 3);
+        Debug.Log("init");
+        Debug.Log("Item type: " + mItemType);
+    }
 
     void Start()
     {
@@ -22,10 +33,38 @@ public class WeaponBox : MonoBehaviour
 
     }
 
-
-    void asd()
+    private void OnCollisionEnter(Collision other)
     {
-        return;
+        Debug.Log("Collision");
+
+        mHp -= 1;
+
+        GameObject obj;
+        Transform tmp = new GameObject().GetComponent<Transform>();
+        tmp.position = new Vector3(-3.17f, 1.0f, -0.83f);
+
+        if (mHp <= 0)
+        {
+            switch (mItemType)
+            {
+                case 0:
+                    obj = Instantiate(mFork, tmp);
+                    Debug.Log("Create fork");
+                    break;
+
+                case 1:
+                    obj = Instantiate(mGrenade, tmp);
+                    Debug.Log("Create grenade");
+                    break;
+
+                case 2:
+                    obj = Instantiate(mStone, tmp);
+                    Debug.Log("Create stone");
+                    break;
+            }
+            Destroy(thisObject);
+            Debug.Log("Destroy box");
+        }
     }
 
     private void OnTriggerStay(Collider other)
