@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2272598415935700036}
   - component: {fileID: 4877613209104397357}
   - component: {fileID: 472572349533513768}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FieldStone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 2272598415935700043, guid: 98006157ee54a554581c4d395a695891,
     type: 3}
-  thisObject: {fileID: 2272598415935700037}
 --- !u!1001 &2272598415984866658
 PrefabInstance:
   m_ObjectHideFlags: 0

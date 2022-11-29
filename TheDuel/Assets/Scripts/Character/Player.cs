@@ -20,6 +20,10 @@ public class Player : Character
     private LineRenderer _trajectoryRenderer;
     private Camera _cam;
 
+    public Interactable focusedInteractable { get; private set; }
+    public float interactableAngle = 60f;
+    public float interactableRange = 6f;
+
     protected override void Awake()
     {
         base.Awake();
@@ -33,8 +37,9 @@ public class Player : Character
         _cam = Camera.main;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (Input.GetKeyDown(KeyCode.Mouse0)) UseItem();
         var wheel = Input.GetAxis("Mouse ScrollWheel");
         if (wheel > 0)
@@ -49,6 +54,31 @@ public class Player : Character
         isAiming = Input.GetKey(KeyCode.Mouse1) && equippedItem != null && equippedItem is ThrowingItem;
         _trajectoryRenderer.enabled = isAiming;
         if (isAiming) UpdateTrajectory();
+
+        if (Input.GetKeyDown(KeyCode.E) && focusedInteractable != null && focusedInteractable.CanInteract())
+        {
+            focusedInteractable.Interact();
+        }
+    }
+
+
+    private readonly Collider[] _interactableCheckResults = new Collider[64];
+    private void FixedUpdate()
+    {
+        focusedInteractable = null;
+        var closestAngle = Mathf.Infinity;
+        var count = Physics.OverlapSphereNonAlloc(transform.position, interactableRange, _interactableCheckResults, LayerMask.GetMask("Interactable"));
+        for (var i = 0; i < count; i++)
+        {
+            var interactable = _interactableCheckResults[i].GetComponent<Interactable>();
+            if (interactable == null) continue;
+            if (!interactable.CanInteract()) continue;
+            var angle = Vector3.Angle(_cam.transform.forward, interactable.transform.position - _cam.transform.position);
+            if (angle > interactableAngle / 2f) continue;
+            if (angle > closestAngle) continue;
+            focusedInteractable = interactable;
+            closestAngle = angle;
+        }
     }
 
     private void UpdateTrajectory()
@@ -73,5 +103,11 @@ public class Player : Character
         {
             Debug.Log("Hello");
         }
+    }
+
+    public void Interact()
+    {
+        if (focusedInteractable == null) return;
+        focusedInteractable.Interact();
     }
 }

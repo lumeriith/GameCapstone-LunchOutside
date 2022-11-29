@@ -310,6 +310,8 @@ MonoBehaviour:
   items: []
   equippedItem: {fileID: 0}
   maxItems: 7
+  interactableAngle: 60
+  interactableRange: 2
 --- !u!120 &3988280798075949974
 LineRenderer:
   m_ObjectHideFlags: 0

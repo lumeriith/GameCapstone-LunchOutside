@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2201574126801214569}
   - component: {fileID: 1456269788798768469}
   - component: {fileID: 96589302345248386}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FieldGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 5855475486311153994, guid: 2576d221e20b436499882c3c5f32ba8b,
     type: 3}
-  thisObject: {fileID: 1760795902786023685}
 --- !u!1 &1941679214510878391
 GameObject:
   m_ObjectHideFlags: 0
