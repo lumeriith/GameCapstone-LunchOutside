@@ -37,6 +37,6 @@ public class LearningTeacherPolicy {
 		GMMConfig config = walk();
 		//GMMConfig config = fencing();
 		PolicyLearning learning = new PolicyLearning(config, false);
-		learning.runTraining(10000);
+		learning.runTraining(100000);
 	}
 }
