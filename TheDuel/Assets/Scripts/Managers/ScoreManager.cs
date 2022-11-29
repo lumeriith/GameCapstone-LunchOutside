@@ -40,6 +40,8 @@ public class ScoreManager : ManagerBase<ScoreManager>
     public float scoreWindowTime = 0.4f;
     public float scoreWindowTimescale = 0.5f;
 
+    public bool disableScoreWindow = false;
+
     private void Start()
     {
         Player.instance.onDealAttack += HandlePlayerDealtAttack;
@@ -78,6 +80,11 @@ public class ScoreManager : ManagerBase<ScoreManager>
 
         IncrementPlayerScore(hit.score);
         onPlayerValidAttack?.Invoke(hit);
+        if (disableScoreWindow)
+        {
+            Time.timeScale = 0f;
+            return;
+        }
         if (scoreWindowState == ScoreWindowState.Before)
         {
             StartScoreWindow(false);
@@ -101,6 +108,11 @@ public class ScoreManager : ManagerBase<ScoreManager>
 
         IncrementEnemyScore(hit.score);
         onEnemyValidAttack?.Invoke(hit);
+        if (disableScoreWindow)
+        {
+            Time.timeScale = 0f;
+            return;
+        }
         if (scoreWindowState == ScoreWindowState.Before)
         {
             StartScoreWindow(true);
