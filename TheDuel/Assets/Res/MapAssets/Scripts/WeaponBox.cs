@@ -4,41 +4,18 @@ using UnityEngine;
 
 public class WeaponBox : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject[] itemsPool;
 
-    [SerializeField] GameObject thisObject;
-    [SerializeField] GameObject mFork;
-    [SerializeField] GameObject mGrenade;
-    [SerializeField] GameObject mStone;
+    private int _health = 2;
 
-    void Start()
+    public void Hit()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
-    void asd()
-    {
-        return;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        //Debug.Log("fdsdf");
-        if (other.gameObject.name=="Player")
+        _health--;
+        
+        if (_health <= 0)
         {
-            if (Input.GetKeyDown("e"))
-            {
-                Debug.Log("WeaponBoxTest");
-                Instantiate(mFork, thisObject.transform); //ÀÌ°Å ¿Ö ¾È µÅ
-                Destroy(thisObject);
-            }
+            Instantiate(itemsPool[Random.Range(0, itemsPool.Length)], transform.position, transform.rotation);
+            Destroy(gameObject);
         }
     }
 }

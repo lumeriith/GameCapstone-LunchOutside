@@ -93,3 +93,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {x: 0, y: 0, z: 0}
   m_InitialAngle: 60
+  stunDuration: 2
+  headshotStunDuration: 4
+  headshotGameObjectNames:
+  - humanoid_ Spine2
+  - humanoid_ Neck
+  - humanoid_ Head
+  minVelocity: 3
+  destroyTime: 5

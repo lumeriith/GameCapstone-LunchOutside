@@ -36,28 +36,37 @@ public class FencingSword : Item
         base.Update();
         var d = endPivot.position - startPivot.position;
         
-        if (!Physics.Raycast(startPivot.position, d, out var hit, d.magnitude, LayerMask.GetMask("Character Hitbox"),
+        if (!Physics.Raycast(startPivot.position, d, out var hit, d.magnitude, LayerMask.GetMask("Attackable"),
                 QueryTriggerInteraction.Collide)) return;
-        var other = hit.collider.GetComponentInParent<Character>();
-        if (other == null) return;
         
         if (Time.time - _lastHitTime < HitCooldown)
         {
-            _lastHitTime = Time.time;
             return;
         }
-        var hitInfo = new InfoAttackHit
+        
+        var otherCharacter = hit.collider.GetComponentInParent<Character>();
+        var otherWeaponBox = hit.collider.GetComponent<WeaponBox>();
+        if (otherCharacter != null)
         {
-            from = _parent,
-            to = other,
-            point = hit.point,
-            normal = hit.normal,
-            collider = hit.collider,
-            score = score
-        };
-        _parent.onDealAttack?.Invoke(hitInfo);
-        other.onTakeAttack?.Invoke(hitInfo);
-        _lastHitTime = Time.time;
+            var hitInfo = new InfoAttackHit
+            {
+                from = _parent,
+                to = otherCharacter,
+                point = hit.point,
+                normal = hit.normal,
+                collider = hit.collider,
+                score = score
+            };
+            _parent.onDealAttack?.Invoke(hitInfo);
+            otherCharacter.onTakeAttack?.Invoke(hitInfo);
+            _lastHitTime = Time.time;
+        }
+
+        if (otherWeaponBox != null)
+        {
+            otherWeaponBox.Hit();
+            _lastHitTime = Time.time;
+        }
     }
     
     private Animator _animator;
