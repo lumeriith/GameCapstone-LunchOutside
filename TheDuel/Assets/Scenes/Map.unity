@@ -8228,7 +8228,6 @@ GameObject:
   - component: {fileID: 2033031601}
   - component: {fileID: 2033031600}
   - component: {fileID: 2033031599}
-  - component: {fileID: 2033031598}
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
@@ -8251,49 +8250,6 @@ Transform:
   m_Father: {fileID: 725726192}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2033031598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2033031596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03fe34c7fc437ea4f98de44bbc76b9d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyScoreBoard: {fileID: 0}
-  PlayerScoreBoard: {fileID: 0}
-  MinuteBoard: {fileID: 0}
-  TensSecBoard: {fileID: 0}
-  UnitSecBoard: {fileID: 0}
-  zero: {fileID: 2100000, guid: 3e90e5b915dc8bd4fa272d65748bee75, type: 2}
-  one: {fileID: 2100000, guid: 05fc7b00c2ec05b49993c1b26a5621a8, type: 2}
-  two: {fileID: 2100000, guid: e0e65114cbb029040b3fe3b03c01b981, type: 2}
-  three: {fileID: 2100000, guid: 9737b611b85d14948aeda4c6d30ff314, type: 2}
-  four: {fileID: 2100000, guid: bdf5211448f6e9b4d8ec5fc017a61915, type: 2}
-  five: {fileID: 2100000, guid: cc688a8aa47851647aa28b2c47b106e3, type: 2}
-  six: {fileID: 2100000, guid: 8c87894b4f4b0e4418e372939293373a, type: 2}
-  seven: {fileID: 2100000, guid: 20814bafa20f26c4393f29fb38b824af, type: 2}
-  eight: {fileID: 2100000, guid: 033829d339d73b84f80f49ee707559e0, type: 2}
-  nine: {fileID: 2100000, guid: 1b98b8b144b6be448a4a21b6ae061d86, type: 2}
-  ten: {fileID: 2100000, guid: aaad5fb84d6ad8e4c8af5effb40a8f10, type: 2}
-  eleven: {fileID: 2100000, guid: 79900d62467ca604096b1a80898019c0, type: 2}
-  twelve: {fileID: 2100000, guid: 43c0870fa4aa82d4b9086aee061bcf69, type: 2}
-  thirteen: {fileID: 2100000, guid: f540682f5f2deee45af6b5d7d11c1f88, type: 2}
-  fourteen: {fileID: 2100000, guid: a4da748aa317796419056597bc0bf621, type: 2}
-  fifteen: {fileID: 2100000, guid: a6a89ab157410c34eb4d41c3e8bad8c9, type: 2}
-  timezero: {fileID: 2100000, guid: 453f172702168ff479c512ff6e0e43b9, type: 2}
-  timeone: {fileID: 2100000, guid: 362f3218140e23f45b50c7e18d437a6d, type: 2}
-  timetwo: {fileID: 2100000, guid: 54cb9bf8c9f1309419b1be60653a5777, type: 2}
-  timethree: {fileID: 2100000, guid: 997a8fda4bfe84f4ab66c615ace30185, type: 2}
-  timefour: {fileID: 2100000, guid: cd7be5a7ad667a446bee0f7b2aa80a21, type: 2}
-  timefive: {fileID: 2100000, guid: cb7496cbcf99860418690b81f38554e9, type: 2}
-  timesix: {fileID: 2100000, guid: b9891009b9a9f8545abb1d50fe4bcc56, type: 2}
-  timeseven: {fileID: 2100000, guid: 3b6736e1a5a7d264897729797643e7a3, type: 2}
-  timeeight: {fileID: 2100000, guid: 8239fdf120d46414688e16fbd868bc7c, type: 2}
-  timenine: {fileID: 2100000, guid: fabc8ea773bf04645bf644d9e52ea7fe, type: 2}
 --- !u!65 &2033031599
 BoxCollider:
   m_ObjectHideFlags: 0
