@@ -149,6 +149,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2822101166207294217}
   - component: {fileID: 3999959872034615980}
+  - component: {fileID: -8811920989504221785}
+  - component: {fileID: -1266742732314658498}
   - component: {fileID: 2822101166207294216}
   - component: {fileID: 2822101166207294213}
   - component: {fileID: 2822101166207294212}
@@ -193,10 +195,34 @@ MonoBehaviour:
   items: []
   equippedItem: {fileID: 0}
   maxItems: 7
-  rotationSpeed: 0
-  disableAi: 0
-  aiProfile: {fileID: 0}
+--- !u!114 &-8811920989504221785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822101166207294211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fee860d4a79d4543b12260065406486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: f5d3c08b049324846a24bc761dc03418, type: 2}
   disableInitiative: 0
+  rotationSpeed: 120
+--- !u!114 &-1266742732314658498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822101166207294211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694f9a57030d28f4284119215cca1358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 0
 --- !u!95 &2822101166207294216
 Animator:
   serializedVersion: 4

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName="EnemyAI", menuName="Enemy AI Profile")]
-public class EnemyAIProfile : ScriptableObject
+public class EnemyFencingAIProfile : ScriptableObject
 {
     [Header("Look AI Settings")] 
     public float lookNoiseSpeed = 1;
