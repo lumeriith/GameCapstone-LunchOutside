@@ -78,9 +78,7 @@ public class FencingSword : Item
         else
         {
             var trail = gameObject.GetComponentInChildren<TrailRenderer>();
-            if (trail != null) trail.enabled = true;
             _animator.SetTrigger("Basic Attack");
-            if (trail != null) trail.enabled = false;
         }
     }
 }
