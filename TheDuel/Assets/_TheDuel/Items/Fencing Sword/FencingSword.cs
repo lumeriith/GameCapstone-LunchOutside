@@ -75,6 +75,12 @@ public class FencingSword : Item
     {
         base.OnUse();
         if (Input.GetKey(KeyCode.W)) _animator.SetTrigger("Leap Attack");
-        else _animator.SetTrigger("Basic Attack");
+        else
+        {
+            var trail = gameObject.GetComponentInChildren<TrailRenderer>();
+            if (trail != null) trail.enabled = true;
+            _animator.SetTrigger("Basic Attack");
+            if (trail != null) trail.enabled = false;
+        }
     }
 }
