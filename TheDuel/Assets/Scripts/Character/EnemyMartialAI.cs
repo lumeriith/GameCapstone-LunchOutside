@@ -9,6 +9,6 @@ public class EnemyMartialAI : MonoBehaviour
 
     private void LateUpdate()
     {
-        throw new NotImplementedException();
+        
     }
 }

@@ -9,6 +9,7 @@ public class Item : MonoBehaviour
     public Character owner { get; set; }
     public bool isUseReady => isEquipped && CanUse();
 
+    public Sprite icon;
     public GameObject[] activatedOnEquip;
 
     public float useCooldown = 0.1f;

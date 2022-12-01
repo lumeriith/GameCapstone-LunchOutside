@@ -3344,6 +3344,8 @@ PrefabInstance:
     - {fileID: 2822101166207294213, guid: e6dd21c5d2fbad146a00374cb0920858, type: 3}
     - {fileID: 2822101166207294212, guid: e6dd21c5d2fbad146a00374cb0920858, type: 3}
     - {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858, type: 3}
+    - {fileID: -8811920989504221785, guid: e6dd21c5d2fbad146a00374cb0920858, type: 3}
+    - {fileID: -1266742732314658498, guid: e6dd21c5d2fbad146a00374cb0920858, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e6dd21c5d2fbad146a00374cb0920858, type: 3}
 --- !u!95 &1857651550 stripped
 Animator:

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fccd2aa91d2b3744ebfd88b8e3a711b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 151140a1aee67b844882017b8586c90e, type: 3}
   activatedOnEquip:
   - {fileID: 2272598415984899010}
   useCooldown: 0.1

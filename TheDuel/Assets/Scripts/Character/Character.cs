@@ -6,7 +6,10 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     private static readonly int IsStunned = Animator.StringToHash("IsStunned");
-    
+
+    public Action<Item> onAddItem;
+    public Action<Item> onRemoveItem;
+    public Action<Item> onChangeEquippedItem;
     public Action<InfoAttackHit> onDealAttack;
     public Action<InfoAttackHit> onTakeAttack;
     public Action<bool> onCheatingChanged;
@@ -70,10 +73,11 @@ public class Character : MonoBehaviour
     public Item AddItem(Item prefab)
     {
         if (!canAddItem) throw new InvalidOperationException("Max item limit reached");
-        var newWeapon = Instantiate(prefab, transform);
-        newWeapon.owner = this;
-        items.Add(newWeapon);
-        return newWeapon;
+        var newItem = Instantiate(prefab, transform);
+        newItem.owner = this;
+        items.Add(newItem);
+        onAddItem?.Invoke(newItem);
+        return newItem;
     }
 
     public void EquipItem(Item item)
@@ -82,6 +86,7 @@ public class Character : MonoBehaviour
         item.isEquipped = true;
         equippedItem = item;
         item.OnEquip();
+        onChangeEquippedItem?.Invoke(item);
     }
 
     public void UnequipItem()
@@ -100,9 +105,10 @@ public class Character : MonoBehaviour
             UnequipItem();
             EquipDefaultItem();
         }
-
+        
         items.Remove(item);
-        Destroy(item);
+        onRemoveItem?.Invoke(item);
+        Destroy(item.gameObject);
     }
     
     public void UseItem()

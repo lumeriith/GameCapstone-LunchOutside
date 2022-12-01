@@ -34,6 +34,7 @@ public class FencingSword : Item
     protected override void Update()
     {
         base.Update();
+        if (!isEquipped) return;
         var d = endPivot.position - startPivot.position;
         
         if (!Physics.Raycast(startPivot.position, d, out var hit, d.magnitude, LayerMask.GetMask("Attackable"),
