@@ -42,22 +42,11 @@ public class Item : MonoBehaviour
         }
     }
 
-    public void Use(GameObject obj)
+    public void Use()
     {
         if (!isUseReady) return;
-        if (obj != null)
-        {
-            Character character = obj.GetComponent<Character>();
-            if (character != null)
-            {
-                if (character.GetStamina() >= requireStamina && character.canAct)
-                {
-                    _lastUseTime = Time.time;
-                    OnUse();
-                    character.AddStamina(-requireStamina);
-                }
-            }
-        }
+        _lastUseTime = Time.time;
+        OnUse();
     }
 
     /// <summary>

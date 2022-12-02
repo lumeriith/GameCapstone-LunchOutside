@@ -29,15 +29,11 @@ public class ModelActionInput : ModelComponentBase
             if (Input.GetKeyDown(KeyCode.Space)) DoActionTest();
             if (Input.GetKeyDown(KeyCode.Alpha1)) writer.WriteSetDirection(Random.insideUnitCircle);
             if (Input.GetKeyDown(KeyCode.Alpha2)) writer.WriteSetDirection(Vector2.zero);
-            if (character != null)
-            {
-                double totalAgility = character.basicAgility + (character.GetMaxHealth() - character.health) * character.GetAgilityRate();
-                if (_lastTotalAgility != totalAgility)
-                {
-                    writer.WriteSetTotalAgility(totalAgility);
-                    _lastTotalAgility = totalAgility;
-                }
-            }
         }
+    }
+
+    public void UpdateTotalAgility(double val)
+    {
+        writer.WriteSetTotalAgility(val);
     }
 }

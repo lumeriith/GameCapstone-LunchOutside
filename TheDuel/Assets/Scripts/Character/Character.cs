@@ -25,9 +25,11 @@ public class Character : MonoBehaviour
 
     public double basicAgility = 1.0;
     public const double agilityRate = 1.0;
+    private double _lastTotalAgility;
 
     public const float maxHealth = 100f;
     public float health = 100f;
+    public const float decreaseHealthRate = 0.01f;
     public const float minHealth = 0f;
 
     public const float staminaRecoveryRate = 0.1f;
@@ -43,6 +45,7 @@ public class Character : MonoBehaviour
 
     private byte _isCheatingCounter;
     public Animator animator { get; private set; }
+    public ModelActionInput modelActionInput { get; private set; }
     private float _currentStunDuration;
 
     [NonSerialized]
@@ -55,6 +58,8 @@ public class Character : MonoBehaviour
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
+        modelActionInput = GetComponent<ModelActionInput>();
+        _lastTotalAgility = basicAgility + (maxHealth - health) * agilityRate;
     }
 
     protected virtual void Start()
@@ -83,7 +88,13 @@ public class Character : MonoBehaviour
         animator.SetBool("IsStunned", isStunned);
 
         if (stamina < maxStamina) AddStamina(staminaRecoveryRate * health * Time.deltaTime);
-        Debug.Log("stamina: " + stamina);
+
+        double totalAgility = GetTotalAgility();
+        if (_lastTotalAgility != totalAgility && modelActionInput != null)
+        {
+            modelActionInput.UpdateTotalAgility(totalAgility);
+            _lastTotalAgility = totalAgility;
+        }
     }
 
     public void EquipDefaultItem()
@@ -140,7 +151,12 @@ public class Character : MonoBehaviour
     public void UseItem()
     {
         if (equippedItem == null || !equippedItem.isUseReady) return;
-        equippedItem.Use(gameObject);
+        if (stamina >= equippedItem.requireStamina && canAct)
+        {
+            equippedItem.Use();
+            AddStamina(-equippedItem.requireStamina);
+            AddHealth(-equippedItem.requireStamina * decreaseHealthRate);
+        }
     }
 
     public void CycleItemUp()
@@ -327,5 +343,29 @@ public class Character : MonoBehaviour
             yield return new WaitForSeconds(dodgeDuration);
             isDodging = false;
         }
+    }
+
+    public double GetTotalAgility()
+    {
+        return basicAgility + (maxHealth - health) * agilityRate;
+    }
+
+    public void SetHealth(float val)
+    {
+        health = val;
+        if (health > maxHealth) health = maxHealth;
+        if (health < minHealth) health = minHealth;
+    }
+
+    public void AddHealth(float val)
+    {
+        health += val;
+        if (health > maxHealth) health = maxHealth;
+        if (health < minHealth) health = minHealth;
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }
