@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3063749524672339413}
   - component: {fileID: 901971028472372128}
   - component: {fileID: 2370193880929127164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Physics Body Part 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,6 +36,8 @@ Transform:
   - {fileID: 9217783048340094761}
   - {fileID: 4471281158042449773}
   - {fileID: 654895863125383425}
+  - {fileID: 3267236434240381000}
+  - {fileID: 5280583930059461697}
   m_Father: {fileID: 4021805100241942125}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -224,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 654895863125383425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9217783048340094761}
   - component: {fileID: 7201855494988988089}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +391,7 @@ GameObject:
   - component: {fileID: 1869352798615921964}
   - component: {fileID: 4409931971155309539}
   - component: {fileID: 8875688484922810966}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Fencing Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,8 +439,12 @@ MonoBehaviour:
   requireStamina: 20
   startPivot: {fileID: 4471281158042449773}
   endPivot: {fileID: 654895863125383425}
+  parryStartPivot: {fileID: 3267236434240381000}
+  parryEndPivot: {fileID: 5280583930059461697}
   score: 1
   sphereCastRadius: 0.075
+  parrySphereCastRadius: 1
+  forceUseLeapAttack: 0
 --- !u!114 &4409931971155309539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +477,68 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!1 &4495734222255070373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3267236434240381000}
+  m_Layer: 9
+  m_Name: Parry Start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3267236434240381000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4495734222255070373}
+  m_LocalRotation: {x: -0.70710707, y: -0, z: -0, w: 0.7071066}
+  m_LocalPosition: {x: 0, y: -4.55, z: 0}
+  m_LocalScale: {x: 14.218433, y: 14.21843, z: 4.5104365}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7727085681174557471}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6679430264541157964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5280583930059461697}
+  m_Layer: 9
+  m_Name: Parry End
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5280583930059461697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6679430264541157964}
+  m_LocalRotation: {x: -0.70710707, y: -0, z: -0, w: 0.7071066}
+  m_LocalPosition: {x: 0, y: 1.31, z: 0}
+  m_LocalScale: {x: 14.218433, y: 14.21843, z: 4.5104365}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7727085681174557471}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7040088400962589314
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +553,7 @@ GameObject:
   - component: {fileID: 9086317499700954047}
   - component: {fileID: 634249756760226327}
   - component: {fileID: 5077422499655392074}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Physics Body Part 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +760,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4471281158042449773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,6 +844,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2860770432012949328, guid: f737b785946e5954c9df68826e0932f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -1578373571446707184, guid: f737b785946e5954c9df68826e0932f9,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -785,6 +858,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NewFencingSword
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f737b785946e5954c9df68826e0932f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 951011102456138778, guid: f737b785946e5954c9df68826e0932f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1072549032852616780, guid: f737b785946e5954c9df68826e0932f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931193136774396202, guid: f737b785946e5954c9df68826e0932f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618405258754474897, guid: f737b785946e5954c9df68826e0932f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7080509757388337083, guid: f737b785946e5954c9df68826e0932f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f737b785946e5954c9df68826e0932f9, type: 3}

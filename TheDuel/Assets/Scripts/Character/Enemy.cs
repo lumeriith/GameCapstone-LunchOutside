@@ -14,6 +14,10 @@ public class Enemy : Character
     }
     private static Enemy _instance;
 
-    
 
+    private void Awake()
+    {
+        base.Awake();
+        target = Player.instance;
+    }
 }

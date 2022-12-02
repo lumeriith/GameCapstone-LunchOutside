@@ -22,17 +22,12 @@ public class Character : MonoBehaviour
     public const float maxStamina = 100f;
     public float stamina = 100f;
     public const float minStamina = 0f;
+    public const float staminaRecoveryRate = 20f;
+
 
     public double basicAgility = 1.0;
     public const double agilityRate = 1.0;
     private double _lastTotalAgility;
-
-    public const float maxHealth = 100f;
-    public float health = 100f;
-    public const float decreaseHealthRate = 0.01f;
-    public const float minHealth = 0f;
-
-    public const float staminaRecoveryRate = 0.1f;
 
     public bool canAddItem => items.Count < maxItems;
 
@@ -46,10 +41,13 @@ public class Character : MonoBehaviour
     private byte _isCheatingCounter;
     public Animator animator { get; private set; }
     public ModelActionInput modelActionInput { get; private set; }
+    public Character target { get; protected set; }
     private float _currentStunDuration;
 
     [NonSerialized]
     public bool isIdle;
+    public bool isAttacking;
+    public bool isParrying;
     public bool isSwitchingWeapon { get; private set; }
 
     public float dodgeDuration = 0.5f;
@@ -59,7 +57,6 @@ public class Character : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         modelActionInput = GetComponent<ModelActionInput>();
-        _lastTotalAgility = basicAgility + (maxHealth - health) * agilityRate;
     }
 
     protected virtual void Start()
@@ -87,14 +84,7 @@ public class Character : MonoBehaviour
         _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
         animator.SetBool("IsStunned", isStunned);
 
-        if (stamina < maxStamina) AddStamina(staminaRecoveryRate * health * Time.deltaTime);
-
-        double totalAgility = GetTotalAgility();
-        if (_lastTotalAgility != totalAgility && modelActionInput != null)
-        {
-            modelActionInput.UpdateTotalAgility(totalAgility);
-            _lastTotalAgility = totalAgility;
-        }
+        if (stamina < maxStamina) AddStamina(staminaRecoveryRate * Time.deltaTime);
     }
 
     public void EquipDefaultItem()
@@ -155,7 +145,6 @@ public class Character : MonoBehaviour
         {
             equippedItem.Use();
             AddStamina(-equippedItem.requireStamina);
-            AddHealth(-equippedItem.requireStamina * decreaseHealthRate);
         }
     }
 
@@ -296,6 +285,18 @@ public class Character : MonoBehaviour
         animator.SetTrigger("Leap Attack");
     }
 
+    public void PlayParry()
+    {
+        isIdle = false;
+        animator.SetTrigger("Parry");
+    }
+
+    public void PlayParred()
+    {
+        isIdle = false;
+        animator.SetTrigger("Parryed");
+    }
+
     public void SetStamina(float val)
     {
         stamina = val;
@@ -313,16 +314,6 @@ public class Character : MonoBehaviour
     public float GetStamina()
     {
         return stamina;
-    }
-
-    public float GetMaxHealth()
-    {
-        return maxHealth;
-    }
-
-    public float GetMinHealth()
-    {
-        return minHealth;
     }
 
     public double GetAgilityRate()
@@ -343,29 +334,5 @@ public class Character : MonoBehaviour
             yield return new WaitForSeconds(dodgeDuration);
             isDodging = false;
         }
-    }
-
-    public double GetTotalAgility()
-    {
-        return basicAgility + (maxHealth - health) * agilityRate;
-    }
-
-    public void SetHealth(float val)
-    {
-        health = val;
-        if (health > maxHealth) health = maxHealth;
-        if (health < minHealth) health = minHealth;
-    }
-
-    public void AddHealth(float val)
-    {
-        health += val;
-        if (health > maxHealth) health = maxHealth;
-        if (health < minHealth) health = minHealth;
-    }
-
-    public float GetHealth()
-    {
-        return health;
     }
 }

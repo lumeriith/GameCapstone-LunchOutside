@@ -17,8 +17,13 @@ public class FencingSword : Item
 {
     public Transform startPivot;
     public Transform endPivot;
+
+    public Transform parryStartPivot;
+    public Transform parryEndPivot;
+
     public int score = 1;
     public float sphereCastRadius = 0.075f;
+    public float parrySphereCastRadius = 0.15f;
 
     public const float HitCooldown = 0.75f;
 
@@ -38,11 +43,36 @@ public class FencingSword : Item
     {
         base.Update();
         if (!isEquipped) return;
+
+        var parryDistance = parryEndPivot.position - parryStartPivot.position;
+
+        if (Physics.SphereCast(parryStartPivot.position, parrySphereCastRadius, parryDistance, out var parryHit, parryDistance.magnitude, LayerMask.GetMask("Parryable"),
+                QueryTriggerInteraction.Collide))
+        {
+            var hitCharacter = parryHit.collider.GetComponentInParent<Character>();
+            var otherFencingSword = hitCharacter.GetComponentInChildren<FencingSword>();
+
+            Debug.Log("parent.isParrying: " + _parent.isParrying);
+            Debug.Log("hitCharacter.isAttacking" + hitCharacter.isAttacking);
+            Debug.Log("isEqual: " + (this != otherFencingSword));
+            Debug.Log("isFencingSword: " + (otherFencingSword == null));
+
+            if (otherFencingSword != null && this != otherFencingSword && _parent.isParrying && hitCharacter.isAttacking)
+            {
+                Debug.Log("Parrying");
+                hitCharacter.isAttacking = false;
+                hitCharacter.AddStamina(-50);
+                hitCharacter.PlayHitFront();
+                _lastHitTime = Time.time;
+            }
+        }
+
         var d = endPivot.position - startPivot.position;
         
         if (!Physics.SphereCast(startPivot.position, sphereCastRadius, d, out var hit, d.magnitude, LayerMask.GetMask("Attackable"),
                 QueryTriggerInteraction.Collide)) return;
-        
+
+
         if (Time.time - _lastHitTime < HitCooldown)
         {
             return;
@@ -50,7 +80,7 @@ public class FencingSword : Item
         
         var otherCharacter = hit.collider.GetComponentInParent<Character>();
         var otherWeaponBox = hit.collider.GetComponent<WeaponBox>();
-        if (otherCharacter != null && _parent != otherCharacter && !otherCharacter.isDodging)
+        if (otherCharacter != null && _parent != otherCharacter && !otherCharacter.isDodging && otherCharacter.isAttacking)
         {
             var hitInfo = new InfoAttackHit
             {
