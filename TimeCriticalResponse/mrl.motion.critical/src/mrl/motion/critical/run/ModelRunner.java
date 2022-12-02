@@ -23,7 +23,7 @@ public class ModelRunner {
 
     private Vector2d targetDirection;
 
-    private double agility = 1;
+    private double totalAgility = 1;
     private boolean useDynamicAgility = true;
 
     private int locoType = 1;
@@ -80,7 +80,7 @@ public class ModelRunner {
                 double[] control = AgilityControlParameterGenerator.getActionType(actionTypesLength, action);
                 control = MathUtil.concatenate(control, new double[] { targetAngle });
                 if (useDynamicAgility) {
-                    control = MathUtil.concatenate(control, new double[] { agility });
+                    control = MathUtil.concatenate(control, new double[] { totalAgility });
                 }
                 return control;
             }
@@ -123,5 +123,10 @@ public class ModelRunner {
 
     public void setDirection(Vector2d vec) throws IOException {
         targetDirection = vec;
+    }
+    
+    public void setTotalAgility(double val)
+    {
+    	totalAgility = val;
     }
 }
