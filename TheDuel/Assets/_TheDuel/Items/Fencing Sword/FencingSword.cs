@@ -47,7 +47,7 @@ public class FencingSword : Item
         
         var otherCharacter = hit.collider.GetComponentInParent<Character>();
         var otherWeaponBox = hit.collider.GetComponent<WeaponBox>();
-        if (otherCharacter != null)
+        if (otherCharacter != null && _parent != otherCharacter)
         {
             var hitInfo = new InfoAttackHit
             {
