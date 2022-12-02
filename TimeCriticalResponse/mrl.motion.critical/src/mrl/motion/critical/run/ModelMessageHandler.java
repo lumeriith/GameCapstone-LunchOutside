@@ -18,6 +18,7 @@ public class ModelMessageHandler {
             this::handleDoAction,
             this::handleSetDirection,
             this::handleSetTimescale,
+            this::handleSetTotalAgility,
     };
 
     public void handleMessage(int opCode, int length) throws IOException {
@@ -41,5 +42,9 @@ public class ModelMessageHandler {
 
     private void handleSetTimescale(int length) throws IOException {
         parent.timescale = parent.socketReader.readFloat();
+    }
+    
+    private void handleSetTotalAgility(int length) throws IOException {
+    	parent.model.setTotalAgility(parent.socketReader.readDouble());
     }
 }
