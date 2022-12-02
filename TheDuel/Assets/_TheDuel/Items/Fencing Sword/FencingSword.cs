@@ -18,6 +18,7 @@ public class FencingSword : Item
     public Transform startPivot;
     public Transform endPivot;
     public int score = 1;
+    public float sphereCastRadius = 0.075f;
 
     public const float HitCooldown = 0.75f;
     
@@ -37,7 +38,7 @@ public class FencingSword : Item
         if (!isEquipped) return;
         var d = endPivot.position - startPivot.position;
         
-        if (!Physics.Raycast(startPivot.position, d, out var hit, d.magnitude, LayerMask.GetMask("Attackable"),
+        if (!Physics.SphereCast(startPivot.position, sphereCastRadius, d, out var hit, d.magnitude, LayerMask.GetMask("Attackable"),
                 QueryTriggerInteraction.Collide)) return;
         
         if (Time.time - _lastHitTime < HitCooldown)
