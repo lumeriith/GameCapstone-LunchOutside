@@ -267,6 +267,7 @@ MonoBehaviour:
   selectedScale: 1.25
   target: {fileID: 0}
   keyText: {fileID: 1877256436168389939}
+  scaleDuration: 0.3
 --- !u!1 &8784092359226996550
 GameObject:
   m_ObjectHideFlags: 0
