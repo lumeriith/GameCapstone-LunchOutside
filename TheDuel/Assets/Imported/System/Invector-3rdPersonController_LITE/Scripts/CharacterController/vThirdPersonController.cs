@@ -34,7 +34,7 @@ namespace Invector.vCharacterController
         {
             if (lockRotation) return;
 
-            bool validInput = input != Vector3.zero || strafeSpeed.rotateWithCamera;
+            bool validInput = strafeSpeed.rotateWithCamera;
 
             if (validInput)
             {

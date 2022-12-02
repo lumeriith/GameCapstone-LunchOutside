@@ -249,7 +249,7 @@ namespace Invector.vCharacterController
             // apply extra force to the jump height   
             var vel = _rigidbody.velocity;
             vel.y = jumpHeight;
-            _rigidbody.velocity = vel;
+            //_rigidbody.velocity = vel;
         }
 
         public virtual void AirControl()
@@ -260,7 +260,7 @@ namespace Invector.vCharacterController
 
             if (jumpWithRigidbodyForce && !isGrounded)
             {
-                _rigidbody.AddForce(moveDirection * airSpeed * Time.deltaTime, ForceMode.VelocityChange);
+                //_rigidbody.AddForce(moveDirection * airSpeed * Time.deltaTime, ForceMode.VelocityChange);
                 return;
             }
 
@@ -272,7 +272,7 @@ namespace Invector.vCharacterController
             Vector3 targetVelocity = (targetPosition - transform.position) / Time.deltaTime;
 
             targetVelocity.y = _rigidbody.velocity.y;
-            _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, targetVelocity, airSmooth * Time.deltaTime);
+            //_rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, targetVelocity, airSmooth * Time.deltaTime);
         }
 
         protected virtual bool jumpFwdCondition
@@ -296,8 +296,8 @@ namespace Invector.vCharacterController
             if (groundDistance <= groundMinDistance)
             {
                 isGrounded = true;
-                if (!isJumping && groundDistance > 0.05f)
-                    _rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
+                // if (!isJumping && groundDistance > 0.05f)
+                //     _rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
 
                 heightReached = transform.position.y;
             }
@@ -308,16 +308,16 @@ namespace Invector.vCharacterController
                     // set IsGrounded to false 
                     isGrounded = false;
                     // check vertical velocity
-                    verticalVelocity = _rigidbody.velocity.y;
+                    //verticalVelocity = _rigidbody.velocity.y;
                     // apply extra gravity when falling
                     if (!isJumping)
                     {
-                        _rigidbody.AddForce(transform.up * extraGravity * Time.deltaTime, ForceMode.VelocityChange);
+                        //_rigidbody.AddForce(transform.up * extraGravity * Time.deltaTime, ForceMode.VelocityChange);
                     }
                 }
                 else if (!isJumping)
                 {
-                    _rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
+                    //_rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
                 }
             }
         }

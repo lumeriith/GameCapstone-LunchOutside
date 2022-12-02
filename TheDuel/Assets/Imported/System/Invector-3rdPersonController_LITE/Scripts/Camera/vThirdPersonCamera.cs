@@ -68,8 +68,8 @@ public class vThirdPersonCamera : MonoBehaviour
     private Vector3 desired_cPos;
     private CinemachineVirtualCamera _camera;
     private float distance = 5f;
-    private float mouseY = 0f;
-    private float mouseX = 0f;
+    public float mouseY = 0f;
+    public float mouseX = 0f;
     private float currentHeight;
     private float cullingDistance;
     private float checkHeightRadius = 0.4f;
@@ -191,6 +191,13 @@ public class vThirdPersonCamera : MonoBehaviour
             mouseY = currentTarget.root.localEulerAngles.x;
             mouseX = currentTarget.root.localEulerAngles.y;
         }
+    }
+
+    public void SetRotation(Quaternion rot)
+    {
+        var euler = rot.eulerAngles;
+        mouseY = euler.x;
+        mouseX = euler.y;
     }
 
     /// <summary>

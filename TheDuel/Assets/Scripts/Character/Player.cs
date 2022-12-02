@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Invector.vCharacterController;
 using UnityEngine;
 
 
@@ -24,22 +25,32 @@ public class Player : Character
     public float interactableAngle = 60f;
     public float interactableRange = 6f;
 
+    private vThirdPersonController _tpController;
+
     protected override void Awake()
     {
         base.Awake();
         _trajectoryRenderer = GetComponent<LineRenderer>();
         _trajectoryRenderer.positionCount = 20;
+        _tpController = GetComponent<vThirdPersonController>();
     }
 
     protected override void Start()
     {
         base.Start();
         _cam = Camera.main;
+        GameManager.instance.onRoundPrepare += () =>
+        {
+            var rot = Quaternion.LookRotation(Enemy.instance.transform.position - transform.position);
+            FindObjectOfType<vThirdPersonCamera>().SetRotation(rot);
+            transform.rotation = Quaternion.Euler(0, rot.eulerAngles.y, 0);
+        };
     }
 
     protected override void Update()
     {
         base.Update();
+        _tpController.strafeSpeed.rotateWithCamera = canAct;
         if (Input.GetKeyDown(KeyCode.Mouse0)) UseItem();
         var wheel = Input.GetAxis("Mouse ScrollWheel");
         if (wheel > 0)

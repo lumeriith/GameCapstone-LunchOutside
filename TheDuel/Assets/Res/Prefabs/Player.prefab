@@ -219,7 +219,7 @@ MonoBehaviour:
   strafeSpeed:
     movementSmooth: 2
     animationSmooth: 0
-    rotationSpeed: 16
+    rotationSpeed: 8
     walkByDefault: 0
     rotateWithCamera: 1
     walkSpeed: 0

@@ -64,10 +64,10 @@ public class GameManager : ManagerBase<GameManager>
     
     private IEnumerator StartRoundRoutine()
     {
-        onRoundPrepare?.Invoke();
         fadeOutVolume.weight = 1f;
         Player.instance.transform.SetPositionAndRotation(playerStartPos.position, playerStartPos.rotation);
         Enemy.instance.transform.SetPositionAndRotation(enemyStartPos.position, enemyStartPos.rotation);
+        onRoundPrepare?.Invoke();
         DOTween.To(() => fadeOutVolume.weight, v => fadeOutVolume.weight = v, 0f, 1f);
         yield return new WaitForSecondsRealtime(1f);
         onRoundStarted?.Invoke();
