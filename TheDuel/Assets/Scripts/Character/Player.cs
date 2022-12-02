@@ -51,13 +51,25 @@ public class Player : Character
             CycleItemDown();
         }
 
-        isAiming = Input.GetKey(KeyCode.Mouse1) && equippedItem != null && equippedItem is ThrowingItem;
+        isAiming = Input.GetKey(KeyCode.Mouse1) && equippedItem != null && equippedItem is ThrowingItem && canAct;
         _trajectoryRenderer.enabled = isAiming;
         if (isAiming) UpdateTrajectory();
 
-        if (Input.GetKeyDown(KeyCode.E) && focusedInteractable != null && focusedInteractable.CanInteract())
+        if (Input.GetKeyDown(KeyCode.E) && focusedInteractable != null && focusedInteractable.CanInteract() && canAct)
         {
-            focusedInteractable.Interact();
+            Interact();
+        }
+
+        if (canAct)
+        {
+            for (int i = 0; i <= 8; i++)
+            {
+                if (HasItemAt(i) && Input.GetKeyDown((KeyCode) ((int) KeyCode.Alpha1 + i)))
+                {
+                    SwitchToItemAtIndex(i);
+                    break;
+                }
+            }
         }
     }
 

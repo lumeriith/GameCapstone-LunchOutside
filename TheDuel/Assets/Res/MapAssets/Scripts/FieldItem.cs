@@ -39,7 +39,14 @@ public class FieldItem : Interactable
     public override void Interact()
     {
         base.Interact();
-        Player.instance.AddItem(itemPrefab);
-        Destroy(gameObject);
+        StartCoroutine(PickupRoutine());
+        IEnumerator PickupRoutine()
+        {
+            Player.instance.PlayPickUp();
+            yield return new WaitForSeconds(.3f);
+            Player.instance.AddItem(itemPrefab);
+            Destroy(gameObject);
+        }
+
     }
 }

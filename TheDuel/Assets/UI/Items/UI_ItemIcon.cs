@@ -13,7 +13,6 @@ public class UI_ItemIcon : MonoBehaviour
     public float selectedScale = 1.1f;
     public Item target;
     public TextMeshProUGUI keyText;
-    public float scaleDuration = 0.3f;
     
     private void Start()
     {
@@ -46,7 +45,7 @@ public class UI_ItemIcon : MonoBehaviour
     {
         var isSelected = item == target;
         var targetScale = isSelected ? selectedScale : 1;
-        transform.DOScale(targetScale, scaleDuration);
+        transform.localScale = Vector3.one * targetScale;
         selectedIndicator.SetActive(isSelected);
     }
 }
