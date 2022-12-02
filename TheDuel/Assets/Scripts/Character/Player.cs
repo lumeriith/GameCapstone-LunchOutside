@@ -33,7 +33,6 @@ public class Player : Character
         _trajectoryRenderer = GetComponent<LineRenderer>();
         _trajectoryRenderer.positionCount = 20;
         _tpController = GetComponent<vThirdPersonController>();
-        target = Enemy.instance;
     }
 
     protected override void Start()
@@ -53,10 +52,7 @@ public class Player : Character
         base.Update();
         _tpController.strafeSpeed.rotateWithCamera = canAct;
         if (Input.GetKeyDown(KeyCode.Mouse0) && canAct) UseItem();
-        if (Input.GetKeyDown(KeyCode.Q) && canAct)
-        {
-            PlayParry();
-        }
+        if (Input.GetKeyDown(KeyCode.Q) && canAct) PlayParry();
 
         var wheel = Input.GetAxis("Mouse ScrollWheel");
         if (wheel > 0)

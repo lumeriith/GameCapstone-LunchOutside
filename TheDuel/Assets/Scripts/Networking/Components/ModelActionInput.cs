@@ -8,7 +8,6 @@ public class ModelActionInput : ModelComponentBase
 {
     private int _actionNumber = 0;
     private Character character;
-    private double _lastTotalAgility = Single.NegativeInfinity;
 
     private void DoActionTest()
     {

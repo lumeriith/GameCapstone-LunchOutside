@@ -20,13 +20,16 @@ public class Character : MonoBehaviour
     public int maxItems = 7;
 
     public const float maxStamina = 100f;
-    public float stamina = 100f;
+    public float stamina = maxStamina;
     public const float minStamina = 0f;
-    public const float staminaRecoveryRate = 20f;
+    public const float staminaRecoveryRate = 10f;
 
+    public bool isDrained = false;
+
+    public float parryingDecreateStamina = 50f; //패링에 성공했을 때 상대방 스태미너를 얼마나 깎는지에 대한 수치
 
     public double basicAgility = 1.0;
-    public const double agilityRate = 1.0;
+    public const double agilityRate = 0.01;
     private double _lastTotalAgility;
 
     public bool canAddItem => items.Count < maxItems;
@@ -41,7 +44,6 @@ public class Character : MonoBehaviour
     private byte _isCheatingCounter;
     public Animator animator { get; private set; }
     public ModelActionInput modelActionInput { get; private set; }
-    public Character target { get; protected set; }
     private float _currentStunDuration;
 
     [NonSerialized]
@@ -57,6 +59,7 @@ public class Character : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         modelActionInput = GetComponent<ModelActionInput>();
+        _lastTotalAgility = GetTotalAgility(); 
     }
 
     protected virtual void Start()
@@ -84,7 +87,17 @@ public class Character : MonoBehaviour
         _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
         animator.SetBool("IsStunned", isStunned);
 
-        if (stamina < maxStamina) AddStamina(staminaRecoveryRate * Time.deltaTime);
+        if (stamina < maxStamina) AddStamina(staminaRecoveryRate * (isDrained ? 0.5f : 1.0f) * Time.deltaTime);
+        if (isDrained && stamina > maxStamina * 0.4) isDrained = false;
+
+
+        double totalAgility = GetTotalAgility();
+        if (_lastTotalAgility != totalAgility)
+        {
+            _lastTotalAgility = totalAgility;
+            animator.SetFloat("Speed", (float)(2 - totalAgility));
+            if (modelActionInput != null) modelActionInput.UpdateTotalAgility(totalAgility);
+        }
     }
 
     public void EquipDefaultItem()
@@ -141,7 +154,7 @@ public class Character : MonoBehaviour
     public void UseItem()
     {
         if (equippedItem == null || !equippedItem.isUseReady) return;
-        if (stamina >= equippedItem.requireStamina && canAct)
+        if (canAct && !isDrained)
         {
             equippedItem.Use();
             AddStamina(-equippedItem.requireStamina);
@@ -308,7 +321,11 @@ public class Character : MonoBehaviour
     {
         stamina += val;
         if (stamina > maxStamina) stamina = maxStamina;
-        if (stamina < minStamina) stamina = minStamina;
+        if (stamina < minStamina)
+        {
+            stamina = minStamina;
+            isDrained = true;
+        }
     }
 
     public float GetStamina()
@@ -319,6 +336,14 @@ public class Character : MonoBehaviour
     public double GetAgilityRate()
     {
         return agilityRate;
+    }
+
+    public double GetTotalAgility()
+    {
+        double totalAgility = 2 - (basicAgility + (maxStamina - stamina) * agilityRate);
+        if (totalAgility > 2) totalAgility = 2;
+        if (totalAgility < 0.1) totalAgility = 0.1;
+        return totalAgility;
     }
 
     public void Dodge()

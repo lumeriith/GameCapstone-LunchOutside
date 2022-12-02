@@ -23,7 +23,7 @@ public class FencingSword : Item
 
     public int score = 1;
     public float sphereCastRadius = 0.075f;
-    public float parrySphereCastRadius = 0.15f;
+    public float parrySphereCastRadius = 0.075f;
 
     public const float HitCooldown = 0.75f;
 
@@ -52,16 +52,10 @@ public class FencingSword : Item
             var hitCharacter = parryHit.collider.GetComponentInParent<Character>();
             var otherFencingSword = hitCharacter.GetComponentInChildren<FencingSword>();
 
-            Debug.Log("parent.isParrying: " + _parent.isParrying);
-            Debug.Log("hitCharacter.isAttacking" + hitCharacter.isAttacking);
-            Debug.Log("isEqual: " + (this != otherFencingSword));
-            Debug.Log("isFencingSword: " + (otherFencingSword == null));
-
             if (otherFencingSword != null && this != otherFencingSword && _parent.isParrying && hitCharacter.isAttacking)
             {
-                Debug.Log("Parrying");
                 hitCharacter.isAttacking = false;
-                hitCharacter.AddStamina(-50);
+                hitCharacter.AddStamina(_parent.parryingDecreateStamina);
                 hitCharacter.PlayHitFront();
                 _lastHitTime = Time.time;
             }

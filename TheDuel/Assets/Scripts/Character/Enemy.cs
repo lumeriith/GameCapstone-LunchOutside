@@ -18,6 +18,5 @@ public class Enemy : Character
     private void Awake()
     {
         base.Awake();
-        target = Player.instance;
     }
 }
