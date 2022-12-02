@@ -21,6 +21,8 @@ public class Item : MonoBehaviour
     private Transform _followTransform;
     private float _lastUseTime;
 
+    public float requireStamina = 20f;
+
     protected virtual void Awake()
     {
         foreach (var gobj in activatedOnEquip) gobj.SetActive(false);
@@ -40,11 +42,22 @@ public class Item : MonoBehaviour
         }
     }
 
-    public void Use()
+    public void Use(GameObject obj)
     {
         if (!isUseReady) return;
-        _lastUseTime = Time.time;
-        OnUse();
+        if (obj != null)
+        {
+            Character character = obj.GetComponent<Character>();
+            if (character != null)
+            {
+                if (character.GetStamina() >= requireStamina)
+                {
+                    _lastUseTime = Time.time;
+                    OnUse();
+                    character.AddStamina(-requireStamina);
+                }
+            }
+        }
     }
 
     /// <summary>

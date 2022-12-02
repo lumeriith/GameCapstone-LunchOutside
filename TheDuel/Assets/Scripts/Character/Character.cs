@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private static readonly int IsStunned = Animator.StringToHash("IsStunned");
+    public bool canAct => isIdle && !isStunned && !isSwitchingWeapon;
 
     public Action<Item> onAddItem;
     public Action<Item> onRemoveItem;
@@ -44,6 +44,10 @@ public class Character : MonoBehaviour
     public Animator animator { get; private set; }
     private float _currentStunDuration;
 
+    [NonSerialized]
+    public bool isIdle;
+    public bool isSwitchingWeapon { get; private set; }
+
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
@@ -65,18 +69,16 @@ public class Character : MonoBehaviour
         }
 
         GameManager.instance.onRoundPrepare += EquipDefaultItem;
+        GameManager.instance.onRoundPrepare += PlayDrawSword;
     }
 
     protected virtual void Update()
     {
         _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
-        animator.SetBool(IsStunned, isStunned);
-<<<<<<< HEAD
+        animator.SetBool("IsStunned", isStunned);
 
         if (stamina < maxStamina) AddStamina(staminaRecoveryRate * health * Time.deltaTime);
         Debug.Log("stamina: " + stamina);
-=======
->>>>>>> parent of 8ecc085 (Add several animations + Fix bugs)
     }
 
     public void EquipDefaultItem()
@@ -122,7 +124,7 @@ public class Character : MonoBehaviour
         if (equippedItem == item)
         {
             UnequipItem();
-            EquipDefaultItem();
+            StartCoroutine(SwitchWeaponRoutine(EquipDefaultItem));
         }
 
         items.Remove(item);
@@ -138,22 +140,48 @@ public class Character : MonoBehaviour
 
     public void CycleItemUp()
     {
+        if (!canAct) return;
         if (items.Count < 2) return;
         var i = items.IndexOf(equippedItem);
         if (i == -1) return;
         i++;
         if (i >= items.Count) i = 0;
-        EquipItem(items[i]);
+        SwitchToItemAtIndex(i);
     }
 
     public void CycleItemDown()
     {
+        if (!canAct) return;
         if (items.Count < 2) return;
         var i = items.IndexOf(equippedItem);
         if (i == -1) return;
         i--;
         if (i < 0) i = items.Count - 1;
-        EquipItem(items[i]);
+        SwitchToItemAtIndex(i);
+    }
+
+    public void SwitchToItemAtIndex(int index)
+    {
+        if (index == items.IndexOf(equippedItem)) return;
+        if (!HasItemAt(index)) return;
+        if (!canAct) return;
+        isSwitchingWeapon = true;
+        StartCoroutine(SwitchWeaponRoutine(() => EquipItem(items[index])));
+    }
+
+    private IEnumerator SwitchWeaponRoutine(Action callback)
+    {
+        PlaySwitch();
+        isSwitchingWeapon = true;
+        yield return new WaitForSeconds(0.4f);
+        callback?.Invoke();
+        yield return new WaitForSeconds(0.4f);
+        isSwitchingWeapon = false;
+    }
+
+    public bool HasItemAt(int index)
+    {
+        return index >= 0 && index < items.Count;
     }
 
     public void IncrementCheatingCounter()
@@ -198,7 +226,36 @@ public class Character : MonoBehaviour
     {
         animator.SetTrigger("GetHitBack");
     }
-<<<<<<< HEAD
+
+    public void PlayPickUp()
+    {
+        animator.SetTrigger("PickUp");
+    }
+
+    public void PlayUseRemote()
+    {
+        animator.SetTrigger("UseRemote");
+    }
+
+    public void PlayThrow()
+    {
+        animator.SetTrigger("Throw");
+    }
+
+    public void PlayDodge()
+    {
+        animator.SetTrigger("Dodge");
+    }
+
+    public void PlayDrawSword()
+    {
+        animator.SetTrigger("DrawSword");
+    }
+
+    public void PlaySwitch()
+    {
+        animator.SetTrigger("Switch");
+    }
 
     public void SetStamina(float val)
     {
@@ -233,6 +290,4 @@ public class Character : MonoBehaviour
     {
         return agilityRate;
     }
-=======
->>>>>>> parent of 8ecc085 (Add several animations + Fix bugs)
 }
