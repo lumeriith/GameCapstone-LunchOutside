@@ -39,8 +39,8 @@ ModelImporter:
       name: Big Hit To Head_Dodge
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 24
+      firstFrame: 2.5
+      lastFrame: 17.8
       wrapMode: 0
       orientationOffsetY: 40
       level: 0
