@@ -50,7 +50,7 @@ public class Item : MonoBehaviour
             Character character = obj.GetComponent<Character>();
             if (character != null)
             {
-                if (character.GetStamina() >= requireStamina)
+                if (character.GetStamina() >= requireStamina && character.canAct)
                 {
                     _lastUseTime = Time.time;
                     OnUse();
