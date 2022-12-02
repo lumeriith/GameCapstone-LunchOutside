@@ -317,6 +317,7 @@ public class Character : MonoBehaviour
     public void Dodge()
     {
         if (!canAct) return;
+        if (stamina < dodgeStaminaCost) return;
         StartCoroutine(DodgeRoutine());
         IEnumerator DodgeRoutine()
         {

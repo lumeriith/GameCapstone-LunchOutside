@@ -21,6 +21,8 @@ public class FencingSword : Item
     public float sphereCastRadius = 0.075f;
 
     public const float HitCooldown = 0.75f;
+
+    public bool forceUseLeapAttack = false;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
@@ -76,11 +78,9 @@ public class FencingSword : Item
     public override void OnUse()
     {
         base.OnUse();
-        if (Input.GetKey(KeyCode.W)) _parent.PlayLeapAttack();
-        else
-        {
-            var trail = gameObject.GetComponentInChildren<TrailRenderer>();
-            _parent.PlayBasicAttack();
-        }
+        var isLeapAttack = forceUseLeapAttack || (_parent == Player.instance && Input.GetKey(KeyCode.W));
+
+        if (isLeapAttack) _parent.PlayLeapAttack();
+        else _parent.PlayBasicAttack();
     }
 }

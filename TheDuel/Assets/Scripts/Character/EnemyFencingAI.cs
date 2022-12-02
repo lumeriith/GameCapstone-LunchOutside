@@ -77,11 +77,13 @@ public class EnemyFencingAI : MonoBehaviour
             var val = UnityEngine.Random.value;
             if (val < profile.basicAttackChance)
             {
-                _enemy.animator.SetTrigger("Basic Attack");
+                ((FencingSword) _enemy.equippedItem).forceUseLeapAttack = false;
+                _enemy.UseItem();
             } 
             else if (val < profile.basicAttackChance + profile.leapAttackChance)
             {
-                _enemy.animator.SetTrigger("Leap Attack");
+                ((FencingSword) _enemy.equippedItem).forceUseLeapAttack = true;
+                _enemy.UseItem();
             }
         }
     }

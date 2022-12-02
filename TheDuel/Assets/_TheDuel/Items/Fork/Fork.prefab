@@ -138,9 +138,11 @@ MonoBehaviour:
   equipLocalPosition: {x: -0.07, y: 0.02, z: 0.025}
   equipLocalRotation: {x: 0, y: 0, z: 0}
   isCheating: 1
+  requireStamina: 20
   startPivot: {fileID: 322287003026728732}
   endPivot: {fileID: 3702935839598201200}
   score: 3
+  sphereCastRadius: 0.075
 --- !u!1 &1644815316986321042
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2926576748927297822
 Transform:
   m_ObjectHideFlags: 0
