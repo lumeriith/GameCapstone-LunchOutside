@@ -38,6 +38,7 @@ public class Character : MonoBehaviour
 
     public bool isCheating { get; private set; }
     public bool isAiming { get; protected set; }
+    public bool isDodging { get; private set; }
     public bool isStunned => _currentStunDuration > 0;
 
     private byte _isCheatingCounter;
@@ -47,6 +48,9 @@ public class Character : MonoBehaviour
     [NonSerialized]
     public bool isIdle;
     public bool isSwitchingWeapon { get; private set; }
+
+    public float dodgeDuration = 0.5f;
+    public float dodgeStaminaCost = 20f;
 
     protected virtual void Awake()
     {
@@ -70,6 +74,7 @@ public class Character : MonoBehaviour
 
         GameManager.instance.onRoundPrepare += EquipDefaultItem;
         GameManager.instance.onRoundPrepare += PlayDrawSword;
+        GameManager.instance.onRoundPrepare += () => stamina = maxStamina;
     }
 
     protected virtual void Update()
@@ -219,26 +224,31 @@ public class Character : MonoBehaviour
 
     public void PlayHitFront()
     {
+        isIdle = false;
         animator.SetTrigger("GetHitFront");
     }
 
     public void PlayHitBack()
     {
+        isIdle = false;
         animator.SetTrigger("GetHitBack");
     }
 
     public void PlayPickUp()
     {
+        isIdle = false;
         animator.SetTrigger("PickUp");
     }
 
     public void PlayUseRemote()
     {
+        isIdle = false;
         animator.SetTrigger("UseRemote");
     }
 
     public void PlayThrow()
     {
+        isIdle = false;
         animator.SetTrigger("Throw");
     }
 
@@ -249,12 +259,25 @@ public class Character : MonoBehaviour
 
     public void PlayDrawSword()
     {
+        isIdle = false;
         animator.SetTrigger("DrawSword");
     }
 
     public void PlaySwitch()
     {
         animator.SetTrigger("Switch");
+    }
+
+    public void PlayBasicAttack()
+    {
+        isIdle = false;
+        animator.SetTrigger("Basic Attack");
+    }
+    
+    public void PlayLeapAttack()
+    {
+        isIdle = false;
+        animator.SetTrigger("Leap Attack");
     }
 
     public void SetStamina(float val)
@@ -289,5 +312,19 @@ public class Character : MonoBehaviour
     public double GetAgilityRate()
     {
         return agilityRate;
+    }
+
+    public void Dodge()
+    {
+        if (!canAct) return;
+        StartCoroutine(DodgeRoutine());
+        IEnumerator DodgeRoutine()
+        {
+            isDodging = true;
+            AddStamina(-dodgeStaminaCost);
+            PlayDodge();
+            yield return new WaitForSeconds(dodgeDuration);
+            isDodging = false;
+        }
     }
 }

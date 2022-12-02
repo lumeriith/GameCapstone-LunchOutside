@@ -51,7 +51,7 @@ public class Player : Character
     {
         base.Update();
         _tpController.strafeSpeed.rotateWithCamera = canAct;
-        if (Input.GetKeyDown(KeyCode.Mouse0)) UseItem();
+        if (Input.GetKeyDown(KeyCode.Mouse0) && canAct) UseItem();
         var wheel = Input.GetAxis("Mouse ScrollWheel");
         if (wheel > 0)
         {
@@ -66,21 +66,25 @@ public class Player : Character
         _trajectoryRenderer.enabled = isAiming;
         if (isAiming) UpdateTrajectory();
 
-        if (Input.GetKeyDown(KeyCode.E) && focusedInteractable != null && focusedInteractable.CanInteract() && canAct)
+        if (!canAct) return;
+
+        if (Input.GetKeyDown(KeyCode.E) && focusedInteractable != null && focusedInteractable.CanInteract())
         {
             Interact();
         }
 
-        if (canAct)
+        for (int i = 0; i <= 8; i++)
         {
-            for (int i = 0; i <= 8; i++)
+            if (HasItemAt(i) && Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)))
             {
-                if (HasItemAt(i) && Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)))
-                {
-                    SwitchToItemAtIndex(i);
-                    break;
-                }
+                SwitchToItemAtIndex(i);
+                break;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Dodge();
         }
     }
 

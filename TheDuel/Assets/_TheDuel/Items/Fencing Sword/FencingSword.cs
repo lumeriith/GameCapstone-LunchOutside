@@ -47,7 +47,7 @@ public class FencingSword : Item
         
         var otherCharacter = hit.collider.GetComponentInParent<Character>();
         var otherWeaponBox = hit.collider.GetComponent<WeaponBox>();
-        if (otherCharacter != null && _parent != otherCharacter)
+        if (otherCharacter != null && _parent != otherCharacter && !otherCharacter.isDodging)
         {
             var hitInfo = new InfoAttackHit
             {
@@ -75,11 +75,11 @@ public class FencingSword : Item
     public override void OnUse()
     {
         base.OnUse();
-        if (Input.GetKey(KeyCode.W)) _animator.SetTrigger("Leap Attack");
+        if (Input.GetKey(KeyCode.W)) _parent.PlayLeapAttack();
         else
         {
             var trail = gameObject.GetComponentInChildren<TrailRenderer>();
-            _animator.SetTrigger("Basic Attack");
+            _parent.PlayBasicAttack();
         }
     }
 }
