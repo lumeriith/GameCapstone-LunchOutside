@@ -87,7 +87,7 @@ public class ModelRunner {
         };
 
         MotionDataConverter.setAllJoints();
-        Configuration.BASE_MOTION_FILE = "data\\stop_fencing.bvh";
+        Configuration.BASE_MOTION_FILE = "data\\t_pose_ue2.bvh";
         MotionDataConverter.setUseOrientation();
         MotionDataConverter.setOrientationJointsByFileOrder();
 

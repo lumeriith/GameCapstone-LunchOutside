@@ -36,7 +36,7 @@ public class ModelBackendServer {
 
     private void start() throws IOException {
         model = new ModelRunner();
-        model.init("walk_10000_sp_da", WalkConfig.actionTypes.length);
+        model.init("martial_arts_sp_da", MartialArtsConfig.actionTypes.length);
 
         messageHandler = new ModelMessageHandler(this);
 
