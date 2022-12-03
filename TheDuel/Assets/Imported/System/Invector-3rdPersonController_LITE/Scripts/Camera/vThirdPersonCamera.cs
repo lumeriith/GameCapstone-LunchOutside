@@ -37,6 +37,9 @@ public class vThirdPersonCamera : MonoBehaviour
     public float yMinLimit = -40f;
     public float yMaxLimit = 80f;
 
+    public float dodgeSwayHorizontal = 1.5f;
+    public float dodgeSwayVertical = 1.5f;
+
     #endregion
 
     #region hide properties    
@@ -255,7 +258,15 @@ public class vThirdPersonCamera : MonoBehaviour
         lookPoint += (targetLookAt.right * Vector3.Dot(camDir * (distance), targetLookAt.right));
         targetLookAt.position = current_cPos;
 
-        Quaternion newRot = Quaternion.Euler(mouseY, mouseX, 0);
+        var localDodgeVel = transform.InverseTransformVector(Player.instance.currentDodgeVelocity);
+        var verticalSway = localDodgeVel.z;
+        var horizontalSway = localDodgeVel.x;
+
+        verticalSway *= dodgeSwayVertical;
+        horizontalSway *= dodgeSwayHorizontal;
+
+        
+        Quaternion newRot = Quaternion.Euler(mouseY + verticalSway, mouseX + horizontalSway, 0);
         targetLookAt.rotation = Quaternion.Slerp(targetLookAt.rotation, newRot, smoothCameraRotation * Time.deltaTime);
         transform.position = current_cPos + (camDir * (distance));
         var rotation = Quaternion.LookRotation((lookPoint) - transform.position);

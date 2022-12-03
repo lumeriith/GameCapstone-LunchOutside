@@ -26,7 +26,7 @@ public class Character : MonoBehaviour
 
     public bool isDrained = false;
 
-    public float parryingDecreateStamina = 50f; //ÆÐ¸µ¿¡ ¼º°øÇßÀ» ¶§ »ó´ë¹æ ½ºÅÂ¹Ì³Ê¸¦ ¾ó¸¶³ª ±ð´ÂÁö¿¡ ´ëÇÑ ¼öÄ¡
+    public float parryingDecreateStamina = 50f; //ï¿½Ð¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¹Ì³Ê¸ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 
     public double basicAgility = 1.0;
     public const double agilityRate = 0.01;
@@ -54,6 +54,10 @@ public class Character : MonoBehaviour
 
     public float dodgeDuration = 0.5f;
     public float dodgeStaminaCost = 20f;
+    public float dodgeVelocityMagnitude = 7;
+    public float dodgeVelocityDecay = 15;
+
+    public Vector3 currentDodgeVelocity { get; private set; }
 
     protected virtual void Awake()
     {
@@ -95,9 +99,13 @@ public class Character : MonoBehaviour
         if (_lastTotalAgility != totalAgility)
         {
             _lastTotalAgility = totalAgility;
-            animator.SetFloat("Speed", (float)(2 - totalAgility));
+            animator.SetFloat("Speed", 1);
             if (modelActionInput != null) modelActionInput.UpdateTotalAgility(totalAgility);
         }
+
+        transform.position += currentDodgeVelocity * Time.deltaTime;
+        currentDodgeVelocity =
+            Vector3.MoveTowards(currentDodgeVelocity, Vector3.zero, dodgeVelocityDecay * Time.deltaTime);
     }
 
     public void EquipDefaultItem()
@@ -156,8 +164,8 @@ public class Character : MonoBehaviour
         if (equippedItem == null || !equippedItem.isUseReady) return;
         if (canAct && !isDrained)
         {
-            equippedItem.Use();
             AddStamina(-equippedItem.requireStamina);
+            equippedItem.Use();
         }
     }
 
@@ -270,8 +278,9 @@ public class Character : MonoBehaviour
         animator.SetTrigger("Throw");
     }
 
-    public void PlayDodge()
+    public void PlayDodge(int direction)
     {
+        animator.SetInteger("DodgeDirection", direction);
         animator.SetTrigger("Dodge");
     }
 
@@ -346,16 +355,31 @@ public class Character : MonoBehaviour
         return totalAgility;
     }
 
-    public void Dodge()
+    public void Dodge(int direction)
     {
         if (!canAct) return;
         if (stamina < dodgeStaminaCost) return;
+        switch (direction)
+        {
+            case 1:
+                currentDodgeVelocity = transform.forward * dodgeVelocityMagnitude;
+                break;
+            case 2:
+                currentDodgeVelocity = transform.right * dodgeVelocityMagnitude;
+                break;            
+            case 3:
+                currentDodgeVelocity = -transform.forward * dodgeVelocityMagnitude;
+                break;            
+            case 4:
+                currentDodgeVelocity = -transform.right * dodgeVelocityMagnitude;
+                break;
+        }
         StartCoroutine(DodgeRoutine());
         IEnumerator DodgeRoutine()
         {
             isDodging = true;
             AddStamina(-dodgeStaminaCost);
-            PlayDodge();
+            PlayDodge(direction);
             yield return new WaitForSeconds(dodgeDuration);
             isDodging = false;
         }

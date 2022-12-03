@@ -86,7 +86,11 @@ public class Player : Character
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Dodge();
+            if (Input.GetKey(KeyCode.A)) Dodge(4);
+            else if (Input.GetKey(KeyCode.D)) Dodge(2);
+            else if (Input.GetKey(KeyCode.S)) Dodge(3);
+            else if (Input.GetKey(KeyCode.W)) Dodge(1);
+            else Dodge(0);
         }
     }
 
