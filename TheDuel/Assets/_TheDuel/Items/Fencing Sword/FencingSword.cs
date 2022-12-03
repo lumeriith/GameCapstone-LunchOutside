@@ -30,6 +30,10 @@ public class FencingSword : Item
     public const float HitCooldown = 0.75f;
 
     public bool forceUseLeapAttack = false;
+
+    public Effect swingEffect;
+    public Effect leapSwingEffect;
+    public Effect stabEffect;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
@@ -93,6 +97,7 @@ public class FencingSword : Item
                 };
                 _parent.onDealAttack?.Invoke(hitInfo);
                 otherCharacter.onTakeAttack?.Invoke(hitInfo);
+                stabEffect.PlayNew(hit.point, Quaternion.identity);
                 _lastHitTime = Time.time;
             }
         }
@@ -107,13 +112,15 @@ public class FencingSword : Item
 
         if (isLeapAttack)
         {
+            leapSwingEffect.Play();
             _parent.PlayLeapAttack();
         }
         else
         {
+            swingEffect.Play();
             if (_parent is Player)
             {
-                var cols = Physics.OverlapSphere(_parent.transform.position + _parent.transform.forward * 2f, 2.5f,
+                var cols = Physics.OverlapSphere(_parent.transform.position + _parent.transform.forward * 2.5f, 1.5f,
                     LayerMask.GetMask("Attackable"));
                 foreach (var c in cols)
                 {

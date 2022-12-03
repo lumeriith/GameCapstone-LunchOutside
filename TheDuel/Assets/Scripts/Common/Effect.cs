@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
-    public Vector2 audioPitchRange = Vector2.one;
     public void Play()
     {
-        var audio = GetComponent<AudioSource>();
-        if (audio != null)
+        if (TryGetComponent<DuelAudioSource>(out var ras))
         {
-            audio.enabled = true;
-            audio.pitch = Random.Range(audioPitchRange.x, audioPitchRange.y);
+            ras.Play();
+        }
+        else if (TryGetComponent<AudioSource>(out var audio))
+        {
             audio.Play();
         }
         

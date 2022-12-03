@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrenadeProjectile : Projectile
 {
     public GameObject pinPrefab;
+    public Effect startEffect;
     public Effect explodeEffect;
     public float delay = 2.5f;
     public float explodeMinRadius = 2f;
@@ -15,6 +16,7 @@ public class GrenadeProjectile : Projectile
     protected override void Start()
     {
         base.Start();
+        startEffect.Play();
         var vel = GetComponent<Rigidbody>().velocity;
         var gobj = Instantiate(pinPrefab, transform.position, transform.rotation);
         foreach (var rb in gobj.GetComponentsInChildren<Rigidbody>())

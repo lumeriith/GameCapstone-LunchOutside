@@ -1,5 +1,71 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &471611505694587715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1923468145366012492}
+  - component: {fileID: 1117528346349064972}
+  - component: {fileID: 6952860531499545184}
+  m_Layer: 0
+  m_Name: Attack Swing Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1923468145366012492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471611505694587715}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.07, y: -0.02, z: -0.025}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4021805100241942125}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1117528346349064972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471611505694587715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e37cbb08d809144ebef404c2eda3be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6952860531499545184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471611505694587715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a38a32d96f0e64886b30fec0fd552e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 93090c2ba2e141d4fb5274cc86419f2d, type: 3}
+  - {fileID: 8300000, guid: 167aa201a3f36ef4a9f51e4550124af6, type: 3}
+  - {fileID: 8300000, guid: 2a5ac55d7e7eb37489882184c942a113, type: 3}
+  minPitch: 0.9
+  maxPitch: 1.1
+  volume: 1
+  affectedByTimeScale: 1
+  delay: 0.15
 --- !u!1 &665806138888903865
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,6 +314,70 @@ Transform:
   m_Father: {fileID: 7727085681174557471}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2568507876828252926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 210495061776089075}
+  - component: {fileID: 3634039746051456172}
+  - component: {fileID: 5353720445986443277}
+  m_Layer: 9
+  m_Name: Stab Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &210495061776089075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2568507876828252926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4021805100241942125}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3634039746051456172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2568507876828252926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e37cbb08d809144ebef404c2eda3be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5353720445986443277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2568507876828252926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a38a32d96f0e64886b30fec0fd552e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: c7c9c7424219c694586c071f5748a3ce, type: 3}
+  minPitch: 1.2
+  maxPitch: 1.8
+  volume: 0.7
+  affectedByTimeScale: 1
+  delay: 0
 --- !u!1 &3948566771426682650
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +543,9 @@ Transform:
   - {fileID: 5789550605771464464}
   - {fileID: 3187688821992576980}
   - {fileID: 7727085681174557471}
+  - {fileID: 1923468145366012492}
+  - {fileID: 3226522586391871736}
+  - {fileID: 210495061776089075}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -446,6 +579,9 @@ MonoBehaviour:
   sphereCastRadius: 0.075
   parrySphereCastRadius: 1
   forceUseLeapAttack: 0
+  swingEffect: {fileID: 1117528346349064972}
+  leapSwingEffect: {fileID: 7564279655735425061}
+  stabEffect: {fileID: 3634039746051456172}
 --- !u!114 &4409931971155309539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,6 +645,72 @@ Transform:
   m_Father: {fileID: 7727085681174557471}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5248307735394106340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3226522586391871736}
+  - component: {fileID: 7564279655735425061}
+  - component: {fileID: 8842628292381417271}
+  m_Layer: 0
+  m_Name: Leap Attack Swing Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3226522586391871736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248307735394106340}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.07, y: -0.02, z: -0.025}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4021805100241942125}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7564279655735425061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248307735394106340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e37cbb08d809144ebef404c2eda3be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8842628292381417271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248307735394106340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a38a32d96f0e64886b30fec0fd552e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: cbdf36fb82729e542bbe9f424c49cca9, type: 3}
+  - {fileID: 8300000, guid: d236ae170d7af3940895d20a2cee99cf, type: 3}
+  - {fileID: 8300000, guid: df3ff4b718cec524f848c299217e2aaa, type: 3}
+  minPitch: 0.9
+  maxPitch: 1.1
+  volume: 1
+  affectedByTimeScale: 1
+  delay: 0.25
 --- !u!1 &6679430264541157964
 GameObject:
   m_ObjectHideFlags: 0
