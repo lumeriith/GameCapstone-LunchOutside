@@ -21,6 +21,20 @@ public class GameManager : ManagerBase<GameManager>
     
     public Bounds playRegion { get; private set; }
     
+    public bool isPlayerOutOfBounds
+    {
+        get => _isPlayerOutOfBounds;
+        set
+        {
+            if (_isPlayerOutOfBounds == value) return;
+            _isPlayerOutOfBounds = value;
+            if (value) Player.instance.IncrementCheatingCounter();
+            else Player.instance.DecrementCheatingCounter();
+        }
+    }
+
+    private bool _isPlayerOutOfBounds;
+    
 
     public int cheatPenalty;
 
@@ -37,6 +51,11 @@ public class GameManager : ManagerBase<GameManager>
         {
             StartCoroutine(CheatRestartRoutine());
         };
+    }
+
+    private void FixedUpdate()
+    {
+        isPlayerOutOfBounds = !playRegionCollider.Raycast(new Ray(Player.instance.transform.position + Vector3.down * 5f, Vector3.up), out var info, 10f);
     }
 
     public void StartNewRound()
