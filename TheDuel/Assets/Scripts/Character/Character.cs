@@ -273,13 +273,11 @@ public class Character : MonoBehaviour
 
     public void PlayUseRemote()
     {
-        isIdle = false;
         animator.SetTrigger("UseRemote");
     }
 
     public void PlayThrow()
     {
-        isIdle = false;
         animator.SetTrigger("Throw");
     }
 
@@ -330,7 +328,7 @@ public class Character : MonoBehaviour
         isIdle = false;
         animator.SetTrigger("Parryed");
     }
-
+    
     public void SetStamina(float val)
     {
         stamina = Mathf.Clamp(val, 0, MaxStamina);

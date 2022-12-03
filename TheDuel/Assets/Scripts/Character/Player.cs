@@ -64,8 +64,9 @@ public class Player : Character
             CycleItemDown();
         }
 
-        isAiming = Input.GetKey(KeyCode.Mouse1) && equippedItem != null && equippedItem is ThrowingItem && canAct;
+        isAiming = Input.GetKey(KeyCode.Mouse1) && equippedItem != null && equippedItem is ThrowingItem && canAct && equippedItem.CanUse();
         _trajectoryRenderer.enabled = isAiming;
+        animator.SetBool("IsAiming", isAiming);
         if (isAiming) UpdateTrajectory();
 
         if (!canAct) return;
