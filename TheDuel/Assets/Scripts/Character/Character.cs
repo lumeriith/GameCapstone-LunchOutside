@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     public Action<InfoAttackHit> onDealAttack;
     public Action<InfoAttackHit> onTakeAttack;
     public Action<bool> onCheatingChanged;
+    public Action onStaminaCheckFail;
 
     public Item[] defaultItemPrefabs;
     public List<Item> items;
@@ -337,7 +338,11 @@ public class Character : MonoBehaviour
     public bool UseStamina(float val)
     {
         if (val < 0) throw new InvalidOperationException("Cannot use negative amount of stamina");
-        if (stamina < val) return false;
+        if (stamina < val)
+        {
+            onStaminaCheckFail?.Invoke();
+            return false;
+        }
         stamina -= val;
         _lastStaminaUseTime = Time.time;
         return true;

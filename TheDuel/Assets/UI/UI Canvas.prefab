@@ -626,6 +626,7 @@ MonoBehaviour:
   startFromLeft: 0
   fillImage: {fileID: 5589564291137575787}
   deltaImage: {fileID: 6317835611561384518}
+  backgroundImage: {fileID: 1788981797321617359}
   boxTransform: {fileID: 2687075454239219420}
   glowTransform: {fileID: 6892364768302726241}
   glowCanvasGroup: {fileID: 5173427120973805434}
@@ -633,6 +634,9 @@ MonoBehaviour:
   glowScaleSpeed: 8
   fillSmoothTime: 0.1
   deltaSpeed: 0.5
+  notEnoughStaminaPunchScale: 0.1
+  notEnoughStaminaDuration: 0.1
+  notEnoughStaminaBackgroundColor: {r: 0.5377358, g: 0, b: 0, a: 1}
 --- !u!1 &1602584550986846939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3983,6 +3987,7 @@ MonoBehaviour:
   startFromLeft: 1
   fillImage: {fileID: 3580432627650140000}
   deltaImage: {fileID: 6191706371443739687}
+  backgroundImage: {fileID: 2070288913998074946}
   boxTransform: {fileID: 7811128841464015344}
   glowTransform: {fileID: 5780858826531038718}
   glowCanvasGroup: {fileID: 3045127554026871266}
@@ -3990,6 +3995,9 @@ MonoBehaviour:
   glowScaleSpeed: 8
   fillSmoothTime: 0.1
   deltaSpeed: 0.5
+  notEnoughStaminaPunchScale: 0.1
+  notEnoughStaminaDuration: 0.1
+  notEnoughStaminaBackgroundColor: {r: 0.5377358, g: 0, b: 0, a: 1}
 --- !u!1 &7462133180496146023
 GameObject:
   m_ObjectHideFlags: 0
