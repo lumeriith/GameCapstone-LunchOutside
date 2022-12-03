@@ -9,7 +9,7 @@ public class Interactable : MonoBehaviour
         
     }
 
-    public virtual bool CanInteract()
+    public virtual bool CanInteract(Character character)
     {
         return true;
     }

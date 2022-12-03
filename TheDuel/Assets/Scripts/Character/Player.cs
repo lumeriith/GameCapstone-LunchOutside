@@ -70,7 +70,7 @@ public class Player : Character
 
         if (!canAct) return;
 
-        if (Input.GetKeyDown(KeyCode.E) && focusedInteractable != null && focusedInteractable.CanInteract())
+        if (Input.GetKeyDown(KeyCode.E) && focusedInteractable != null && focusedInteractable.CanInteract(this))
         {
             Interact();
         }
@@ -105,7 +105,7 @@ public class Player : Character
         {
             var interactable = _interactableCheckResults[i].GetComponent<Interactable>();
             if (interactable == null) continue;
-            if (!interactable.CanInteract()) continue;
+            if (!interactable.CanInteract(this)) continue;
             var angle = Vector3.Angle(_cam.transform.forward, interactable.transform.position - _cam.transform.position);
             if (angle > interactableAngle / 2f) continue;
             if (angle > closestAngle) continue;

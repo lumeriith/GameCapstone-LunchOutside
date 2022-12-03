@@ -47,6 +47,10 @@ public class FieldItem : Interactable
             Player.instance.AddItem(itemPrefab);
             Destroy(gameObject);
         }
+    }
 
+    public override bool CanInteract(Character character)
+    {
+        return base.CanInteract(character) && character.canAddItem;
     }
 }
