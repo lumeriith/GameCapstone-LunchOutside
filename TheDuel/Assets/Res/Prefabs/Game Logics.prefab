@@ -3751,7 +3751,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.94, y: 3.36, z: 14.04}
+  m_Size: {x: 3.73, y: 3.94, z: 14.68}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6777482120334799175
 GameObject:
@@ -6854,7 +6854,7 @@ PrefabInstance:
     - target: {fileID: -8811920989504221785, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
       propertyPath: rotationSpeed
-      value: 180
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: -1266742732314658498, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}

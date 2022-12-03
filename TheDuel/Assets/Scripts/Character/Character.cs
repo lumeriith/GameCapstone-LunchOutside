@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public const float MaxStamina = 100f;
+    public const float StaminaRecoveryRate = 10f;
+    public const float StaminaRecoveryDelay = 1.5f;
+    public const float StaminaRecoveryBonusThreshold = 35f;
+    public const float StaminaRecoveryBonusMultiplier = 6f;
+    public const double AgilityRate = 0.01;
+    
+
     public bool canAct => isIdle && !isStunned && !isSwitchingWeapon;
 
     public Action<Item> onAddItem;
@@ -19,32 +27,21 @@ public class Character : MonoBehaviour
     public Item equippedItem;
     public int maxItems = 7;
 
-    public const float maxStamina = 100f;
-    public float stamina = maxStamina;
-    public const float minStamina = 0f;
-    public const float staminaRecoveryRate = 10f;
-
-    public bool isDrained = false;
+    public float stamina = MaxStamina;
 
     public float parryingDecreateStamina = 50f; //�и��� �������� �� ���� ���¹̳ʸ� �󸶳� ������� ���� ��ġ
 
     public double basicAgility = 1.0;
-    public const double agilityRate = 0.01;
-    private double _lastTotalAgility;
 
     public bool canAddItem => items.Count < maxItems;
-
-    private Item _defaultItem;
-
+    
     public bool isCheating { get; private set; }
     public bool isAiming { get; protected set; }
     public bool isDodging { get; private set; }
     public bool isStunned => _currentStunDuration > 0;
 
-    private byte _isCheatingCounter;
     public Animator animator { get; private set; }
     public ModelActionInput modelActionInput { get; private set; }
-    private float _currentStunDuration;
 
     [NonSerialized]
     public bool isIdle;
@@ -58,6 +55,13 @@ public class Character : MonoBehaviour
     public float dodgeVelocityDecay = 15;
 
     public Vector3 currentDodgeVelocity { get; private set; }
+    
+    private Item _defaultItem;
+    private byte _isCheatingCounter;
+    private float _currentStunDuration;
+    private float _lastStaminaUseTime = float.NegativeInfinity;
+    private double _lastTotalAgility;
+
 
     protected virtual void Awake()
     {
@@ -83,7 +87,7 @@ public class Character : MonoBehaviour
 
         GameManager.instance.onRoundPrepare += EquipDefaultItem;
         GameManager.instance.onRoundPrepare += PlayDrawSword;
-        GameManager.instance.onRoundPrepare += () => stamina = maxStamina;
+        GameManager.instance.onRoundPrepare += () => stamina = MaxStamina;
     }
 
     protected virtual void Update()
@@ -91,9 +95,10 @@ public class Character : MonoBehaviour
         _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
         animator.SetBool("IsStunned", isStunned);
 
-        if (stamina < maxStamina) AddStamina(staminaRecoveryRate * (isDrained ? 0.5f : 1.0f) * Time.deltaTime);
-        if (isDrained && stamina > maxStamina * 0.4) isDrained = false;
-
+        if (stamina < MaxStamina && Time.time - _lastStaminaUseTime > StaminaRecoveryDelay)
+        {
+            AddStamina(StaminaRecoveryRate * (stamina > StaminaRecoveryBonusThreshold ? StaminaRecoveryBonusMultiplier : 1) * Time.deltaTime);
+        }
 
         double totalAgility = GetTotalAgility();
         if (_lastTotalAgility != totalAgility)
@@ -162,9 +167,8 @@ public class Character : MonoBehaviour
     public void UseItem()
     {
         if (equippedItem == null || !equippedItem.isUseReady) return;
-        if (canAct && !isDrained)
+        if (canAct && UseStamina(equippedItem.requireStamina))
         {
-            AddStamina(-equippedItem.requireStamina);
             equippedItem.Use();
         }
     }
@@ -280,6 +284,7 @@ public class Character : MonoBehaviour
 
     public void PlayDodge(int direction)
     {
+        isIdle = false;
         animator.SetInteger("DodgeDirection", direction);
         animator.SetTrigger("Dodge");
     }
@@ -321,20 +326,21 @@ public class Character : MonoBehaviour
 
     public void SetStamina(float val)
     {
-        stamina = val;
-        if (stamina > maxStamina) stamina = maxStamina;
-        if (stamina < minStamina) stamina = minStamina;
+        stamina = Mathf.Clamp(val, 0, MaxStamina);
     }
 
     public void AddStamina(float val)
     {
-        stamina += val;
-        if (stamina > maxStamina) stamina = maxStamina;
-        if (stamina < minStamina)
-        {
-            stamina = minStamina;
-            isDrained = true;
-        }
+        stamina = Mathf.Clamp(stamina + val, 0, MaxStamina);
+    }
+    
+    public bool UseStamina(float val)
+    {
+        if (val < 0) throw new InvalidOperationException("Cannot use negative amount of stamina");
+        if (stamina < val) return false;
+        stamina -= val;
+        _lastStaminaUseTime = Time.time;
+        return true;
     }
 
     public float GetStamina()
@@ -344,12 +350,12 @@ public class Character : MonoBehaviour
 
     public double GetAgilityRate()
     {
-        return agilityRate;
+        return AgilityRate;
     }
 
     public double GetTotalAgility()
     {
-        double totalAgility = basicAgility + (maxStamina - stamina) * agilityRate;
+        double totalAgility = basicAgility + (MaxStamina - stamina) * AgilityRate;
         if (totalAgility > 2) totalAgility = 2;
         if (totalAgility < 0.1) totalAgility = 0.1;
         return totalAgility;
@@ -378,7 +384,7 @@ public class Character : MonoBehaviour
         IEnumerator DodgeRoutine()
         {
             isDodging = true;
-            AddStamina(-dodgeStaminaCost);
+            if (!UseStamina(dodgeStaminaCost)) yield break;
             PlayDodge(direction);
             yield return new WaitForSeconds(dodgeDuration);
             isDodging = false;

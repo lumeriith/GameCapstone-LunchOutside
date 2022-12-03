@@ -71,7 +71,8 @@ public class EnemyFencingAI : MonoBehaviour
         if (disableInitiative) return;
         
         if (GetInitiativeValue() > profile.initiativeThreshold && 
-            Time.time - _lastInitiativeTime > profile.initiativeCooldown)
+            Time.time - _lastInitiativeTime > profile.initiativeCooldown &&
+            Quaternion.Angle(targetRotation, transform.rotation) < 20f)
         {
             _lastInitiativeTime = Time.time;
             var val = UnityEngine.Random.value;

@@ -27,9 +27,9 @@ public class UI_Stamina : MonoBehaviour
 
     private void Update()
     {
-        var normalized = isPlayer ? Player.instance.GetStamina() / Player.maxStamina : Enemy.instance.GetStamina() / Enemy.maxStamina;
+        var normalized = isPlayer ? Player.instance.GetStamina() / Player.MaxStamina : Enemy.instance.GetStamina() / Enemy.MaxStamina;
 
-        var isDecreasing = normalized < fillImage.fillAmount;
+        var isDecreasing = normalized + 0.001f < fillImage.fillAmount;
         glowCanvasGroup.alpha = Mathf.MoveTowards(glowCanvasGroup.alpha, isDecreasing ? 1 : 0,
             Time.unscaledDeltaTime * glowAlphaSpeed);
         glowTransform.localScale = Mathf.MoveTowards(glowTransform.localScale.x, isDecreasing ? 1 : 0,
