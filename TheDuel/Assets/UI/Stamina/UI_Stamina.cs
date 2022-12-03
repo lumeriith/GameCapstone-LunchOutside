@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UI_Stamina : MonoBehaviour
 {
+    public bool isPlayer;
+    public bool startFromLeft;
     public Image fillImage;
     public Image deltaImage;
     public RectTransform boxTransform;
@@ -25,7 +27,7 @@ public class UI_Stamina : MonoBehaviour
 
     private void Update()
     {
-        var normalized = Player.instance.GetStamina() / Player.maxStamina;
+        var normalized = isPlayer ? Player.instance.GetStamina() / Player.maxStamina : Enemy.instance.GetStamina() / Enemy.maxStamina;
 
         var isDecreasing = normalized < fillImage.fillAmount;
         glowCanvasGroup.alpha = Mathf.MoveTowards(glowCanvasGroup.alpha, isDecreasing ? 1 : 0,
@@ -37,7 +39,7 @@ public class UI_Stamina : MonoBehaviour
         deltaImage.fillAmount =
             Mathf.MoveTowards(deltaImage.fillAmount, fillImage.fillAmount, deltaSpeed * Time.unscaledDeltaTime);
         var aPos = glowTransform.anchoredPosition;
-        aPos.x = fillImage.fillAmount * boxTransform.rect.width;
+        aPos.x = (startFromLeft ? fillImage.fillAmount : 1 - fillImage.fillAmount) * boxTransform.rect.width;
         glowTransform.anchoredPosition = aPos;
         
     }

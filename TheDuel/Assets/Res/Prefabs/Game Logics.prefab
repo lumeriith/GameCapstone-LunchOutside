@@ -6949,6 +6949,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
+      propertyPath: dodgeVelocityDecay
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
       propertyPath: lookRotationOffset
       value: 5
       objectReference: {fileID: 0}
@@ -6966,6 +6971,11 @@ PrefabInstance:
         type: 3}
       propertyPath: weapons.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: dodgeVelocityMagnitude
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3999959872034615980, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
@@ -7243,6 +7253,16 @@ PrefabInstance:
         type: 3}
       propertyPath: maxWeapons
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: dodgeVelocityDecay
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
+        type: 3}
+      propertyPath: dodgeVelocityMagnitude
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3168531735682471818, guid: 7df7fd81f4c32be478332bfeda682b5d,
         type: 3}
