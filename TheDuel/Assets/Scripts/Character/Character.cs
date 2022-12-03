@@ -312,6 +312,12 @@ public class Character : MonoBehaviour
         isIdle = false;
         animator.SetTrigger("Leap Attack");
     }
+    
+    public void PlayLowAttack()
+    {
+        isIdle = false;
+        animator.SetTrigger("Low Attack");
+    }
 
     public void PlayParry()
     {

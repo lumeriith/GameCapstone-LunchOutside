@@ -80,7 +80,6 @@ public class FencingSword : Item
             }
         
             var otherCharacter = hit.collider.GetComponentInParent<Character>();
-            var otherWeaponBox = hit.collider.GetComponent<WeaponBox>();
             if (otherCharacter != null && _parent != otherCharacter)
             {
                 var hitInfo = new InfoAttackHit
@@ -96,12 +95,6 @@ public class FencingSword : Item
                 otherCharacter.onTakeAttack?.Invoke(hitInfo);
                 _lastHitTime = Time.time;
             }
-
-            if (otherWeaponBox != null)
-            {
-                otherWeaponBox.Hit();
-                _lastHitTime = Time.time;
-            }
         }
     }
     
@@ -112,7 +105,37 @@ public class FencingSword : Item
         base.OnUse();
         var isLeapAttack = forceUseLeapAttack || (_parent == Player.instance && Input.GetKey(KeyCode.W));
 
-        if (isLeapAttack) _parent.PlayLeapAttack();
-        else _parent.PlayBasicAttack();
+        if (isLeapAttack)
+        {
+            _parent.PlayLeapAttack();
+        }
+        else
+        {
+            if (_parent is Player)
+            {
+                var cols = Physics.OverlapSphere(_parent.transform.position + _parent.transform.forward * 2f, 2.5f,
+                    LayerMask.GetMask("Attackable"));
+                foreach (var c in cols)
+                {
+                    if (c.TryGetComponent<WeaponBox>(out var box))
+                    {
+                        _parent.PlayLowAttack();
+                        StartCoroutine(HitWeaponBoxRoutine(box));
+                        return;
+                    }
+                }
+                _parent.PlayBasicAttack();
+            }
+            else
+            {
+                _parent.PlayBasicAttack();
+            }
+        }
+    }
+
+    private IEnumerator HitWeaponBoxRoutine(WeaponBox box)
+    {
+        yield return new WaitForSeconds(.5f);
+        box.Hit();
     }
 }
