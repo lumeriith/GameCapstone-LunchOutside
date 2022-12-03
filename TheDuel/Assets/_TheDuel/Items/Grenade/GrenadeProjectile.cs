@@ -35,7 +35,7 @@ public class GrenadeProjectile : Projectile
         var cols = Physics.OverlapSphere(transform.position, explodeMaxRadius);
         foreach (var c in cols)
         {
-            var chr = c.GetComponent<Character>();
+            var chr = c.GetComponentInParent<Character>();
             if (chr == null) continue;
             var closestPoint = c.ClosestPoint(transform.position);
             var dist = Vector3.Distance(transform.position, closestPoint);
