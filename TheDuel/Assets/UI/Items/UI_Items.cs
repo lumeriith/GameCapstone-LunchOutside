@@ -15,6 +15,11 @@ public class UI_Items : MonoBehaviour
         {
             AddItemIcon(item);
         }
+
+        ScoreManager.instance.onEnemyScoreWindowStarted += () => gameObject.SetActive(false);
+        ScoreManager.instance.onPlayerScoreWindowStarted += () => gameObject.SetActive(false);
+
+        GameManager.instance.onRoundPrepare += () => gameObject.SetActive(true);
     }
 
     private void AddItemIcon(Item target)
