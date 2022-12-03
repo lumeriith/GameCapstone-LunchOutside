@@ -6,10 +6,10 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public const float MaxStamina = 100f;
-    public const float StaminaRecoveryRate = 10f;
-    public const float StaminaRecoveryDelay = 1.5f;
+    public const float StaminaRecoveryRate = 15f;
+    public const float StaminaRecoveryDelay = 1f;
     public const float StaminaRecoveryBonusThreshold = 35f;
-    public const float StaminaRecoveryBonusMultiplier = 6f;
+    public const float StaminaRecoveryBonusMultiplier = 5f;
     public const double AgilityRate = 0.01;
     
 
