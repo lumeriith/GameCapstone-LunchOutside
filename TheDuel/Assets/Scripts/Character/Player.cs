@@ -52,7 +52,7 @@ public class Player : Character
         base.Update();
         _tpController.strafeSpeed.rotateWithCamera = canAct;
         if (Input.GetKeyDown(KeyCode.Mouse0) && canAct) UseItem();
-        if (Input.GetKeyDown(KeyCode.Q) && canAct) PlayParry();
+        if (Input.GetKeyDown(KeyCode.Q) && canAct && equippedItem != null && equippedItem is FencingSword f && f.canParry) PlayParry();
 
         var wheel = Input.GetAxis("Mouse ScrollWheel");
         if (wheel > 0)

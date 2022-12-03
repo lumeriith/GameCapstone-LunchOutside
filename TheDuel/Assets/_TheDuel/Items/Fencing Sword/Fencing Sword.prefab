@@ -437,6 +437,7 @@ MonoBehaviour:
   equipLocalRotation: {x: 0, y: 0, z: 0}
   isCheating: 0
   requireStamina: 20
+  canParry: 1
   startPivot: {fileID: 4471281158042449773}
   endPivot: {fileID: 654895863125383425}
   parryStartPivot: {fileID: 3267236434240381000}
