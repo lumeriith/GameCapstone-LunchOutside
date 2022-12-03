@@ -340,7 +340,7 @@ public class Character : MonoBehaviour
 
     public double GetTotalAgility()
     {
-        double totalAgility = 2 - (basicAgility + (maxStamina - stamina) * agilityRate);
+        double totalAgility = basicAgility + (maxStamina - stamina) * agilityRate;
         if (totalAgility > 2) totalAgility = 2;
         if (totalAgility < 0.1) totalAgility = 0.1;
         return totalAgility;
