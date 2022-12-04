@@ -155,7 +155,7 @@ MonoBehaviour:
   swingEffect: {fileID: 680681598521110219}
   leapSwingEffect: {fileID: 6109067891727236522}
   stabEffect: {fileID: 7708872741961183989}
-  hitEffect: {fileID: 4268860945269853769}
+  hitEffect: {fileID: 0}
 --- !u!1 &1644815316986321042
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,9 +31,15 @@ public class Character : MonoBehaviour
     public Item equippedItem;
     public int maxItems = 7;
 
+    public Effect heartBeatEffect;
+    public Effect breathEffect;
+    public Effect dodgeEffect;
+    public Effect drawSwordEffect;
+    public Effect pickUpItemEffect;
+
     public float stamina = MaxStamina;
 
-    public float parryingDecreateStamina = 50f; //�и��� �������� �� ���� ���¹̳ʸ� �󸶳� ������� ���� ��ġ
+    public float parryingDecreateStamina = 50f; 
 
     public double basicAgility = 1.0;
 
@@ -71,7 +77,7 @@ public class Character : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         modelActionInput = GetComponent<ModelActionInput>();
-        _lastTotalAgility = GetTotalAgility(); 
+        _lastTotalAgility = GetTotalAgility();
     }
 
     protected virtual void Start()
@@ -98,6 +104,15 @@ public class Character : MonoBehaviour
     {
         _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
         animator.SetBool("IsStunned", isStunned);
+
+        if (stamina < MaxStamina * 0.5)
+        {
+            breathEffect.Play();
+            if (stamina < MaxStamina * 0.2)
+            {
+                heartBeatEffect.Play();
+            }
+        }
 
         if (stamina < MaxStamina && Time.time - _lastStaminaUseTime > StaminaRecoveryDelay)
         {
@@ -273,6 +288,7 @@ public class Character : MonoBehaviour
     {
         isIdle = false;
         animator.SetTrigger("PickUp");
+        pickUpItemEffect.Play();
     }
 
     public void PlayUseRemote()
@@ -290,12 +306,14 @@ public class Character : MonoBehaviour
         isIdle = false;
         animator.SetInteger("DodgeDirection", direction);
         animator.SetTrigger("Dodge");
+        dodgeEffect.Play();
     }
 
     public void PlayDrawSword()
     {
         isIdle = false;
         animator.SetTrigger("DrawSword");
+        drawSwordEffect.Play();
     }
 
     public void PlaySwitch()
