@@ -35,6 +35,7 @@ public class FencingSword : Item
     public Effect leapSwingEffect;
     public Effect stabEffect;
     public Effect hitEffect;
+    public Effect parryingEffect;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
@@ -61,8 +62,9 @@ public class FencingSword : Item
                 var hitCharacter = parryHit.collider.GetComponentInParent<Character>();
                 var otherFencingSword = hitCharacter.GetComponentInChildren<FencingSword>();
 
-                if (otherFencingSword != null && this != otherFencingSword && hitCharacter.isAttacking)
+                if (otherFencingSword != null && this != otherFencingSword && hitCharacter.isAttacking && _parent.isParrying)
                 {
+                    parryingEffect.Play();
                     hitCharacter.isAttacking = false;
                     hitCharacter.AddStamina(_parent.parryingDecreateStamina);
                     hitCharacter.PlayHitFront();

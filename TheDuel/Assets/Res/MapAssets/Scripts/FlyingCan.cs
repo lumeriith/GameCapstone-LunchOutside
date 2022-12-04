@@ -18,6 +18,8 @@ public class FlyingCan : MonoBehaviour
 
     private bool isValid = true;
 
+    public Effect hitEffect;
+
     void Start()
     {
         MakeRandom();
@@ -81,6 +83,7 @@ public class FlyingCan : MonoBehaviour
             if (other.relativeVelocity.magnitude < minVelocity) return;
             var character = other.gameObject.GetComponentInParent<Character>();
             if (character == null) return;
+            hitEffect.Play();
             var hitName = other.collider.name;
             var isHeadshot = headshotGameObjectNames.Contains(hitName);
             character.Stun(isHeadshot ? headshotStunDuration : stunDuration);
