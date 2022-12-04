@@ -16,6 +16,10 @@ public class Character : MonoBehaviour
     public const float MinSpeed = 0.65f;
     public const float MinSpeedStaminaThreshold = 20f;
 
+    public const float BreathStartStaminaThreshold = 50f;
+    public const float HeartbeatStartStaminaThreshold = 20f;
+    public const float BreathHeartbeatVolumeSpeed = 2f;
+
     public bool canAct => isIdle && !isStunned && !isSwitchingWeapon;
 
     public Action<Item> onAddItem;
@@ -31,11 +35,12 @@ public class Character : MonoBehaviour
     public Item equippedItem;
     public int maxItems = 7;
 
-    public Effect heartBeatEffect;
-    public Effect breathEffect;
     public Effect dodgeEffect;
     public Effect drawSwordEffect;
     public Effect pickUpItemEffect;
+
+    public AudioSource heartbeatAudio;
+    public AudioSource breathAudio;
 
     public float stamina = MaxStamina;
 
@@ -105,14 +110,10 @@ public class Character : MonoBehaviour
         _currentStunDuration = Mathf.MoveTowards(_currentStunDuration, 0, Time.deltaTime);
         animator.SetBool("IsStunned", isStunned);
 
-        if (stamina < MaxStamina * 0.5)
-        {
-            breathEffect.Play();
-            if (stamina < MaxStamina * 0.2)
-            {
-                heartBeatEffect.Play();
-            }
-        }
+        if (breathAudio != null)
+            breathAudio.volume = Mathf.MoveTowards(breathAudio.volume, stamina <= BreathStartStaminaThreshold ? 1 : 0, Time.deltaTime * BreathHeartbeatVolumeSpeed);
+        if (heartbeatAudio != null)
+            heartbeatAudio.volume = Mathf.MoveTowards(heartbeatAudio.volume, stamina <= HeartbeatStartStaminaThreshold ? 1 : 0, Time.deltaTime * BreathHeartbeatVolumeSpeed);
 
         if (stamina < MaxStamina && Time.time - _lastStaminaUseTime > StaminaRecoveryDelay)
         {
