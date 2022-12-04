@@ -197,6 +197,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crowd (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4382498379154503107, guid: ffe2abdec8167484fb1c3a02fe7e6c8f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffe2abdec8167484fb1c3a02fe7e6c8f, type: 3}
 --- !u!4 &15211084 stripped
@@ -945,6 +950,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Crowd (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382498379154503107, guid: ffe2abdec8167484fb1c3a02fe7e6c8f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffe2abdec8167484fb1c3a02fe7e6c8f, type: 3}

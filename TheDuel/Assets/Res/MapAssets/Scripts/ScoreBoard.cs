@@ -55,13 +55,13 @@ public class ScoreBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.onRoundPrepare += InitializeTime;
+        //GameManager.instance.onRoundPrepare += InitializeTime;
         GameManager.instance.onRoundStarted += RoundStart;
         ScoreManager.instance.onPlayerScoreChanged += UpdatePlayerScore;
         ScoreManager.instance.onEnemyScoreChanged += UpdateEnemyScore;
 
-       
 
+        InitializeTime();
         StartCoroutine(OneSec());
 
 
