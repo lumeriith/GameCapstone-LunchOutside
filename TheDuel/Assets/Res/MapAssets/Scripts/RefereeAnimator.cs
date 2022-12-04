@@ -11,9 +11,12 @@ public class RefereeAnimator : MonoBehaviour
     private Animator animator;
     private int refereeState = 0;
 
+    private AudioSource audioSource;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -24,6 +27,7 @@ public class RefereeAnimator : MonoBehaviour
             StopCoroutine(Idle());
             StopCoroutine(Stretching());
             animator.SetInteger("RefereeState", 5);
+            StartCoroutine(PlayAudio());
         };
         //Phone.GetComponent<MeshRenderer>().gameObject.SetActive(false);
         GameManager.instance.onRoundStarted += StartRound;
@@ -31,9 +35,15 @@ public class RefereeAnimator : MonoBehaviour
 
         StartCoroutine(Idle());
 
-        
-
     }
+
+    IEnumerator PlayAudio()
+    {
+        yield return new WaitForSeconds(0.8f);
+        audioSource.Play();
+    }
+
+    
 
     void StartRound()
     {
