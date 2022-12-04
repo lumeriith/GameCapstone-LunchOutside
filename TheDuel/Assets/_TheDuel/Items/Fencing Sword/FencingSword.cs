@@ -34,6 +34,7 @@ public class FencingSword : Item
     public Effect swingEffect;
     public Effect leapSwingEffect;
     public Effect stabEffect;
+    public Effect hitEffect;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
@@ -98,6 +99,7 @@ public class FencingSword : Item
                 _parent.onDealAttack?.Invoke(hitInfo);
                 otherCharacter.onTakeAttack?.Invoke(hitInfo);
                 stabEffect.PlayNew(hit.point, Quaternion.identity);
+                hitEffect.PlayNew(hit.point, Quaternion.identity);
                 _lastHitTime = Time.time;
             }
         }
