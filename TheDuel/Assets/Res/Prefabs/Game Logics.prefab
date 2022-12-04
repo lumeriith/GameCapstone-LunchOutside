@@ -952,7 +952,6 @@ MonoBehaviour:
   setWorldOffsetPeriodically: 0
   setWorldOffsetInterval: 0
   hipsYOffset: -1
-  useRootReposition: 0
 --- !u!114 &8683778314054829032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2069,7 +2068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdleCycle: 3
-  PhoneCycle: 3
+  PhoneCycle: 8
   Phone: {fileID: 4784518093352044088}
 --- !u!1 &4477654642399106961
 GameObject:
