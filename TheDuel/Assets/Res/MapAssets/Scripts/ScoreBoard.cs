@@ -45,23 +45,35 @@ public class ScoreBoard : MonoBehaviour
     private int tensSec = 0;
     private int unitSec = 0;
 
+    [SerializeField] AudioSource ScoreSound;
+    [SerializeField] AudioSource RoundStartSound;
+
+
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         GameManager.instance.onRoundPrepare += InitializeTime;
+        GameManager.instance.onRoundStarted += RoundStart;
         ScoreManager.instance.onPlayerScoreChanged += UpdatePlayerScore;
         ScoreManager.instance.onEnemyScoreChanged += UpdateEnemyScore;
-        
+
+       
+
         StartCoroutine(OneSec());
-        
-        
-        
+
+
 
     }
 
     // Update is called once per frame
+
+    void RoundStart()
+    {
+        RoundStartSound.Play();
+    }
 
    void InitializeTime()
     {
@@ -179,6 +191,7 @@ public class ScoreBoard : MonoBehaviour
 
     void UpdatePlayerScore(float newScore)
     {
+        ScoreSound.Play();
         switch (newScore)
         {
             case 1:
@@ -232,6 +245,7 @@ public class ScoreBoard : MonoBehaviour
 
     void UpdateEnemyScore(float newScore)
     {
+        ScoreSound.Play();
         switch (newScore)
         {
             case 1:
