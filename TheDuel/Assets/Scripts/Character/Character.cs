@@ -6,12 +6,15 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public const float MaxStamina = 100f;
-    public const float StaminaRecoveryRate = 10f;
-    public const float StaminaRecoveryDelay = 1.5f;
+    public const float StaminaRecoveryRate = 15f;
+    public const float StaminaRecoveryDelay = 1f;
     public const float StaminaRecoveryBonusThreshold = 35f;
-    public const float StaminaRecoveryBonusMultiplier = 6f;
+    public const float StaminaRecoveryBonusMultiplier = 5f;
     public const double AgilityRate = 0.01;
-    
+
+    public const float MaxSpeed = 1.2f;
+    public const float MinSpeed = 0.65f;
+    public const float MinSpeedStaminaThreshold = 20f;
 
     public bool canAct => isIdle && !isStunned && !isSwitchingWeapon;
 
@@ -105,13 +108,14 @@ public class Character : MonoBehaviour
         if (_lastTotalAgility != totalAgility)
         {
             _lastTotalAgility = totalAgility;
-            animator.SetFloat("Speed", 1);
             if (modelActionInput != null) modelActionInput.UpdateTotalAgility(totalAgility);
         }
 
         transform.position += currentDodgeVelocity * Time.deltaTime;
         currentDodgeVelocity =
             Vector3.MoveTowards(currentDodgeVelocity, Vector3.zero, dodgeVelocityDecay * Time.deltaTime);
+        
+        animator.SetFloat("Speed", GetSpeed());
     }
 
     public void EquipDefaultItem()
@@ -368,6 +372,11 @@ public class Character : MonoBehaviour
         if (totalAgility > 2) totalAgility = 2;
         if (totalAgility < 0.1) totalAgility = 0.1;
         return totalAgility;
+    }
+
+    public float GetSpeed()
+    {
+        return Mathf.Lerp(MinSpeed, MaxSpeed, (stamina - MinSpeedStaminaThreshold) / (MaxStamina - MinSpeedStaminaThreshold));
     }
 
     public void Dodge(int direction)
