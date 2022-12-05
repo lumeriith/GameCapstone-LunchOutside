@@ -112,7 +112,7 @@ public class Character : MonoBehaviour
 
         if (breathAudio != null)
             breathAudio.volume = Mathf.MoveTowards(breathAudio.volume, stamina <= BreathStartStaminaThreshold ? 1 : 0, Time.deltaTime * BreathHeartbeatVolumeSpeed);
-        if (heartbeatAudio != null)
+        if (heartbeatAudio != null) 
             heartbeatAudio.volume = Mathf.MoveTowards(heartbeatAudio.volume, stamina <= HeartbeatStartStaminaThreshold ? 1 : 0, Time.deltaTime * BreathHeartbeatVolumeSpeed);
 
         if (stamina < MaxStamina && Time.time - _lastStaminaUseTime > StaminaRecoveryDelay)
