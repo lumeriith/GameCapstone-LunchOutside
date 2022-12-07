@@ -70,7 +70,10 @@ public class Character : MonoBehaviour
     public float dodgeVelocityDecay = 15;
 
     public Vector3 currentDodgeVelocity { get; private set; }
-    
+
+    public Item lastEquipedItem;
+    public bool isGetLastScore= false;
+
     private Item _defaultItem;
     private byte _isCheatingCounter;
     private float _currentStunDuration;
@@ -103,6 +106,16 @@ public class Character : MonoBehaviour
         GameManager.instance.onRoundPrepare += EquipDefaultItem;
         GameManager.instance.onRoundPrepare += PlayDrawSword;
         GameManager.instance.onRoundPrepare += () => stamina = MaxStamina;
+        GameManager.instance.onRoundEnded += () =>
+        {
+            if (lastEquipedItem != null)
+            {
+                if (lastEquipedItem.isFork && isGetLastScore)
+                    RemoveItem(lastEquipedItem);
+            }
+
+            isGetLastScore = false;
+        };
     }
 
     protected virtual void Update()

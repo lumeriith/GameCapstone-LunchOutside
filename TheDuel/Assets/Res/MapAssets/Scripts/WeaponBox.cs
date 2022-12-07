@@ -5,7 +5,6 @@ using UnityEngine;
 public class WeaponBox : MonoBehaviour
 {
     public GameObject[] itemsPool;
-    public Effect boxHitEffect;
 
     private int _health = 2;
 
@@ -17,11 +16,6 @@ public class WeaponBox : MonoBehaviour
         {
             Instantiate(itemsPool[Random.Range(0, itemsPool.Length)], transform.position, transform.rotation);
             Destroy(gameObject);
-        }
-
-        else
-        {
-            boxHitEffect.Play();
         }
     }
 }

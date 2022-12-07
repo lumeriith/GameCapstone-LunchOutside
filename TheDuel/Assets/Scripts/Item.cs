@@ -6,6 +6,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public bool isEquipped { get; set; }
+    public bool isFork = false;
     public Character owner { get; set; }
     public bool isUseReady => isEquipped && CanUse();
 

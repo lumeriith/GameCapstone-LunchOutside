@@ -628,6 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e783b34e515a644da185fe5a130b733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFork: 0
   icon: {fileID: 21300000, guid: 2f22af9ba0525e84fa74f1d2eeee6f72, type: 3}
   activatedOnEquip:
   - {fileID: 6562673978892584362}
@@ -651,6 +652,7 @@ MonoBehaviour:
   stabEffect: {fileID: 3634039746051456172}
   hitEffect: {fileID: 6743198324202495105}
   parryingEffect: {fileID: 3992299583500551041}
+  hitBoxEffect: {fileID: 7906606757673943976}
 --- !u!114 &4409931971155309539
 MonoBehaviour:
   m_ObjectHideFlags: 0

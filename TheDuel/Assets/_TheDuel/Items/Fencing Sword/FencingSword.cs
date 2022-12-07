@@ -36,6 +36,7 @@ public class FencingSword : Item
     public Effect stabEffect;
     public Effect hitEffect;
     public Effect parryingEffect;
+    public Effect hitBoxEffect;
     
     private Character _parent;
     private float _lastHitTime = Single.NegativeInfinity;
@@ -102,6 +103,7 @@ public class FencingSword : Item
                 otherCharacter.onTakeAttack?.Invoke(hitInfo);
                 stabEffect.PlayNew(hit.point, Quaternion.identity);
                 hitEffect.PlayNew(hit.point, Quaternion.identity);
+                _parent.isGetLastScore = true;
                 _lastHitTime = Time.time;
             }
         }
@@ -146,6 +148,7 @@ public class FencingSword : Item
 
     private IEnumerator HitWeaponBoxRoutine(WeaponBox box)
     {
+        hitBoxEffect.Play();
         yield return new WaitForSeconds(.5f);
         box.Hit();
     }

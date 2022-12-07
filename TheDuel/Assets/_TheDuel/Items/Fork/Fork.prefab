@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e783b34e515a644da185fe5a130b733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFork: 0
   icon: {fileID: 21300000, guid: 030e604717f7bcf408901be78681a885, type: 3}
   activatedOnEquip:
   - {fileID: 1644815316986321042}
@@ -150,8 +151,8 @@ MonoBehaviour:
   canParry: 0
   startPivot: {fileID: 322287003026728732}
   endPivot: {fileID: 3702935839598201200}
-  parryStartPivot: {fileID: 0}
-  parryEndPivot: {fileID: 0}
+  parryStartPivot: {fileID: 4643292912040810866}
+  parryEndPivot: {fileID: 739053981294177821}
   score: 3
   sphereCastRadius: 0.075
   parrySphereCastRadius: 0.075
@@ -161,6 +162,7 @@ MonoBehaviour:
   stabEffect: {fileID: 7708872741961183989}
   hitEffect: {fileID: 4268860945269853769}
   parryingEffect: {fileID: 2285519854318372496}
+  hitBoxEffect: {fileID: 0}
 --- !u!1 &1316985337104074009
 GameObject:
   m_ObjectHideFlags: 0
