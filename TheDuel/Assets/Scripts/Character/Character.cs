@@ -127,9 +127,9 @@ public class Character : MonoBehaviour
             if (modelActionInput != null) modelActionInput.UpdateTotalAgility(totalAgility);
         }
 
-        transform.position += currentDodgeVelocity * Time.deltaTime;
+        transform.position += currentDodgeVelocity * Time.deltaTime * GetSpeed();
         currentDodgeVelocity =
-            Vector3.MoveTowards(currentDodgeVelocity, Vector3.zero, dodgeVelocityDecay * Time.deltaTime);
+            Vector3.MoveTowards(currentDodgeVelocity, Vector3.zero, dodgeVelocityDecay * Time.deltaTime * GetSpeed());
         
         animator.SetFloat("Speed", GetSpeed());
     }
