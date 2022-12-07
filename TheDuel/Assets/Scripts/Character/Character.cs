@@ -103,19 +103,22 @@ public class Character : MonoBehaviour
             }
         }
 
-        GameManager.instance.onRoundPrepare += EquipDefaultItem;
-        GameManager.instance.onRoundPrepare += PlayDrawSword;
-        GameManager.instance.onRoundPrepare += () => stamina = MaxStamina;
-        GameManager.instance.onRoundEnded += () =>
+        GameManager.instance.onRoundPrepare += () =>
         {
             if (lastEquipedItem != null)
             {
                 if (lastEquipedItem.isFork && isGetLastScore)
+                {
                     RemoveItem(lastEquipedItem);
+                    Debug.Log("fork");
+                }
             }
 
             isGetLastScore = false;
         };
+        GameManager.instance.onRoundPrepare += EquipDefaultItem;
+        GameManager.instance.onRoundPrepare += PlayDrawSword;
+        GameManager.instance.onRoundPrepare += () => stamina = MaxStamina;
     }
 
     protected virtual void Update()
@@ -172,6 +175,7 @@ public class Character : MonoBehaviour
         if (equippedItem != null) UnequipItem();
         item.isEquipped = true;
         equippedItem = item;
+        lastEquipedItem = item;
         item.OnEquip();
         onChangeEquippedItem?.Invoke(item);
     }

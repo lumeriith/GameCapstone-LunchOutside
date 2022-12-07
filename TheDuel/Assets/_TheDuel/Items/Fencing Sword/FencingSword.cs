@@ -148,8 +148,8 @@ public class FencingSword : Item
 
     private IEnumerator HitWeaponBoxRoutine(WeaponBox box)
     {
-        hitBoxEffect.Play();
         yield return new WaitForSeconds(.5f);
+        hitBoxEffect.Play();
         box.Hit();
     }
 }
