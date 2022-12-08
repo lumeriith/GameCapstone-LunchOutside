@@ -68,6 +68,7 @@ public class Character : MonoBehaviour
     public float dodgeStaminaCost = 20f;
     public float dodgeVelocityMagnitude = 7;
     public float dodgeVelocityDecay = 15;
+    public float parryStaminaCost = 25f;
 
     public Vector3 currentDodgeVelocity { get; private set; }
 
@@ -362,6 +363,7 @@ public class Character : MonoBehaviour
 
     public void PlayParry()
     {
+        if (!UseStamina(parryStaminaCost)) return;
         isIdle = false;
         animator.SetTrigger("Parry");
     }

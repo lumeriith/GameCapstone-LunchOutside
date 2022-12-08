@@ -64,6 +64,7 @@ MonoBehaviour:
   volume: 1
   affectedByTimeScale: 1
   delay: 0
+  is3d: 1
 --- !u!1 &2822101164325760486
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +220,7 @@ GameObject:
   - component: {fileID: 2822101166207294213}
   - component: {fileID: 7611657843294627388}
   - component: {fileID: 7966124554936067934}
+  - component: {fileID: 6905251354189858676}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Player
@@ -280,6 +282,7 @@ MonoBehaviour:
   dodgeStaminaCost: 20
   dodgeVelocityMagnitude: 7
   dodgeVelocityDecay: 15
+  parryStaminaCost: 25
   lastEquipedItem: {fileID: 0}
   isGetLastScore: 0
 --- !u!114 &-8811920989504221785
@@ -398,6 +401,21 @@ CapsuleCollider:
   m_Height: 1.76
   m_Direction: 1
   m_Center: {x: 0, y: 0.88, z: 0}
+--- !u!114 &6905251354189858676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822101166207294211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbd6354f6f06844fae17de50413ec87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whenLosing: {fileID: 11400000, guid: 39446bbba9fe2d346a4556721e19088a, type: 2}
+  whenSame: {fileID: 11400000, guid: f5d3c08b049324846a24bc761dc03418, type: 2}
+  whenWinning: {fileID: 11400000, guid: 97ca94d323a231a4cb665c53c4dfa3e2, type: 2}
 --- !u!1 &3362472744326678919
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +480,7 @@ MonoBehaviour:
   volume: 1
   affectedByTimeScale: 1
   delay: 0
+  is3d: 1
 --- !u!1 &4366457841519876070
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +546,7 @@ MonoBehaviour:
   volume: 1
   affectedByTimeScale: 1
   delay: 0
+  is3d: 1
 --- !u!1 &5659890268745862963
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,6 +611,7 @@ MonoBehaviour:
   volume: 1
   affectedByTimeScale: 1
   delay: 0
+  is3d: 1
 --- !u!1 &6535286354829914060
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +679,7 @@ MonoBehaviour:
   volume: 1
   affectedByTimeScale: 1
   delay: 0.2
+  is3d: 1
 --- !u!114 &8736188879449103256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +833,7 @@ MonoBehaviour:
   volume: 1
   affectedByTimeScale: 1
   delay: 0
+  is3d: 1
 --- !u!1001 &5170968368531587520
 PrefabInstance:
   m_ObjectHideFlags: 0
