@@ -84,8 +84,10 @@ public class GameManager : ManagerBase<GameManager>
     private IEnumerator StartRoundRoutine()
     {
         fadeOutVolume.weight = 1f;
-        Player.instance.transform.SetPositionAndRotation(playerStartPos.position, playerStartPos.rotation);
-        Enemy.instance.transform.SetPositionAndRotation(enemyStartPos.position, enemyStartPos.rotation);
+        Player.instance.rigidbody.position = playerStartPos.position;
+        Player.instance.rigidbody.rotation = playerStartPos.rotation;
+        Enemy.instance.rigidbody.position = enemyStartPos.position;
+        Enemy.instance.rigidbody.rotation = enemyStartPos.rotation;
         onRoundPrepare?.Invoke();
         DOTween.To(() => fadeOutVolume.weight, v => fadeOutVolume.weight = v, 0f, 1f);
         yield return new WaitForSecondsRealtime(1f);

@@ -11,6 +11,8 @@ public class ModelConnection : SerializedMonoBehaviour
 {
     public bool isConnected => _client != null && _client.Connected;
     public BinaryWriterBE writer => _outgoingWriter;
+
+    public Action onConnected;
     
     [NonSerialized]
     public Action<BinaryReaderBE> dataReader;
@@ -54,6 +56,7 @@ public class ModelConnection : SerializedMonoBehaviour
             _networkStreamBuffer = new byte[dataBufferSize];
             _copyRemainBuffer = new byte[dataBufferSize];
             _networkStream.BeginRead(_networkStreamBuffer, 0, dataBufferSize, PutToMemStream, null);
+            onConnected?.Invoke();
         }, _client);
     }
     

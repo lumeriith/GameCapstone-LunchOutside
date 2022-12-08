@@ -784,7 +784,6 @@ GameObject:
   - component: {fileID: 6791950209297260403}
   - component: {fileID: 5938326654654802789}
   - component: {fileID: 7650052849293184697}
-  - component: {fileID: 8683778314054829032}
   - component: {fileID: 935915280898485981}
   m_Layer: 0
   m_Name: Model Communication Object
@@ -830,7 +829,10 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: onConnected
+      Entry: 6
+      Data: 
   dataBufferSize: 307200
   host: 127.0.0.1
   port: 1369
@@ -952,27 +954,7 @@ MonoBehaviour:
   setWorldOffsetPeriodically: 0
   setWorldOffsetInterval: 0
   hipsYOffset: -1
---- !u!114 &8683778314054829032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1936387785132611308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee5248e285aafa459ece1a3a18d2e92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
+  useRootReposition: 0
 --- !u!114 &935915280898485981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1582,7 +1564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3115881490196066440
 Transform:
   m_ObjectHideFlags: 0
@@ -3636,8 +3618,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6628506635665928606}
-  m_LocalRotation: {x: -0.11828741, y: -0.9821434, z: 0.145976, w: -0.00967033}
-  m_LocalPosition: {x: 0.13, y: 2.55, z: 7.95}
+  m_LocalRotation: {x: 0.13033628, y: -0.12741236, z: 0.016119603, w: 0.98311687}
+  m_LocalPosition: {x: 1.7896686, y: 2.1825128, z: -3.5176105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6981,6 +6963,31 @@ PrefabInstance:
       propertyPath: rootReferenceTransform
       value: 
       objectReference: {fileID: 7815925288667610007}
+    - target: {fileID: -1266742732314658498, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: actionSequence.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -1266742732314658498, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: actionSequence.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1266742732314658498, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: actionSequence.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -1266742732314658498, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: actionSequence.Array.data[2]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -1266742732314658498, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: actionSequence.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2822101166207294211, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
       propertyPath: m_Name
@@ -7433,6 +7440,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5382348490782816760}
     m_Modifications:
+    - target: {fileID: 2822101164325760488, guid: e6dd21c5d2fbad146a00374cb0920858,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2822101164336830581, guid: e6dd21c5d2fbad146a00374cb0920858,
         type: 3}
       propertyPath: m_LocalRotation.w

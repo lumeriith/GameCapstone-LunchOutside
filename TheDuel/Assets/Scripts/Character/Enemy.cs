@@ -14,9 +14,9 @@ public class Enemy : Character
     }
     private static Enemy _instance;
 
-
-    private void Awake()
+    protected override void Update()
     {
-        base.Awake();
+        base.Update();
+        
     }
 }

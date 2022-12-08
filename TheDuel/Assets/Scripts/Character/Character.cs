@@ -80,12 +80,15 @@ public class Character : MonoBehaviour
     private float _lastStaminaUseTime = float.NegativeInfinity;
     private double _lastTotalAgility;
 
+    public new Rigidbody rigidbody { get; private set; }
+
 
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
         modelActionInput = GetComponent<ModelActionInput>();
         _lastTotalAgility = GetTotalAgility();
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     protected virtual void Start()

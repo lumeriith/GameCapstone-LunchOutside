@@ -27,6 +27,7 @@ public class ModelDataCharacterVisualizer : ModelComponentBase
     public bool setWorldOffsetPeriodically;
     public float setWorldOffsetInterval = 1f;
     public float hipsYOffset;
+    public bool useRootReposition;
     
     private float _lastWorldOffsetTime;
     
@@ -90,12 +91,20 @@ public class ModelDataCharacterVisualizer : ModelComponentBase
                 {
                     if (pair.name == "Hips")
                     {
-                        var xzPos = new Vector3(tr.position.x, 0, tr.position.z);
-                        var diff = xzPos - _prevRootPosition;
-                        boneTransform.position = tr.position + Vector3.up * hipsYOffset;
-                        connectedCharacter.transform.position += diff;
-                        _prevRootPosition = xzPos;
+                        if (useRootReposition)
+                        {
+                            var xzPos = new Vector3(tr.position.x, 0, tr.position.z);
+                            var diff = xzPos - _prevRootPosition;
+                            boneTransform.position = tr.position + Vector3.up * hipsYOffset;
+                            connectedCharacter.transform.position += diff;
+                            _prevRootPosition = xzPos;
+                        }
+                        else
+                        {
+                            boneTransform.position = tr.position + Vector3.up * hipsYOffset;
+                        }
                     }
+
                     boneTransform.rotation = tr.rotation;
                     boneTransform.rotation = boneTransform.rotation * pair.baseRot;
                 }

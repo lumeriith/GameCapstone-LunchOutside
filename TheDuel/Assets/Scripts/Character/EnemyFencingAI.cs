@@ -17,6 +17,7 @@ public class EnemyFencingAI : MonoBehaviour
     
     private OpenSimplexNoise _noiseGen;
     private Enemy _enemy;
+    private EnemyMartialAI _martial;
 
     public float rotationSpeed;
 
@@ -28,6 +29,7 @@ public class EnemyFencingAI : MonoBehaviour
     private void Start()
     {
         _enemy = GetComponent<Enemy>();
+        _martial = GetComponent<EnemyMartialAI>();
     }
 
     private void Update()
@@ -39,6 +41,8 @@ public class EnemyFencingAI : MonoBehaviour
         
         var lookOffset = Mathf.Lerp(profile.lookRotationMinOffset, profile.lookRotationMaxOffset, _noiseLook / 2f + 0.5f);
         var targetRotation = Quaternion.Euler(0, Quaternion.LookRotation(Player.instance.transform.position - transform.position).eulerAngles.y + lookOffset, 0);
+        
+        //if (_martial.weight < 0.1f)
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         var isBackward = Vector3.Angle(transform.forward, Vector3.forward) > 90;

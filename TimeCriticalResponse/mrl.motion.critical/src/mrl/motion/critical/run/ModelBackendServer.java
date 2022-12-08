@@ -169,7 +169,7 @@ public class ModelBackendServer {
             socketWriter.writeInt(result.length);
             socketWriter.write(result);
             socketWriter.flush();
-            Thread.sleep((int)(1000f / (60f * timescale)));
+            Thread.sleep((int)(1000f / (30f * timescale)));
         }
     }
 

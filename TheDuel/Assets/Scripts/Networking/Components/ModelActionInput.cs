@@ -7,18 +7,12 @@ using Random = UnityEngine.Random;
 public class ModelActionInput : ModelComponentBase
 {
     private int _actionNumber = 0;
-    private Character character;
 
     private void DoActionTest()
     {
         if (_actionNumber == 5) _actionNumber = 0;
         writer.WriteDoAction(_actionNumber);
         _actionNumber++;
-    }
-
-    private void Awake()
-    {
-        character = gameObject.GetComponent<Character>();
     }
 
     private void Update()
