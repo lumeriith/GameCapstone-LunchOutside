@@ -183,6 +183,7 @@ MonoBehaviour:
   volume: 0.5
   affectedByTimeScale: 1
   delay: 0
+  is3d: 1
 --- !u!1001 &440068917821625579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -745,6 +746,7 @@ MonoBehaviour:
   volume: 1
   affectedByTimeScale: 1
   delay: 0
+  is3d: 0
 --- !u!114 &6529532699304486214
 MonoBehaviour:
   m_ObjectHideFlags: 0

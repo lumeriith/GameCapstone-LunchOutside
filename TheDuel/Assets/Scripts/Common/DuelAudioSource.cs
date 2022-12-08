@@ -14,6 +14,7 @@ public class DuelAudioSource : MonoBehaviour
     public float volume = 1f;
     public bool affectedByTimeScale = true;
     public float delay;
+    public bool is3d = true;
     
     private AudioSource _audio;
     private float _unscaledPitch = 1f;
@@ -21,8 +22,11 @@ public class DuelAudioSource : MonoBehaviour
     private void Awake()
     {
         _audio = gameObject.AddComponent<AudioSource>();
-        _audio.spatialize = true;
-        _audio.spatialBlend = 1f;
+        if (is3d)
+        {
+            _audio.spatialize = true;
+            _audio.spatialBlend = 1f;
+        }
         _audio.volume = volume;
     }
 
