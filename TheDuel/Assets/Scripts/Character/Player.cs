@@ -39,12 +39,6 @@ public class Player : Character
     {
         base.Start();
         _cam = Camera.main;
-        GameManager.instance.onRoundPrepare += () =>
-        {
-            var rot = Quaternion.LookRotation(Enemy.instance.transform.position - transform.position);
-            FindObjectOfType<vThirdPersonCamera>().SetRotation(rot);
-            transform.rotation = Quaternion.Euler(0, rot.eulerAngles.y, 0);
-        };
     }
 
     protected override void Update()

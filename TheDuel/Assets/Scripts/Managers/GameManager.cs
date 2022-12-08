@@ -53,6 +53,11 @@ public class GameManager : ManagerBase<GameManager>
         };
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F2)) ResetPosition();
+    }
+
     private void FixedUpdate()
     {
         isPlayerOutOfBounds = !playRegionCollider.Raycast(new Ray(Player.instance.transform.position + Vector3.down * 5f, Vector3.up), out var info, 10f);
@@ -84,10 +89,9 @@ public class GameManager : ManagerBase<GameManager>
     private IEnumerator StartRoundRoutine()
     {
         fadeOutVolume.weight = 1f;
-        Player.instance.rigidbody.position = playerStartPos.position;
-        Player.instance.rigidbody.rotation = playerStartPos.rotation;
-        Enemy.instance.rigidbody.position = enemyStartPos.position;
-        Enemy.instance.rigidbody.rotation = enemyStartPos.rotation;
+
+        StartCoroutine(ResetPositionRoutine());
+
         onRoundPrepare?.Invoke();
         DOTween.To(() => fadeOutVolume.weight, v => fadeOutVolume.weight = v, 0f, 1f);
         yield return new WaitForSecondsRealtime(1f);
@@ -103,5 +107,37 @@ public class GameManager : ManagerBase<GameManager>
         ScoreManager.instance.IncrementEnemyScore(cheatPenalty);
         yield return new WaitForSeconds(2f);
         StartNewRound();
+    }
+
+    private IEnumerator ResetPositionRoutine()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            ResetPosition();
+            yield return null;
+        }    
+    }
+
+    private void ResetPosition()
+    {
+        Player.instance.rigidbody.position = playerStartPos.position;
+        Player.instance.rigidbody.isKinematic = true;
+        Player.instance.rigidbody.isKinematic = false;
+        Player.instance.rigidbody.velocity = Vector3.zero;
+        Player.instance.rigidbody.angularVelocity = Vector3.zero;
+        
+        Enemy.instance.rigidbody.position = enemyStartPos.position;
+        Enemy.instance.rigidbody.isKinematic = true;
+        Enemy.instance.rigidbody.isKinematic = false;
+        Enemy.instance.rigidbody.velocity = Vector3.zero;
+        Enemy.instance.rigidbody.angularVelocity = Vector3.zero;
+        
+        Player.instance.rigidbody.rotation = Quaternion.Euler(0, Quaternion.LookRotation(Enemy.instance.rigidbody.position - Player.instance.rigidbody.position).eulerAngles.y, 0);
+        Enemy.instance.rigidbody.rotation = Quaternion.Euler(0, Quaternion.LookRotation(Player.instance.rigidbody.position - Enemy.instance.rigidbody.position).eulerAngles.y, 0);
+        
+        var cam = FindObjectOfType<vThirdPersonCamera>();
+        cam.mouseY = 9;
+        cam.mouseX = 183;
+
     }
 }
