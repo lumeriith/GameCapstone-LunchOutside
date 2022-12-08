@@ -214,13 +214,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2822101166207294217}
   - component: {fileID: 3999959872034615980}
+  - component: {fileID: 6905251354189858676}
   - component: {fileID: -8811920989504221785}
   - component: {fileID: -1266742732314658498}
   - component: {fileID: 2822101166207294216}
   - component: {fileID: 2822101166207294213}
   - component: {fileID: 7611657843294627388}
   - component: {fileID: 7966124554936067934}
-  - component: {fileID: 6905251354189858676}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Player
@@ -285,6 +285,22 @@ MonoBehaviour:
   parryStaminaCost: 25
   lastEquipedItem: {fileID: 0}
   isGetLastScore: 0
+--- !u!114 &6905251354189858676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822101166207294211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbd6354f6f06844fae17de50413ec87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: {fileID: -8811920989504221785}
+  whenLosing: {fileID: 11400000, guid: 39446bbba9fe2d346a4556721e19088a, type: 2}
+  whenSame: {fileID: 11400000, guid: f5d3c08b049324846a24bc761dc03418, type: 2}
+  whenWinning: {fileID: 11400000, guid: 97ca94d323a231a4cb665c53c4dfa3e2, type: 2}
 --- !u!114 &-8811920989504221785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,21 +417,6 @@ CapsuleCollider:
   m_Height: 1.76
   m_Direction: 1
   m_Center: {x: 0, y: 0.88, z: 0}
---- !u!114 &6905251354189858676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2822101166207294211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fbd6354f6f06844fae17de50413ec87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  whenLosing: {fileID: 11400000, guid: 39446bbba9fe2d346a4556721e19088a, type: 2}
-  whenSame: {fileID: 11400000, guid: f5d3c08b049324846a24bc761dc03418, type: 2}
-  whenWinning: {fileID: 11400000, guid: 97ca94d323a231a4cb665c53c4dfa3e2, type: 2}
 --- !u!1 &3362472744326678919
 GameObject:
   m_ObjectHideFlags: 0

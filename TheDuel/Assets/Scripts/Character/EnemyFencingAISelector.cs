@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyFencingAISelector : MonoBehaviour
 {
+    public EnemyFencingAI ai;
     public EnemyFencingAIProfile whenLosing;
     public EnemyFencingAIProfile whenSame;
     public EnemyFencingAIProfile whenWinning;
@@ -13,7 +14,6 @@ public class EnemyFencingAISelector : MonoBehaviour
     {
         GameManager.instance.onRoundPrepare += () =>
         {
-            var ai = GetComponent<EnemyFencingAI>();
             if (ScoreManager.instance.enemyScore > ScoreManager.instance.playerScore)
             {
                 ai.profile = whenWinning;
