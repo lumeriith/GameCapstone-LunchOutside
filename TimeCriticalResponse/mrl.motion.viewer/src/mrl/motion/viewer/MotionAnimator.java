@@ -277,21 +277,15 @@ public abstract class MotionAnimator extends SWTViewableCanvas{
 					m.m03, m.m13, m.m23, m.m33,
 			}, 0);
 		}
-
-		boolean pass = (isRoot && joint.length > 0) || (joint.name.equals("pelvis") && joint.length > 0);
+		
+		boolean pass = (isRoot && joint.length > 0) || (joint.name.equals("pelvis") && joint.length > 0) ;
 		if (!pass && (joint.length != 0)){
 			Point3d b0 = new Point3d();
 			Point3d b1 = new Point3d(joint.transition);
-			if (joint.name.equals("root")) {
-				gl.glTranslated(joint.transition.x, joint.transition.y, joint.transition.z);
-			}
-			else {
-				SWTViewableCanvas.drawLine(gl, glut, b0, b1, boneThickness);
-				gl.glTranslated(joint.transition.x, joint.transition.y, joint.transition.z);
-				glut.glutSolidSphere((boneThickness + 0.05), SLICE_AND_STACK, SLICE_AND_STACK);
-			}
-
-
+			SWTViewableCanvas.drawLine(gl, glut, b0, b1, boneThickness);
+			gl.glTranslated(joint.transition.x, joint.transition.y, joint.transition.z);
+			glut.glutSolidSphere((boneThickness + 0.05), SLICE_AND_STACK, SLICE_AND_STACK);
+			
 			if (drawAxis){
 				double t = boneThickness/4;
 				Vector3d[] vList = new Vector3d[]{
