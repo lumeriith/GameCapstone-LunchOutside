@@ -73,7 +73,7 @@ public class Referee : MonoBehaviour
         
         int visibleRays = 0;
 
-        if (isWatching)
+        if (isWatching && !FogSystem.instance.isFogged)
         {
             var startPoint = visionStartPoint.position;
             foreach (var t in _sampleTransforms)

@@ -87,7 +87,8 @@ public class RefereeAnimator : MonoBehaviour
     {
         Phone.SetActive(true);
         Referee.instance.isWatching = false;
-        
+       
+
 
         yield return new WaitForSeconds(4.0f);
         StartCoroutine(PhoneCall());
@@ -111,6 +112,7 @@ public class RefereeAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
         Referee.instance.isWatching = true;
+       
         Phone.SetActive(false);
         StartCoroutine(Idle());
     }

@@ -33,9 +33,9 @@ public class FlyingCan : MonoBehaviour
 
     void MakeRandom()
     {
-        randomx = Random.Range(-3, 4);
-        randomy = Random.Range(-3, 4);
-        randomz = Random.Range(-3, 4);
+        randomx = Random.Range(-1, 2);
+        randomy = Random.Range(-1, 2);
+        randomz = Random.Range(-1, 2);
     }
 
     void GetTargetPosition()
